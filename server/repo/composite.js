@@ -14,13 +14,13 @@ module.exports = {
             description: composite.description
         };
         var result = yield cypher.send(statement, parameters);
-        return result[0].c;
+        return result[0].c
     },
 
     find: function *(uuid) {
         var statement = 'MATCH (c:Composite {uuid: {uuid}}) RETURN c';
         var result = yield cypher.send(statement, {uuid});
-        return result[0].c;
+        return result[0].c
     }
 
 };

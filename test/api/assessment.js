@@ -15,7 +15,7 @@ describe('Assessment API', function () {
         expect(createdAssessment.description).to.equal(assessment.description);
         assessment.testedItemIds.forEach(itemId =>
             expect(createdAssessment.testedItemIds).to.contain(itemId)
-        );
+        )
     });
 
     it('finds Assessment', function *() {
@@ -25,7 +25,7 @@ describe('Assessment API', function () {
         expect(foundAssessment.uuid).to.equal(assessment.uuid);
         assessment.testedItemIds.forEach(itemId =>
             expect(foundAssessment.testedItemIds).to.contain(itemId)
-        );
+        )
     });
 
 });

@@ -22,7 +22,7 @@ module.exports = {
         var result = yield cypher.send(statement, parameters);
         var createdAssessment = result[0].a;
         createdAssessment.testedItemIds = assessment.testedItemIds;
-        return createdAssessment;
+        return createdAssessment
     },
 
     find: function *(uuid) {
@@ -30,7 +30,7 @@ module.exports = {
         var result = yield cypher.send(statement, {uuid});
         var createdAssessment = result[0].a;
         createdAssessment.testedItemIds = _.map(result[0].testedItems, i => i.uuid);
-        return createdAssessment;
+        return createdAssessment
     }
 
 };

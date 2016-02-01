@@ -16,12 +16,12 @@ module.exports = {
             item.categoryId = category.uuid
         }
         const response = yield api.post('/api/item').send(item).expect(201).end();
-        return response.body;
+        return response.body
     },
 
     find: function *(uuid) {
         const response = yield api.get('/api/item/' + uuid).expect(200).end();
-        return response.body;
+        return response.body
     }
 
 };

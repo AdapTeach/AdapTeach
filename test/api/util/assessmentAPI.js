@@ -17,12 +17,12 @@ module.exports = {
             assessment.testedItemIds = [item1.uuid, item2.uuid];
         }
         const response = yield api.post('/api/assessment').send(assessment).expect(201).end();
-        return response.body;
+        return response.body
     },
 
     find: function *(uuid) {
         const response = yield api.get('/api/assessment/' + uuid).expect(200).end();
-        return response.body;
+        return response.body
     }
 
 };

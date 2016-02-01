@@ -18,7 +18,7 @@ module.exports = {
         var result = yield cypher.send(statement, parameters);
         var createdItem = result[0].i;
         createdItem.categoryId = result[0].c.uuid;
-        return createdItem;
+        return createdItem
     },
 
     find: function *(uuid) {
@@ -27,7 +27,7 @@ module.exports = {
         var item = result[0].i;
         var category = result[0].c;
         item.categoryId = category.uuid;
-        return item;
+        return item
     }
 
 };

@@ -29,7 +29,7 @@ module.exports = {
             );
             rows.push(row);
         });
-        return rows;
+        return rows
     }
 
 };
