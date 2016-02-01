@@ -6,9 +6,19 @@ describe('Category API', function () {
 
     it('creates Category', function *() {
         const category = {name: 'Category to create'};
-        var createdCategory = yield categoryAPI.create(category);
+        const createdCategory = yield categoryAPI.create(category);
         expect(createdCategory.uuid).to.exist;
         expect(createdCategory.name).to.equal(category.name);
+    });
+
+    it('creates child Category', function *() {
+        const parent = yield categoryAPI.create({name: 'Parent Category'});
+        const child = yield categoryAPI.create({
+            name: 'Child Category',
+            parentId: parent.uuid
+        });
+        expect(child.uuid).to.exist;
+        expect(child.parentId).to.equal(parent.uuid)
     });
 
     it('finds Category', function *() {
