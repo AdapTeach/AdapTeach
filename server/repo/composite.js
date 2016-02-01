@@ -1,26 +1,27 @@
-var uuid = require('node-uuid');
+const uuid = require('node-uuid');
 
-var cypher = require('./graph/cypher');
+const cypher = require('./graph/cypher');
 
-module.exports = {
-
-    create: function *(composite) {
-        var statement = `
+const create = function *(composite) {
+  const statement = `
 			CREATE (c:Composite:Objective {uuid: {uuid}, name: {name}, description: {description}})
 			RETURN c`;
-        var parameters = {
-            uuid: uuid.v4(),
-            name: composite.name,
-            description: composite.description
-        };
-        var result = yield cypher.send(statement, parameters);
-        return result[0].c
-    },
+  const parameters = {
+    uuid: uuid.v4(),
+    name: composite.name,
+    description: composite.description
+  };
+  const result = yield cypher.send(statement, parameters);
+  return result[0].c
+};
 
-    find: function *(uuid) {
-        var statement = 'MATCH (c:Composite {uuid: {uuid}}) RETURN c';
-        var result = yield cypher.send(statement, {uuid});
-        return result[0].c
-    }
+const find = function *(uuid) {
+  const statement = 'MATCH (c:Composite {uuid: {uuid}}) RETURN c';
+  const result = yield cypher.send(statement, {uuid});
+  return result[0].c
+};
 
+module.exports = {
+  create,
+  find
 };
