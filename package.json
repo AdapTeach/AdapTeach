@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "co-body": "^4.0.0",
+    "eslint": "^1.10.3",
     "koa": "^1.1.2",
     "koa-logger": "^1.3.0",
     "koa-request": "^1.0.0",
@@ -18,8 +19,8 @@
     "node-uuid": "^1.4.7"
   },
   "devDependencies": {
-    "co-supertest": "0.0.10",
     "chai": "^3.4.1",
+    "co-supertest": "0.0.10",
     "gulp": "^3.9.0",
     "gulp-exit": "0.0.2",
     "gulp-mocha-co": "^0.4.1-co.3",
