@@ -1,4 +1,4 @@
-var request = require('koa-request');
+const request = require('koa-request');
 
 const url = 'http://localhost:7474/db/data/transaction/commit';
 const auth = {
@@ -19,7 +19,7 @@ const send = function *(statement, parameters) {
   if (!result)
     throw new Error(response.body.errors[0].message);
   const rows = [];
-  result.data.forEach(item => {
+  result.data.forEach(item => { // TODO Adopt more functional style
     const row = {};
     result.columns.forEach((colName, index) =>
       row[colName] = item.row[index]
