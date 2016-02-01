@@ -7,7 +7,7 @@ module.exports = {
     create: function *(item) {
         var statement = `
             MATCH (c:Category {uuid: {categoryId}})
-			CREATE (i:Item {uuid: {uuid}, name: {name}, description: {description}}) -[:IN_CATEGORY]-> (c)
+			CREATE (i:Item:Objective {uuid: {uuid}, name: {name}, description: {description}}) -[:IN_CATEGORY]-> (c)
 			RETURN i, c`;
         var parameters = {
             categoryId: item.categoryId,

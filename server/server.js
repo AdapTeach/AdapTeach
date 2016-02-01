@@ -15,5 +15,8 @@ app.use(itemRouter.routes());
 var assessmentRouter = require('./router/assessment');
 app.use(assessmentRouter.routes());
 
+var compositeRouter = require('./router/composite');
+app.use(compositeRouter.routes());
+
 app.listen(port);
 console.log('app listening on port:', port, env);
