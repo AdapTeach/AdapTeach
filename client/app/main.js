@@ -1,32 +1,14 @@
 import React from 'react'
 import { render } from 'react-dom'
-import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import { Router, Route, Link } from 'react-router'
-import createHistory from 'history/lib/createBrowserHistory'
-import { syncHistory, routeReducer } from 'react-router-redux'
 
 // Required by MaterialUI until React reaches v1
 import injectTapEventPlugin from 'react-tap-event-plugin'
 injectTapEventPlugin()
 
-import reducers from './reducers'
-
-const reducer = combineReducers(Object.assign({}, reducers, {
-  routing: routeReducer
-}))
-
-const browserHistory = createHistory()
-
-// Sync dispatched route actions to the history
-const reduxRouterMiddleware = syncHistory(browserHistory)
-const createStoreWithMiddleware = applyMiddleware(reduxRouterMiddleware)(createStore)
-
-//const store = createStore(reducer);
-const store = createStoreWithMiddleware(reducer)
-
-// Required for replaying actions from devtools to work
-reduxRouterMiddleware.listenForReplays(store)
+import history from './history'
+import store from './store'
 
 import App from './app'
 import Home from './home'
@@ -34,7 +16,7 @@ import CreateCategory from './category/create'
 
 render(
   <Provider store={store}>
-    <Router history={browserHistory}>
+    <Router history={history}>
       <Route path="/" component={App}/>
       <Route path="home" component={Home}/>
       <Route path="category">

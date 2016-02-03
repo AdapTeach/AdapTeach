@@ -4,8 +4,8 @@ const cypher = require('./graph/cypher');
 
 const create = function *(composite) {
   const statement = `
-			CREATE (c:Composite:Objective {uuid: {uuid}, name: {name}, description: {description}})
-			RETURN c`;
+    CREATE (c:Composite:Objective {uuid: {uuid}, name: {name}, description: {description}})
+    RETURN c`;
   const parameters = {
     uuid: uuid.v4(),
     name: composite.name,

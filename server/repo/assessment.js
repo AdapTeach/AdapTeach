@@ -4,12 +4,12 @@ const cypher = require('./graph/cypher');
 
 const create = function *(assessment) {
   const statement = `
-      CREATE (a:Assessment {uuid: {uuid}, name: {name}, description: {description}})
-      WITH a
-      UNWIND {testedItemIds} AS testedItemId
-          MATCH (i:Item {uuid: testedItemId})
-          CREATE (a) -[:ASSESSMENT_FOR]-> (i)
-      RETURN a`;
+    CREATE (a:Assessment {uuid: {uuid}, name: {name}, description: {description}})
+    WITH a
+    UNWIND {testedItemIds} AS testedItemId
+        MATCH (i:Item {uuid: testedItemId})
+        CREATE (a) -[:ASSESSMENT_FOR]-> (i)
+    RETURN a`;
   const parameters = {
     uuid: uuid.v4(),
     testedItemIds: assessment.testedItemIds,

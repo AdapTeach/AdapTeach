@@ -4,9 +4,9 @@ const cypher = require('./graph/cypher');
 
 const create = function *(item) {
   const statement = `
-            MATCH (c:Category {uuid: {categoryId}})
-			CREATE (i:Item:Objective {uuid: {uuid}, name: {name}, description: {description}}) -[:IN_CATEGORY]-> (c)
-			RETURN i, c`;
+    MATCH (c:Category {uuid: {categoryId}})
+    CREATE (i:Item:Objective {uuid: {uuid}, name: {name}, description: {description}}) -[:IN_CATEGORY]-> (c)
+    RETURN i, c`;
   const parameters = {
     categoryId: item.categoryId,
     uuid: uuid.v4(),

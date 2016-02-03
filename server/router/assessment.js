@@ -14,4 +14,13 @@ router.get('/api/assessment/:uuid', function *() {
   this.body = yield assessmentRepo.find(this.params.uuid)
 });
 
+router.post('/api/assessment/:uuid/prerequisite', function *() {
+  this.status = 201;
+});
+
+router.get('/api/assessment/:uuid/prerequisite', function *() {
+  this.status = 200;
+  this.body = yield assessmentRepo.findPreqs(this.params.uuid);
+});
+
 module.exports = router;
