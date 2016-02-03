@@ -8,7 +8,7 @@ const app = module.exports = koa(),
   env = process.env.NODE_ENV || 'development'
 
 //app.use(logger())
-app.use(cors());
+app.use(cors())
 
 // Routers
 glob('server/router/*.js').then(routerPaths =>
