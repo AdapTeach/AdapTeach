@@ -6,6 +6,10 @@ import { Router, Route, Link } from 'react-router'
 import createHistory from 'history/lib/createBrowserHistory'
 import { syncHistory, routeReducer } from 'react-router-redux'
 
+// Required by MaterialUI until React reaches v1
+import injectTapEventPlugin from 'react-tap-event-plugin'
+injectTapEventPlugin()
+
 import reducers from './reducers'
 
 const reducer = combineReducers(Object.assign({}, reducers, {
