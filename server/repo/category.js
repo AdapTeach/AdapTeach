@@ -46,8 +46,20 @@ const list = function *() {
   return result[0].categories
 }
 
+const search = function *(name) {
+  const statement = `
+    MATCH (c:Category)
+    WHERE c.name  =~ {nameRegex}
+    RETURN collect(c) as categories`
+  const nameRegex = `(?i)${name}.*`
+  const parameters = {nameRegex}
+  const result = yield cypher.send(statement, parameters)
+  return result[0].categories
+}
+
 module.exports = {
   create,
   find,
-  list
+  list,
+  search
 }

@@ -19,4 +19,9 @@ router.get('/api/category/list', function *() {
   this.body = yield categoryRepo.list()
 })
 
+router.get('/api/category/search/:name', function *() {
+  this.status = 200
+  this.body = yield categoryRepo.search(this.params.name)
+})
+
 module.exports = router

@@ -1,5 +1,6 @@
 const expect = require('chai').expect
 
+const api = require('./util/api')
 const categoryAPI = require('./util/categoryAPI')
 
 describe('Category API', () => {
@@ -37,6 +38,24 @@ describe('Category API', () => {
 
     expect(ids).to.contain(category1.uuid)
     expect(ids).to.contain(category2.uuid)
+  })
+
+  it('finds Category by name', function *() {
+    const category = yield categoryAPI.create()
+    const found = yield categoryAPI.search(category.name)
+    expect(found).to.contain(category)
+  })
+
+  it('finds Category by partial name', function *() {
+    const category = yield categoryAPI.create()
+    const found = yield categoryAPI.search(category.name.substr(0, 3))
+    expect(found).to.contain(category)
+  })
+
+  it('finds Category case-insensitively', function *() {
+    const category = yield categoryAPI.create()
+    const found = yield categoryAPI.search(category.name.toUpperCase())
+    expect(found).to.contain(category)
   })
 
 })

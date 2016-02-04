@@ -16,8 +16,14 @@ const list = function *() {
   return response.body
 }
 
+const search = function *(query) {
+  const response = yield api.get(`/api/category/search/${query}`).expect(200).end()
+  return response.body
+}
+
 module.exports = {
   create,
   find,
-  list
+  list,
+  search
 }

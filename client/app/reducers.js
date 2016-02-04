@@ -1,11 +1,9 @@
-const initialState = {
-  categoryList: []
-}
+const initialState = {}
 
 function reducer(state = initialState, action) {
   switch (action.type) {
-    case 'CATEGORY_LIST_UPDATED':
-      state.categoryList = action.data
+    case 'CATEGORY_SELECTED':
+      state.selectedCategory = action.category
       return state
     default:
       return state

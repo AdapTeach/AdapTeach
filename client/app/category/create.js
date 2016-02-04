@@ -1,9 +1,11 @@
 import React from 'react'
 import TextField from 'material-ui/lib/text-field'
+import SelectField from 'material-ui/lib/SelectField';
+import MenuItem from 'material-ui/lib/menus/menu-item';
 import RaisedButton from 'material-ui/lib/raised-button'
 
+import CategorySearch from './search/search'
 import StoreComponent from '../store-component'
-import actions from './actions'
 
 class CreateCategory extends StoreComponent {
 
@@ -15,12 +17,10 @@ class CreateCategory extends StoreComponent {
         <h2>Create Category</h2>
         <form onSubmit={this.create}>
           <TextField hintText="Name"/><br/>
+          <label>Parent Category</label>
+          {state.selectedCategory ? <div>{state.selectedCategory.name}</div> : <CategorySearch />}
           <RaisedButton onClick={this.create} secondary label="Create"/>
         </form>
-        <div>{state.categoryList.length}</div>
-        <ol>
-          {state.categoryList.map( category => <li key={category.uuid}>{category.name}</li>)}
-        </ol>
       </div>
     )
   }
