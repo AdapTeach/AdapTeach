@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
+import React  from 'react'
 
-class StoreComponent extends Component {
+class StoreComponent extends React.Component {
 
   componentDidMount() {
     this.unsubscribe = this.context.store.subscribe(() =>

@@ -10,9 +10,10 @@ injectTapEventPlugin()
 import history from './history'
 import store from './store'
 
-import App from './app'
-import Home from './home'
-import CreateCategory from './category/create'
+import App from '../routes/app'
+import Home from '../routes/home'
+import CreateCategory from '../routes/category/create'
+import ViewCategory from '../routes/category/view'
 
 render(
   <Provider store={store}>
@@ -21,6 +22,7 @@ render(
       <Route path="home" component={Home}/>
       <Route path="category">
         <Route path="create" component={CreateCategory}/>
+        <Route path=":id" component={ViewCategory}/>
       </Route>
     </Router>
   </Provider>,

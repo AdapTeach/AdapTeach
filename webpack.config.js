@@ -2,7 +2,7 @@ const path = require('path')
 
 module.exports = {
   entry: {
-    app: './client/app/main.js'
+    app: './client/app/main/main.js'
   },
   output: {
     path: path.resolve(__dirname, 'client/build'),

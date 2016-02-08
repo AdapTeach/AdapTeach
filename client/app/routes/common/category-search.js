@@ -2,10 +2,7 @@ import React from 'react'
 import SearchBar from 'react-search-bar'
 import axios from 'axios'
 
-import StoreComponent from '../../store-component'
-import store from '../../store'
-
-class CategorySearch extends StoreComponent {
+class CategorySearch extends React.Component {
 
   constructor() {
     super()
@@ -33,12 +30,13 @@ class CategorySearch extends StoreComponent {
 
   onCategorySelected(name) {
     const category = this.categoriesByName[name]
-    store.dispatch({
-      type: 'CATEGORY_SELECTED',
-      category
-    })
+    this.props.onSelect(category)
   }
 
+}
+
+CategorySearch.propTypes = {
+  onSelect: React.PropTypes.func.isRequired
 }
 
 export default CategorySearch
