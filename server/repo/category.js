@@ -36,9 +36,14 @@ const createChild = function *(category) {
 }
 
 const find = function *(uuid) {
-  const statement = 'MATCH (c:Category {uuid: {uuid}}) RETURN c'
+  const statement = `
+    MATCH (c:Category {uuid: {uuid}})
+    OPTIONAL MATCH (c) -[:CHILD_OF*]-> (p)
+    RETURN c, collect(p) as parents`
   const result = yield cypher.send(statement, {uuid})
-  return result[0].c
+  const category = result[0].c
+  category.parents = result[0].parents
+  return category
 }
 
 const list = function *() {

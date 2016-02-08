@@ -40,9 +40,10 @@ class CreateCategory extends React.Component {
   create(e) {
     e.preventDefault()
     const category = {
-      name: this.refs.categoryName.getValue(),
-      parentCategory: this.state.parentCategory
+      name: this.refs.categoryName.getValue()
     }
+    if (this.state.parentCategory)
+      category.parentId = this.state.parentCategory.uuid
     categoryEndpoint.create(category)
       .then(created => history.push(`/category/${created.uuid}`))
   }
