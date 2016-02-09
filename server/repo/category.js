@@ -17,13 +17,18 @@ const createRoot = function *(category) {
     name: category.name
   }
   const result = yield cypher.send(statement, parameters)
-  return result[0].c
+  const created = result[0].c
+  created.parents = []
+  return created
 }
 
 const createChild = function *(category) {
   const statement = `
     MATCH (p:Category { uuid:{parentId} })
-    CREATE (c:Category { uuid:{uuid}, name: {name} }) -[:CHILD_OF]-> (p) RETURN c`
+    CREATE (c:Category { uuid:{uuid}, name: {name} }) -[:CHILD_OF]-> (p)
+    WITH c
+    MATCH (c) -[:CHILD_OF*]-> (p)
+    RETURN c, collect(p) as parents`
   const parameters = {
     parentId: category.parentId,
     uuid: uuid.v4(),
@@ -31,7 +36,7 @@ const createChild = function *(category) {
   }
   const result = yield cypher.send(statement, parameters)
   const created = result[0].c
-  created.parentId = category.parentId
+  created.parents = result[0].parents
   return created
 }
 
@@ -55,11 +60,16 @@ const search = function *(name) {
   const statement = `
     MATCH (c:Category)
     WHERE c.name  =~ {nameRegex}
-    RETURN collect(c) as categories`
+    OPTIONAL MATCH (c) -[:CHILD_OF*]-> (p)
+    RETURN c, collect(p) as parents`
   const nameRegex = `(?i)${name}.*`
   const parameters = {nameRegex}
   const result = yield cypher.send(statement, parameters)
-  return result[0].categories
+  return result.map(row => {
+    const category = row.c
+    category.parents = row.parents
+    return category
+  })
 }
 
 module.exports = {

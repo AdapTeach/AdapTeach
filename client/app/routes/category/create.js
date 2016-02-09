@@ -46,6 +46,7 @@ class CreateCategory extends React.Component {
       category.parentId = this.state.parentCategory.uuid
     categoryEndpoint.create(category)
       .then(created => history.push(`/category/${created.uuid}`))
+      .catch(e => console.error(e))
   }
 
 }
