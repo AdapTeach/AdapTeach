@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link }from 'react-router'
 
 import StoreComponent from '../common/store-component'
 import categoryData from '../../core/data/category'
@@ -14,13 +15,12 @@ class ViewCategory extends StoreComponent {
     return (
       <div>
         <h1>View Category</h1>
-        <h3>{category.name}</h3>
-        <h4>Parents</h4>
-        <ul>
-          {category.parents.map(parent =>
-            <li key={parent.uuid}>{parent.name}</li>
+        <h3>
+          {category.parents.reverse().map(parent =>
+            <span key={parent.uuid}><Link to={`/category/${parent.uuid}`}>{parent.name}</Link> > </span>
           )}
-        </ul>
+          {category.name}
+        </h3>
       </div>
     )
   }
