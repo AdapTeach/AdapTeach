@@ -2,7 +2,11 @@ const api = require('./api')
 
 const categoryAPI = require('./categoryAPI')
 
-const create = function *(item) {
+function post() {
+  return api.post('/api/item')
+}
+
+function *create(item) {
   if (!item) {
     item = {
       name: 'Test Item',
@@ -13,16 +17,17 @@ const create = function *(item) {
     const category = yield categoryAPI.create()
     item.categoryId = category.uuid
   }
-  const response = yield api.post('/api/item').send(item).expect(201).end()
+  const response = yield post().send(item).expect(201).end()
   return response.body
 }
 
-const find = function *(uuid) {
-  const response = yield api.get('/api/item/' + uuid).expect(200).end()
+function *find(uuid) {
+  const response = yield api.get(`/api/item/${uuid}`).expect(200).end()
   return response.body
 }
 
 module.exports = {
+  post,
   create,
   find
 }

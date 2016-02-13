@@ -1,7 +1,5 @@
 import React from 'react'
 import TextField from 'material-ui/lib/text-field'
-import SelectField from 'material-ui/lib/SelectField'
-import MenuItem from 'material-ui/lib/menus/menu-item'
 import RaisedButton from 'material-ui/lib/raised-button'
 
 import CategorySearch from '../common/category-search'

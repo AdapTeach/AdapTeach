@@ -12,8 +12,11 @@ import store from './store'
 
 import App from '../routes/app'
 import Home from '../routes/home'
+
 import CreateCategory from '../routes/category/create'
 import ViewCategory from '../routes/category/view'
+
+import CreateItem from '../routes/item/create'
 
 render(
   <Provider store={store}>
@@ -23,6 +26,9 @@ render(
       <Route path="category">
         <Route path="create" component={CreateCategory}/>
         <Route path=":id" component={ViewCategory}/>
+      </Route>
+      <Route path="item">
+        <Route path="create" component={CreateItem}/>
       </Route>
     </Router>
   </Provider>,

@@ -1,8 +1,10 @@
 const uuid = require('node-uuid')
 
 const cypher = require('./graph/cypher')
+const InvalidArgumentError = require('../error/invalid-argument')
 
 const create = function *(item) {
+  if (!item.categoryId) throw new InvalidArgumentError('item.categoryId is required')
   const statement = `
     MATCH (c:Category {uuid: {categoryId}})
     CREATE (i:Item:Objective {uuid: {uuid}, name: {name}, description: {description}}) -[:IN_CATEGORY]-> (c)
@@ -11,11 +13,13 @@ const create = function *(item) {
     categoryId: item.categoryId,
     uuid: uuid.v4(),
     name: item.name,
-    description: item.description
+    description: item.description ? item.description : ''
   }
   const result = yield cypher.send(statement, parameters)
-  const createdItem = result[0].i
-  createdItem.categoryId = result[0].c.uuid
+  const row = result[0]
+  if (!row) throw new InvalidArgumentError(`No Category exists for id ${item.categoryId}`)
+  const createdItem = row.i
+  createdItem.categoryId = row.c.uuid
   return createdItem
 }
 
