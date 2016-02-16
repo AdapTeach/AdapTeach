@@ -19,7 +19,8 @@ class CreateItem extends React.Component {
         <h2>Create Item</h2>
         <form onSubmit={this.create}>
           <TextField onChange={this.onItemNameChange.bind(this)} hintText="Name"/><br/>
-          <label required>Category</label>
+          <TextField ref="description" hintText="Description"/><br/>
+          <label>Category</label>
           {this.state.category ?
             <div>{this.state.category.name}</div>
             : <CategorySearch onSelect={this.selectCategory.bind(this)}/>}
@@ -45,6 +46,7 @@ class CreateItem extends React.Component {
     e.preventDefault()
     const item = {
       name: this.state.itemName,
+      description: this.refs.description.getValue(),
       categoryId: this.state.category.uuid
     }
     itemEndpoint.create(item)
