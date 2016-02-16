@@ -16,7 +16,7 @@ class ViewCategory extends StoreComponent {
       <div>
         <h1>View Category</h1>
         <h3>
-          {category.parents.reverse().map(parent =>
+          {category.parents.slice().reverse().map(parent =>
             <span key={parent.uuid}><Link to={`/category/${parent.uuid}`}>{parent.name}</Link> > </span>
           )}
           {category.name}

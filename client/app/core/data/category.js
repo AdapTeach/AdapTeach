@@ -5,7 +5,7 @@ import DataStore from './data-store'
 class CategoryDataStore extends DataStore {
 
   constructor() {
-    super('categories', categoryEndpoint)
+    super(categoryEndpoint)
   }
 
 }

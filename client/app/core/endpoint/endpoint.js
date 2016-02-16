@@ -9,7 +9,6 @@ class Endpoint {
   }
 
   create(entity) {
-    console.log(this.entityTypeName.toUpperCase())
     return axios.post(`http://localhost:8000/api/${this.entityTypeName}`, entity)
       .then(response => response.data)
       .then(this.dispatchEntityLoadedAction.bind(this))

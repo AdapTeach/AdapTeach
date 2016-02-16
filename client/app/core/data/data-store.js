@@ -2,13 +2,13 @@ import store from '../../main/store'
 
 class DataStore {
 
-  constructor(key, endpoint) {
-    this.key = key
+  constructor(endpoint) {
     this.endpoint = endpoint
+    this.entityType = endpoint.entityTypeName
   }
 
   data() {
-    return store.getState().app.get('data').get(this.key)
+    return store.getState().app.get('data').get(this.entityType)
   }
 
   get(id) {

@@ -1,13 +1,16 @@
 import axios from 'axios'
 
 import store from '../../main/store'
+import { ITEM } from '../data/entities'
 
-function create(item) {
-  return axios.post(`http://localhost:8000/api/item`, item)
-    .then(response => response.data)
-    .catch(error => console.error(error))
+import Endpoint from './endpoint'
+
+class ItemEndpoint extends Endpoint {
+
+  constructor() {
+    super(ITEM)
+  }
+
 }
 
-export default {
-  create
-}
+export default new ItemEndpoint()
