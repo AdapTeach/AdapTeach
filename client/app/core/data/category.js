@@ -1,16 +1,13 @@
 import store from '../../main/store'
 import categoryEndpoint from '../endpoint/category'
+import DataStore from './data-store'
 
-function data() {
-  return store.getState().app.get('data').get('categories')
+class CategoryDataStore extends DataStore {
+
+  constructor() {
+    super('categories', categoryEndpoint)
+  }
+
 }
 
-function get(id) {
-  const category = data().get(id)
-  if (!category) categoryEndpoint.load(id)
-  return category
-}
-
-export default {
-  get
-}
+export default new CategoryDataStore()
