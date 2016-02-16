@@ -11,14 +11,14 @@ class Endpoint {
   create(entity) {
     return axios.post(`http://localhost:8000/api/${this.entityTypeName}`, entity)
       .then(response => response.data)
-      .then(this.dispatchEntityLoadedAction.bind(this))
+      .then(::this.dispatchEntityLoadedAction)
       .catch(error => console.error(error))
   }
 
   load(id) {
     return axios.get(`http://localhost:8000/api/${this.entityTypeName}/${id}`)
       .then(response => response.data)
-      .then(this.dispatchEntityLoadedAction.bind(this))
+      .then(::this.dispatchEntityLoadedAction)
       .catch(error => console.error(`Loading ${this.entityTypeName}`, error))
   }
 

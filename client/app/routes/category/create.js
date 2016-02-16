@@ -22,8 +22,8 @@ class CreateCategory extends React.Component {
           <label>Parent Category</label>
           {this.state.parentCategory ?
             <div>{this.state.parentCategory.name}</div>
-            : <CategorySearch onSelect={this.selectParentCategory.bind(this)}/>}
-          <RaisedButton onClick={this.create.bind(this)} secondary label="Create"/>
+            : <CategorySearch onSelect={::this.selectParentCategory}/>}
+          <RaisedButton onClick={::this.create} secondary label="Create"/>
         </form>
       </div>
     )
