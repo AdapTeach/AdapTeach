@@ -6,7 +6,8 @@ import { CATEGORY, ITEM } from './data/entities'
 
 const initialState = Immutable.fromJS({
   data: {
-    category: {}
+    category: {},
+    item: {}
   }
 })
 
@@ -16,6 +17,9 @@ function reducer(state = initialState, action) {
     case 'CATEGORY_LOADED':
       const category = action.payload
       return state.setIn(['data', CATEGORY, category.uuid], category)
+    case 'ITEM_LOADED':
+      const item = action.payload
+      return state.setIn(['data', ITEM, item.uuid], item)
     default:
       return state
   }

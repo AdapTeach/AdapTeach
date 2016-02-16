@@ -19,7 +19,7 @@ class Endpoint {
     return axios.get(`http://localhost:8000/api/${this.entityTypeName}/${id}`)
       .then(response => response.data)
       .then(this.dispatchEntityLoadedAction.bind(this))
-      .catch(error => console.error(error))
+      .catch(error => console.error(`Loading ${this.entityTypeName}`, error))
   }
 
   dispatchEntityLoadedAction(entity) {

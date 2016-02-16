@@ -17,6 +17,7 @@ import CreateCategory from '../routes/category/create'
 import ViewCategory from '../routes/category/view'
 
 import CreateItem from '../routes/item/create'
+import ViewItem from '../routes/item/view'
 
 render(
   <Provider store={store}>
@@ -29,6 +30,7 @@ render(
       </Route>
       <Route path="item">
         <Route path="create" component={CreateItem}/>
+        <Route path=":id" component={ViewItem}/>
       </Route>
     </Router>
   </Provider>,
