@@ -4,7 +4,7 @@ import RaisedButton from 'material-ui/lib/raised-button'
 
 import CategorySearch from '../common/category-search'
 import categoryEndpoint from '../../core/endpoint/category'
-import history from '../../main/history'
+import history from '../history'
 
 class CreateCategory extends React.Component {
 

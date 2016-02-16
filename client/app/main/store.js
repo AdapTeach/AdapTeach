@@ -2,7 +2,7 @@ import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { syncHistory, routeReducer } from 'react-router-redux'
 
 import reducers from '../core/reducers'
-import history from './history'
+import history from '../routes/history'
 
 const reducer = combineReducers(Object.assign({}, reducers, {
   routing: routeReducer

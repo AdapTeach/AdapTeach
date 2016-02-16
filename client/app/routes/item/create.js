@@ -3,7 +3,7 @@ import TextField from 'material-ui/lib/text-field'
 import RaisedButton from 'material-ui/lib/raised-button'
 
 import CategorySearch from '../common/category-search'
-import history from '../../main/history'
+import history from '../history'
 import itemEndpoint from '../../core/endpoint/item'
 
 class CreateItem extends React.Component {
