@@ -1,29 +1,21 @@
 import Immutable from 'immutable'
 import deepFreeze from 'deep-freeze'
+import { createReducer } from 'redux-immutablejs'
 
 import environment from '../main/environment'
 import { CATEGORY, ITEM } from './data/entities'
 
-const initialState = Immutable.fromJS({
+const initialState = {
   data: {
     category: {},
     item: {}
   }
-})
-
-function reducer(state = initialState, action) {
-  if (environment.isDevelopment) deepFreeze(state)
-  switch (action.type) {
-    case 'CATEGORY_LOADED':
-      const category = action.payload
-      return state.setIn(['data', CATEGORY, category.uuid], category)
-    case 'ITEM_LOADED':
-      const item = action.payload
-      return state.setIn(['data', ITEM, item.uuid], item)
-    default:
-      return state
-  }
 }
+
+const reducer = createReducer(initialState, {
+  [`CATEGORY_LOADED`]: (state, action) => state.setIn(['data', CATEGORY, action.payload.uuid], action.payload),
+  ['ITEM_LOADED']: (state, action) => state.setIn(['data', ITEM, action.payload.uuid], action.payload)
+})
 
 export default {
   app: reducer
