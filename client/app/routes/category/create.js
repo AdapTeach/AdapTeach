@@ -23,7 +23,7 @@ class CreateCategory extends React.Component {
           {this.state.parentCategory ?
             <div>{this.state.parentCategory.name}</div>
             : <CategorySearch onSelect={::this.selectParentCategory}/>}
-          <RaisedButton onClick={::this.create} secondary label="Create"/>
+          <RaisedButton onClick={::this.create} primary label="Create"/>
         </form>
       </div>
     )

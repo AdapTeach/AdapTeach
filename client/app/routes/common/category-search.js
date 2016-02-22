@@ -12,8 +12,8 @@ class CategorySearch extends React.Component {
   render() {
     return (
       <SearchBar
-        onChange={this.updateSuggestions.bind(this)}
-        onSubmit={this.onCategorySelected.bind(this)}
+        onChange={::this.updateSuggestions}
+        onSubmit={::this.onCategorySelected}
       />
     )
   }

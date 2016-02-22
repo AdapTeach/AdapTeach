@@ -8,8 +8,8 @@ import itemEndpoint from '../../core/endpoint/item'
 
 class CreateItem extends React.Component {
 
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {itemName: ''}
   }
 
@@ -24,7 +24,7 @@ class CreateItem extends React.Component {
           {this.state.category ?
             <div>{this.state.category.name}</div>
             : <CategorySearch onSelect={::this.selectCategory}/>}
-          <RaisedButton onClick={::this.create} disabled={!this.canSubmit()} secondary label="Create"/>
+          <RaisedButton onClick={::this.create} disabled={!this.canSubmit()} primary label="Create"/>
         </form>
       </div>
     )
