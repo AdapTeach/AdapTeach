@@ -17,9 +17,7 @@ const createRoot = function *(category) {
     name: category.name
   }
   const result = yield cypher.send(statement, parameters)
-  const created = result[0].c
-  created.parents = []
-  return created
+  return result[0].c
 }
 
 const createChild = function *(category) {
@@ -36,8 +34,20 @@ const createChild = function *(category) {
   }
   const result = yield cypher.send(statement, parameters)
   const created = result[0].c
-  created.parents = result[0].parents
+  const parents = result[0].parents
+  addParentHierarchy(created, parents);
   return created
+}
+
+function addParentHierarchy(category, parents) {
+  if (parents.length > 0) {
+    const parentHierarchy = parents.reduceRight((accumulator, current) => {
+      if (!accumulator) return current // current is root Category
+      current.parent = accumulator
+      return current
+    })
+    category.parent = parentHierarchy
+  }
 }
 
 const find = function *(uuid) {
@@ -47,7 +57,8 @@ const find = function *(uuid) {
     RETURN c, collect(p) as parents`
   const result = yield cypher.send(statement, {uuid})
   const category = result[0].c
-  category.parents = result[0].parents
+  const parents = result[0].parents
+  addParentHierarchy(category, parents)
   return category
 }
 
@@ -67,7 +78,8 @@ const search = function *(name) {
   const result = yield cypher.send(statement, parameters)
   return result.map(row => {
     const category = row.c
-    category.parents = row.parents
+    const parents = row.parents
+    addParentHierarchy(category, parents)
     return category
   })
 }
