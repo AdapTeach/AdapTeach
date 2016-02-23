@@ -23,4 +23,6 @@ const delayRenderUntilPropsLoaded = (props) => {
   return <ViewCategory {...props}/>
 }
 
-export default connect(mapStateToProps)(delayRenderUntilPropsLoaded)
+const ViewCategoryContainer = connect(mapStateToProps)(delayRenderUntilPropsLoaded);
+
+export default ViewCategoryContainer
