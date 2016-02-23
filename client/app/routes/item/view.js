@@ -1,37 +1,37 @@
 import React from 'react'
 import { Link }from 'react-router'
+import { connect } from 'react-redux'
 
-import StoreComponent from '../common/store-component'
 import itemData from '../../core/data/item'
 import categoryData from '../../core/data/category'
 
-class ViewItem extends StoreComponent {
+const ViewItem = (props) => (
+  <div>
+    <h1>View Item</h1>
+    <h2>{props.item.name}</h2>
+    <h3>
+      {props.category.parents.slice().reverse().map(parent =>
+        <span key={parent.uuid}><Link to={`/category/${parent.uuid}`}>{parent.name}</Link> > </span>
+      )}
+      <Link to={`/category/${props.category.uuid}`}>{props.category.name}</Link>
+    </h3>
+    <h4>{props.item.description}</h4>
+  </div>
+)
 
-  render() {
-    const id = this.props.params.id
-    const item = itemData.get(id)
-    if (!item) {
-      return <div>Loading item details...</div>
-    }
-    const category = categoryData.get(item.categoryId)
-    if (!category){
-      return <div>Loading item details... (category)</div>
-    }
-    return (
-      <div>
-        <h1>View Item</h1>
-        <h2>{item.name}</h2>
-        <h3>
-          {category.parents.slice().reverse().map(parent =>
-            <span key={parent.uuid}><Link to={`/category/${parent.uuid}`}>{parent.name}</Link> > </span>
-          )}
-          <Link to={`/category/${category.uuid}`}>{category.name}</Link>
-        </h3>
-        <h4>{item.description}</h4>
-      </div>
-    )
-  }
-
+const ViewItemContainer = (props) => {
+  if (!props.item)
+    return <div>Loading item details...</div>
+  if (!props.category)
+    return <div>Loading item details... (category)</div>
+  return <ViewItem {...props}/>
 }
 
-export default ViewItem
+const mapStateToProps = (state, props) => {
+  var item, category
+  item = itemData.get(props.params.id)
+  if (item) category = categoryData.get(item.categoryId)
+  return {item, category}
+}
+
+export default connect(mapStateToProps)(ViewItemContainer)
