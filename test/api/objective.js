@@ -6,7 +6,7 @@ const objectiveAPI = require('./util/objectiveAPI')
 
 describe('Objective API', () => {
 
-  it('finds Item by name', function *() {
+  it.skip('finds Item by name', function *() {
     const item = yield itemAPI.create()
     const objectives = yield objectiveAPI.search(item.name)
     expect(objectives.items).to.contain(item)

@@ -1,6 +1,7 @@
 const uuid = require('node-uuid')
 
 const cypher = require('./graph/cypher')
+const addParentHierarchy = require('./util').addParentHierarchyToCategory
 
 const create = function *(category) {
   if (category.parentId) {
@@ -33,21 +34,14 @@ const createChild = function *(category) {
     name: category.name
   }
   const result = yield cypher.send(statement, parameters)
-  const created = result[0].c
-  const parents = result[0].parents
-  addParentHierarchy(created, parents);
-  return created
+  return categoryFromRow(result[0])
 }
 
-function addParentHierarchy(category, parents) {
-  if (parents.length > 0) {
-    const parentHierarchy = parents.reduceRight((accumulator, current) => {
-      if (!accumulator) return current // current is root Category
-      current.parent = accumulator
-      return current
-    })
-    category.parent = parentHierarchy
-  }
+function categoryFromRow(row) {
+  const created = row.c
+  const parents = row.parents
+  addParentHierarchy(created, parents);
+  return created;
 }
 
 const find = function *(uuid) {
@@ -56,12 +50,10 @@ const find = function *(uuid) {
     OPTIONAL MATCH (c) -[:CHILD_OF*]-> (p)
     RETURN c, collect(p) as parents`
   const result = yield cypher.send(statement, {uuid})
-  const category = result[0].c
-  const parents = result[0].parents
-  addParentHierarchy(category, parents)
-  return category
+  return categoryFromRow(result[0])
 }
 
+// TODO Delete ?
 const list = function *() {
   const result = yield cypher.send('MATCH (c:Category) RETURN collect(c) as categories')
   return result[0].categories
@@ -76,12 +68,7 @@ const search = function *(name) {
   const nameRegex = `(?i)${name}.*`
   const parameters = {nameRegex}
   const result = yield cypher.send(statement, parameters)
-  return result.map(row => {
-    const category = row.c
-    const parents = row.parents
-    addParentHierarchy(category, parents)
-    return category
-  })
+  return result.map(categoryFromRow)
 }
 
 module.exports = {
