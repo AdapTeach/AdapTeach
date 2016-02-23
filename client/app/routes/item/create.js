@@ -17,7 +17,7 @@ class CreateItem extends React.Component {
     return (
       <div>
         <h2>Create Item</h2>
-        <form onSubmit={this.create}>
+        <form>
           <TextField onChange={::this.onItemNameChange} hintText="Name"/><br/>
           <TextField ref="description" hintText="Description"/><br/>
           <label>Category</label>

@@ -4,14 +4,14 @@ import { connect } from 'react-redux'
 
 import categoryData from '../../core/data/category'
 
-const ViewCategory = (props) =>
+const ViewCategory = ({category}) =>
   <div>
     <h1>View Category</h1>
     <h3>
-      {props.category.parents.slice().reverse().map(parent =>
+      {category.parents.slice().reverse().map(parent =>
         <span key={parent.uuid}><Link to={`/category/${parent.uuid}`}>{parent.name}</Link> > </span>
       )}
-      {props.category.name}
+      {category.name}
     </h3>
   </div>
 

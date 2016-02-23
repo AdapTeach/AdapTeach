@@ -5,17 +5,17 @@ import { connect } from 'react-redux'
 import itemData from '../../core/data/item'
 import categoryData from '../../core/data/category'
 
-const ViewItem = (props) => (
+const ViewItem = ({item, category}) => (
   <div>
     <h1>View Item</h1>
-    <h2>{props.item.name}</h2>
+    <h2>{item.name}</h2>
     <h3>
-      {props.category.parents.slice().reverse().map(parent =>
+      {category.parents.slice().reverse().map(parent =>
         <span key={parent.uuid}><Link to={`/category/${parent.uuid}`}>{parent.name}</Link> > </span>
       )}
-      <Link to={`/category/${props.category.uuid}`}>{props.category.name}</Link>
+      <Link to={`/category/${category.uuid}`}>{category.name}</Link>
     </h3>
-    <h4>{props.item.description}</h4>
+    <h4>{item.description}</h4>
   </div>
 )
 
