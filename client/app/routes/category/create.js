@@ -17,7 +17,7 @@ class CreateCategory extends React.Component {
     return (
       <div>
         <h2>Create Category</h2>
-        <form onSubmit={this.create}>
+        <form>
           <TextField hintText="Name" ref="categoryName"/><br/>
           <label>Parent Category</label>
           {this.state.parentCategory ?
