@@ -15,12 +15,12 @@ const ViewCategory = (props) =>
     </h3>
   </div>
 
-const ViewCategoryContainer = (props) => {
+const mapStateToProps = (state, props) => ({category: categoryData.get(props.params.id)})
+
+const delayRenderUntilPropsLoaded = (props) => {
   if (!props.category)
     return <div>Loading category details...</div>
   return <ViewCategory {...props}/>
 }
 
-const mapStateToProps = (state, props) => ({category: categoryData.get(props.params.id)})
-
-export default connect(mapStateToProps)(ViewCategoryContainer)
+export default connect(mapStateToProps)(delayRenderUntilPropsLoaded)

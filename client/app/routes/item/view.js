@@ -19,14 +19,6 @@ const ViewItem = (props) => (
   </div>
 )
 
-const ViewItemContainer = (props) => {
-  if (!props.item)
-    return <div>Loading item details...</div>
-  if (!props.category)
-    return <div>Loading item details... (category)</div>
-  return <ViewItem {...props}/>
-}
-
 const mapStateToProps = (state, props) => {
   var item, category
   item = itemData.get(props.params.id)
@@ -34,4 +26,12 @@ const mapStateToProps = (state, props) => {
   return {item, category}
 }
 
-export default connect(mapStateToProps)(ViewItemContainer)
+const delayRenderUntilPropsLoaded = (props) => {
+  if (!props.item || !props.category)
+    return <div>Loading item details...</div>
+  return <ViewItem {...props}/>
+}
+
+const ViewItemContainer = connect(mapStateToProps)(delayRenderUntilPropsLoaded);
+
+export default ViewItemContainer
