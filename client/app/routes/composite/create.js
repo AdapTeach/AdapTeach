@@ -4,7 +4,7 @@ import RaisedButton from 'material-ui/lib/raised-button'
 import SearchBar from 'react-search-bar'
 
 import history from '../history'
-import itemEndpoint from '../../core/endpoint/item'
+import itemEndpoint from '../../endpoint/item'
 
 import ObjectiveSearchDialog from '../common/objective-search-dialog'
 

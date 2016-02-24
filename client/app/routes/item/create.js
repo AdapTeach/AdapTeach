@@ -4,7 +4,7 @@ import RaisedButton from 'material-ui/lib/raised-button'
 
 import CategorySearch from '../common/category-search'
 import history from '../history'
-import itemEndpoint from '../../core/endpoint/item'
+import itemEndpoint from '../../endpoint/item'
 
 class CreateItem extends React.Component {
 

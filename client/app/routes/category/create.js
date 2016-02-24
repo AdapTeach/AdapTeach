@@ -3,7 +3,7 @@ import TextField from 'material-ui/lib/text-field'
 import RaisedButton from 'material-ui/lib/raised-button'
 
 import CategorySearch from '../common/category-search'
-import categoryEndpoint from '../../core/endpoint/category'
+import categoryEndpoint from '../../endpoint/category'
 import history from '../history'
 
 class CreateCategory extends React.Component {

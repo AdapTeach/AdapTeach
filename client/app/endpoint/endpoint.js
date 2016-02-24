@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import store from '../../main/store'
+import store from '../main/store'
 
 class Endpoint {
 
