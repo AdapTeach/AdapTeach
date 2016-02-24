@@ -3,6 +3,7 @@ import { Link }from 'react-router'
 import { connect } from 'react-redux'
 
 import categoryData from '../../core/data/category'
+import ParentHierarchy from '../common/category-parent-hierarchy'
 
 const ViewCategory = ({category}) =>
   <div>
@@ -12,15 +13,6 @@ const ViewCategory = ({category}) =>
       {category.name}
     </h3>
   </div>
-
-const ParentHierarchy = ({category}) => {
-  const parent = category.parent
-  if (!parent) return <span></span>
-  return <span>
-    <ParentHierarchy category={parent}/>
-    <Link to={`/category/${parent.uuid}`}>{parent.name}</Link> >
-  </span>
-}
 
 const mapStateToProps = (state, props) => ({category: categoryData.get(props.params.id)})
 
