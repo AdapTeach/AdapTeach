@@ -1,9 +1,5 @@
-import axios from 'axios'
-
-import store from '../main/store'
-import { ITEM } from '../core/data/entities'
-
 import Endpoint from './endpoint'
+import { ITEM } from '../core/data/entities'
 
 class ItemEndpoint extends Endpoint {
 

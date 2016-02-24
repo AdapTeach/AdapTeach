@@ -22,4 +22,8 @@ describe('Composite API', () => {
     expect(foundItem).to.deep.equal(composite)
   })
 
+  it('returns Composite objectives when finding by ID', function *() {
+    throw Error('Not implemented')
+  })
+
 })

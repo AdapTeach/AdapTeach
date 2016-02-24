@@ -3,12 +3,13 @@ import deepFreeze from 'deep-freeze'
 import { createReducer } from 'redux-immutablejs'
 
 import environment from '../main/environment'
-import { CATEGORY, ITEM } from './data/entities'
+import { CATEGORY, ITEM, COMPOSITE } from './data/entities'
 
 const initialState = {
   data: {
     category: {},
-    item: {}
+    item: {},
+    composite: {}
   }
 }
 
@@ -31,7 +32,8 @@ const itemUpdate = (state, action) => {
 
 const reducer = createReducer(initialState, {
   ['CATEGORY_UPDATE']: categoryUpdate,
-  ['ITEM_UPDATE']: itemUpdate
+  ['ITEM_UPDATE']: itemUpdate,
+  ['COMPOSITE_UPDATE']: (state, action) => state.setIn(['data', COMPOSITE, action.payload.uuid], action.payload)
 })
 
 export default {

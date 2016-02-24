@@ -1,6 +1,5 @@
-import store from '../../main/store'
-import categoryEndpoint from '../../endpoint/category'
 import DataStore from './data-store'
+import categoryEndpoint from '../../endpoint/category'
 
 class CategoryDataStore extends DataStore {
 

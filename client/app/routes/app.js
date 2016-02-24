@@ -8,7 +8,8 @@ import Home from './home'
 import CreateCategory from './category/create'
 import ViewCategory from './category/view'
 
-import CreateCompositeObjective from './composite/create'
+import CreateComposite from './composite/create'
+import ViewComposite from './composite/view'
 
 import CreateItem from './item/create'
 import ViewItem from './item/view'
@@ -21,7 +22,8 @@ export default () =>
       <Route path=":id" component={ViewCategory}/>
     </Route>
     <Route path="composite">
-      <Route path="create" component={CreateCompositeObjective}/>
+      <Route path="create" component={CreateComposite}/>
+      <Route path=":id" component={ViewComposite}/>
     </Route>
     <Route path="item">
       <Route path="create" component={CreateItem}/>

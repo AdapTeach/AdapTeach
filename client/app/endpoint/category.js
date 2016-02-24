@@ -1,9 +1,5 @@
-import axios from 'axios'
-
-import store from '../main/store'
-import { CATEGORY } from '../core/data/entities'
-
 import Endpoint from './endpoint'
+import { CATEGORY } from '../core/data/entities'
 
 class CategoryEndpoint extends Endpoint {
 

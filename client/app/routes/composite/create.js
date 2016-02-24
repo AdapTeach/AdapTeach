@@ -4,15 +4,18 @@ import RaisedButton from 'material-ui/lib/raised-button'
 import SearchBar from 'react-search-bar'
 
 import history from '../history'
-import itemEndpoint from '../../endpoint/item'
+import compositeEndpoint from '../../endpoint/composite'
 
 import ObjectiveSearchDialog from '../common/objective-search-dialog'
 
-class CreateCompositeObjective extends React.Component {
+class CreateComposite extends React.Component {
 
   constructor(props) {
     super(props)
-    this.state = {openDialog: false}
+    this.state = {
+      openDialog: false,
+      objectives: []
+    }
   }
 
   render() {
@@ -27,6 +30,9 @@ class CreateCompositeObjective extends React.Component {
           <label>Objectives</label>
           <ObjectiveSearchDialog onSelect={::this.onObjectiveSelected}></ObjectiveSearchDialog>
           <br/>
+          {this.state.objectives.map(objective =>
+            <div key={objective.uuid}>{objective.name}</div>
+          )}
           <RaisedButton onClick={::this.create} primary label="Create"/>
         </form>
       </div>
@@ -34,20 +40,20 @@ class CreateCompositeObjective extends React.Component {
   }
 
   onObjectiveSelected(objective) {
-    console.log(objective)
+    this.setState({objectives: [objective, ...this.state.objectives]})
   }
 
-  create(e){
+  create() {
     const composite = {
       name: this.refs.name.getValue(),
-      description: this.refs.description.getValue()
+      description: this.refs.description.getValue(),
+      objectives: this.state.objectives
     }
-    console.log(composite)
-    //compositeEndpoint.create(item)
-    //  .then(created => history.push(`/item/${created.uuid}`))
-    //  .catch(e => console.error(e))
+    compositeEndpoint.create(composite)
+      .then(created => history.push(`/composite/${created.uuid}`))
+      .catch(e => console.error(e))
   }
 
 }
 
-export default CreateCompositeObjective
+export default CreateComposite

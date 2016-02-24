@@ -30,7 +30,7 @@ class ObjectiveSearchDialog extends React.Component {
     ]
     return (
       <span>
-        <FloatingActionButton onClick={::this.handleOpen} secondary={true}>
+        <FloatingActionButton onClick={::this.handleOpen} secondary>
           <ContentAdd />
         </FloatingActionButton>
         <Dialog
@@ -59,11 +59,11 @@ class ObjectiveSearchDialog extends React.Component {
   }
 
   updateSuggestions(input, resolve) {
-    axios.get(`http://localhost:8000/api/objective/composite/search/${input}`)
+    axios.get(`http://localhost:8000/api/objective/search/${input}`)
       .then(response => {
-        const objectives = response.data
-        objectives.forEach(o => this.objectivesByName[o.name] = o)
-        const names = objectives.map(o => o.name)
+        const items = response.data.items
+        items.forEach(i => this.objectivesByName[i.name] = i)
+        const names = items.map(i => i.name)
         resolve(names)
       })
   }
@@ -71,6 +71,7 @@ class ObjectiveSearchDialog extends React.Component {
   onObjectiveSelected(name) {
     const objective = this.objectivesByName[name]
     this.props.onSelect(objective)
+    this.handleClose()
   }
 
 }
