@@ -12,9 +12,10 @@ const initialState = {
   }
 }
 
-const categoryLoaded = (state, action) => {
+const categoryUpdate = (state, action) => updateCategoryAndParentHierarchy(state, action.payload)
+
+function updateCategoryAndParentHierarchy(state, category) {
   var newState = state
-  var category = action.payload
   while (category) {
     newState = newState.setIn(['data', CATEGORY, category.uuid], category)
     category = category.parent
@@ -22,9 +23,15 @@ const categoryLoaded = (state, action) => {
   return newState
 }
 
+const itemUpdate = (state, action) => {
+  const item = action.payload
+  return updateCategoryAndParentHierarchy(state, item.category)
+    .setIn(['data', ITEM, action.payload.uuid], action.payload)
+}
+
 const reducer = createReducer(initialState, {
-  ['CATEGORY_LOADED']: categoryLoaded,
-  ['ITEM_LOADED']: (state, action) => state.setIn(['data', ITEM, action.payload.uuid], action.payload)
+  ['CATEGORY_UPDATE']: categoryUpdate,
+  ['ITEM_UPDATE']: itemUpdate
 })
 
 export default {

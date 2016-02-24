@@ -11,20 +11,20 @@ class Endpoint {
   create(entity) {
     return axios.post(`http://localhost:8000/api/${this.entityTypeName}`, entity)
       .then(response => response.data)
-      .then(::this.dispatchEntityLoadedAction)
+      .then(::this.dispatchEntityUpdateAction)
       .catch(error => console.error(error))
   }
 
   load(id) {
     return axios.get(`http://localhost:8000/api/${this.entityTypeName}/${id}`)
       .then(response => response.data)
-      .then(::this.dispatchEntityLoadedAction)
+      .then(::this.dispatchEntityUpdateAction)
       .catch(error => console.error(`Loading ${this.entityTypeName}`, error))
   }
 
-  dispatchEntityLoadedAction(entity) {
+  dispatchEntityUpdateAction(entity) {
     store.dispatch({
-      type: `${this.entityTypeName.toUpperCase()}_LOADED`,
+      type: `${this.entityTypeName.toUpperCase()}_UPDATE`,
       payload: entity
     })
     return entity
