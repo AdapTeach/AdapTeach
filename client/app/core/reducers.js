@@ -12,8 +12,18 @@ const initialState = {
   }
 }
 
+const categoryLoaded = (state, action) => {
+  var newState = state
+  var category = action.payload
+  while (category) {
+    newState = newState.setIn(['data', CATEGORY, category.uuid], category)
+    category = category.parent
+  }
+  return newState
+}
+
 const reducer = createReducer(initialState, {
-  [`CATEGORY_LOADED`]: (state, action) => state.setIn(['data', CATEGORY, action.payload.uuid], action.payload),
+  ['CATEGORY_LOADED']: categoryLoaded,
   ['ITEM_LOADED']: (state, action) => state.setIn(['data', ITEM, action.payload.uuid], action.payload)
 })
 
