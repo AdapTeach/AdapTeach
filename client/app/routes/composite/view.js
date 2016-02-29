@@ -8,7 +8,7 @@ const ViewComposite = ({composite}) => (
     <h1>View Composite</h1>
     <h2>{composite.name}</h2>
     <h4>{composite.description}</h4>
-    {composite.objectives.map(objective => <div key={objective.uuid}>{objective.name}</div>)}
+    {composite.components.items.map(item => <div key={item.uuid}>{item.name}</div>)}
   </div>
 )
 

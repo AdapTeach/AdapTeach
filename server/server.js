@@ -21,7 +21,10 @@ app.use(function *handleErrors(next) {
       this.status = 400
     } else {
       this.status = 500
-      if (env !== 'development') {
+      if (env === 'development') {
+        console.error(e.message)
+        console.error(e.stack.split('\n')[1])
+      } else {
         this.body = {error: 'Unexpected Error: Check server logs'}
       }
     }

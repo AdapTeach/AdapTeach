@@ -14,7 +14,7 @@ class CreateComposite extends React.Component {
     super(props)
     this.state = {
       openDialog: false,
-      objectives: []
+      components: []
     }
   }
 
@@ -27,11 +27,11 @@ class CreateComposite extends React.Component {
           <br/>
           <TextField ref="description" hintText="Description"/>
           <br/>
-          <label>Objectives</label>
+          <label>Components</label>
           <ObjectiveSearchDialog onSelect={::this.onObjectiveSelected}></ObjectiveSearchDialog>
           <br/>
-          {this.state.objectives.map(objective =>
-            <div key={objective.uuid}>{objective.name}</div>
+          {this.state.components.map(component =>
+            <div key={component.uuid}>{component.name}</div>
           )}
           <RaisedButton onClick={::this.create} primary label="Create"/>
         </form>
@@ -40,14 +40,14 @@ class CreateComposite extends React.Component {
   }
 
   onObjectiveSelected(objective) {
-    this.setState({objectives: [objective, ...this.state.objectives]})
+    this.setState({components: [...this.state.components, objective]})
   }
 
   create() {
     const composite = {
       name: this.refs.name.getValue(),
       description: this.refs.description.getValue(),
-      objectives: this.state.objectives
+      componentIds: this.state.components.map(component => component.uuid)
     }
     compositeEndpoint.create(composite)
       .then(created => history.push(`/composite/${created.uuid}`))

@@ -7,8 +7,8 @@ const create = function *(assessment) {
     CREATE (a:Assessment {uuid: {uuid}, name: {name}, description: {description}})
     WITH a
     UNWIND {testedItemIds} AS testedItemId
-        MATCH (i:Item {uuid: testedItemId})
-        CREATE (a) -[:ASSESSMENT_FOR]-> (i)
+      MATCH (i:Item {uuid: testedItemId})
+      CREATE (a) -[:ASSESSMENT_FOR]-> (i)
     RETURN a`
   const parameters = {
     uuid: uuid.v4(),
@@ -23,7 +23,9 @@ const create = function *(assessment) {
 }
 
 const find = function *(uuid) {
-  const statement = 'MATCH (a:Assessment {uuid: {uuid}}) -[:ASSESSMENT_FOR]-> (i) RETURN a, collect(i) as testedItems'
+  const statement = `
+    MATCH (a:Assessment {uuid: {uuid}}) -[:ASSESSMENT_FOR]-> (i:Item)
+    RETURN a, collect(i) as testedItems`
   const result = yield cypher.send(statement, {uuid})
   const createdAssessment = result[0].a
   createdAssessment.testedItemIds = result[0].testedItems.map(i => i.uuid)
