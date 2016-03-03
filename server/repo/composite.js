@@ -18,11 +18,11 @@ function addCategoriesToItems(items, categories) {
 }
 
 const create = function *(compositeFields) {
-  // The second, long query will not return created Composite if the objectiveIds array is empty
+  // The second, long query will not return created Composite if the componentIds array is empty
   var statement = `
     CREATE (c:Composite:Objective {uuid: {uuid}, name: {name}, description: {description}})
     RETURN c`
-  if (compositeFields.componentIds) statement = `
+  if (compositeFields.componentIds && compositeFields.componentIds.length > 0) statement = `
     CREATE (c:Composite:Objective {uuid: {uuid}, name: {name}, description: {description}})
     WITH c
     UNWIND {componentIds} AS componentId

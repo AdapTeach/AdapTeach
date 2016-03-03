@@ -5,10 +5,19 @@ const itemAPI = require('./util/itemAPI')
 
 describe('Composite API', () => {
 
-  describe('when empty Composite is created', () => {
-    const compositeFields = {
+  it('creates Composite when componentIds field array is missing', function *() {
+    const composite = yield compositeAPI.create({
       name: 'Empty Composite',
       description: 'Whatever'
+    })
+    expect(composite.uuid).to.exist
+  })
+
+  describe('when Composite with no components is created', () => {
+    const compositeFields = {
+      name: 'Empty Composite',
+      description: 'Whatever',
+      componentIds: []
     }
     var composite
 

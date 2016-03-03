@@ -62,8 +62,10 @@ class ObjectiveSearchDialog extends React.Component {
     axios.get(`http://localhost:8000/api/objective/search/${input}`)
       .then(response => {
         const items = response.data.items
-        items.forEach(i => this.objectivesByName[i.name] = i)
-        const names = items.map(i => i.name)
+        const composites = response.data.composites
+        const objectives = items.concat(composites)
+        objectives.forEach(o => this.objectivesByName[o.name] = o)
+        const names = objectives.map(o => o.name)
         resolve(names)
       })
   }
