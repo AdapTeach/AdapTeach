@@ -1,5 +1,6 @@
 const expect = require('chai').expect
 
+const api = require('./util/api')
 const compositeAPI = require('./util/compositeAPI')
 const itemAPI = require('./util/itemAPI')
 
@@ -11,6 +12,13 @@ describe('Composite API', () => {
       description: 'Whatever'
     })
     expect(composite.uuid).to.exist
+  })
+
+  it('prevents Composite creation when name is missing', function *() {
+    const compositeFields = {
+      description: 'This Composite is missing a name'
+    }
+    yield api.post('/api/composite').send(compositeFields).expect(400).end()
   })
 
   describe('when Composite with no components is created', () => {
