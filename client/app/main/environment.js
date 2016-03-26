@@ -1,6 +1,4 @@
-function isDevelopment() {
-  return true
-}
+const isDevelopment = () => true
 
 export default {
   isDevelopment

@@ -1,8 +1,5 @@
-import Immutable from 'immutable'
-import deepFreeze from 'deep-freeze'
 import { createReducer } from 'redux-immutablejs'
 
-import environment from '../main/environment'
 import { CATEGORY, ITEM, COMPOSITE } from './data/entities'
 
 const initialState = {
@@ -36,6 +33,4 @@ const reducer = createReducer(initialState, {
   ['COMPOSITE_UPDATE']: (state, action) => state.setIn(['data', COMPOSITE, action.payload.uuid], action.payload)
 })
 
-export default {
-  app: reducer
-}
+export default reducer
