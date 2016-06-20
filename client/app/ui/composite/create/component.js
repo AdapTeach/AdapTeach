@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import TextField from 'material-ui/lib/text-field'
-import RaisedButton from 'material-ui/lib/raised-button'
+import TextField from 'material-ui/TextField'
+import RaisedButton from 'material-ui/RaisedButton'
 
 import {compositeRepo} from 'domain-data'
 import {ObjectiveSearchDialog} from 'components'

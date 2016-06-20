@@ -1,6 +1,8 @@
 import React from 'react'
 import {render} from 'react-dom'
 import {Provider} from 'react-redux'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 // Required by MaterialUI until React reaches v1
 import injectTapEventPlugin from 'react-tap-event-plugin'
@@ -10,9 +12,13 @@ import store from './store'
 
 import {App} from '../ui'
 
+const muiTheme = getMuiTheme({})
+
 render(
-  <Provider store={store}>
-    <App/>
-  </Provider>,
+  <MuiThemeProvider muiTheme={muiTheme}>
+    <Provider store={store}>
+      <App/>
+    </Provider>
+  </MuiThemeProvider>,
   document.getElementById('root')
 )

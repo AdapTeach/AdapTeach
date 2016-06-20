@@ -7,12 +7,12 @@ const webpack = require('webpack-stream')
 const PATH_TO_SERVER_SOURCE = 'server/**/*.js'
 const PATH_TO_TESTS = 'test/**/*.js'
 
-gulp.task('nodemon', () => {
-  nodemon({
-    script: 'server/server.js',
-    env: {PORT: 8000}
-  }).on('restart')
-})
+// gulp.task('nodemon', () => {
+//   nodemon({
+//     script: 'server/server.js',
+//     env: {PORT: 8000}
+//   }).on('restart')
+// })
 
 gulp.task('watch', () => {
   gulp.watch(
@@ -33,10 +33,10 @@ gulp.task('test-once', () => {
   gulp.tasks.mocha.fn().pipe(exit())
 })
 
-gulp.task('client', () =>
-  gulp.src('client/app/app.js')
-    .pipe(webpack())
-    .pipe(gulp.dest('client/dist/'))
-)
+// gulp.task('client', () =>
+//   gulp.src('client/app/app.js')
+//     .pipe(webpack())
+//     .pipe(gulp.dest('client/dist/'))
+// )
 
 gulp.task('default', ['mocha', 'watch'])
