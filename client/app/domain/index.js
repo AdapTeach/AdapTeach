@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux'
 
-export {categoryRepo} from './category'
+export {categoryRepo, categoryData} from './category'
 export {compositeRepo} from './composite'
 export {itemRepo} from './item'
 

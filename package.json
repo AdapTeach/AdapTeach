@@ -12,6 +12,7 @@
   "author": "micouz@github",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.12.0",
     "co-body": "^4.0.0",
     "glob-promise": "^1.0.6",
     "koa": "^1.1.2",
@@ -42,6 +43,7 @@
     "kcors": "^1.0.1",
     "material-ui": "^0.15.0",
     "npm-run-all": "^2.2.0",
+    "ramda": "^0.21.0",
     "react": "^15.1.0",
     "react-dom": "^15.1.0",
     "react-redux": "^4.2.1",

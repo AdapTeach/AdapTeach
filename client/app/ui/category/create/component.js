@@ -1,18 +1,19 @@
 import React from 'react'
-import {connect} from 'react-redux'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 import {createContainerComponent} from 'util'
+import {router, path} from 'router'
 
-import {getState, actions} from './model'
-
+import {categoryData} from 'domain-data'
 import {CategorySearch} from 'components'
 
 class CreateCategory extends React.Component {
 
+  state = {}
+
   constructor() {
     super()
-    this.form = {}
+    this.name = ''
   }
 
   render() {
@@ -22,9 +23,9 @@ class CreateCategory extends React.Component {
         <form>
           <TextField onChange={::this.onNameChange} hintText="Name" ref="categoryName"/><br/>
           <label>Parent Category</label>
-          {this.props.parent
-            ? <div>{this.props.parent.name}</div>
-            : <CategorySearch onSelect={::this.props.actions.setParent}/>}
+          {this.state.parent
+            ? <div>{this.state.parent.name}</div>
+            : <CategorySearch onSelect={::this.onParentChange}/>}
           <RaisedButton onClick={::this.create} primary label="Create"/>
         </form>
       </div>
@@ -32,20 +33,21 @@ class CreateCategory extends React.Component {
   }
 
   onNameChange(e) {
-    this.form.name = e.target.value
+    this.name = e.target.value
+  }
+
+  onParentChange(parent) {
+    this.setState({parent: parent})
   }
 
   create(e) {
     e.preventDefault()
-    this.props.actions.setName(this.refs.categoryName.getValue())
-    this.props.actions.createAndDisplay(this.form)
+    categoryData.create({
+      name: this.name,
+      parentId: this.state.parent.uuid
+    }).then(created => router.goTo(path.category.display(created.uuid)))
   }
 
 }
 
-const withProps = () => ({
-  ...getState(),
-  actions
-})
-
-export const component = connect(withProps)(CreateCategory)
+export const component = CreateCategory
