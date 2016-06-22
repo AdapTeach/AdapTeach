@@ -1,4 +1,4 @@
-export {connect} from './connect'
+export * from './connect'
 export {createContainerComponent} from './createContainerComponent'
 export {createReducer} from './createReducer'
 export {Endpoint} from './Endpoint'

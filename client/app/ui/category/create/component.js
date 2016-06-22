@@ -9,11 +9,9 @@ import {CategorySearch} from 'components'
 
 class CreateCategory extends React.Component {
 
-  state = {}
-
-  constructor() {
-    super()
-    this.name = ''
+  state = {
+    name: '',
+    parent: null
   }
 
   render() {
@@ -33,7 +31,7 @@ class CreateCategory extends React.Component {
   }
 
   onNameChange(e) {
-    this.name = e.target.value
+    this.setState({name: e.target.value})
   }
 
   onParentChange(parent) {
@@ -43,7 +41,7 @@ class CreateCategory extends React.Component {
   create(e) {
     e.preventDefault()
     categoryData.create({
-      name: this.name,
+      name: this.state.name,
       parentId: this.state.parent.uuid
     }).then(created => router.goTo(path.category.display(created.uuid)))
   }

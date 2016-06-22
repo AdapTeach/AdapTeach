@@ -22,7 +22,7 @@ const wrapper = (propsMapper, wrappedComponent) => class extends React.Component
 
   render() {
     // if (this.internalProps)
-      return wrappedComponent(this.internalProps)
+    return wrappedComponent(this.internalProps)
     // else
     //   return <div>Loading...</div>
   }
@@ -30,3 +30,9 @@ const wrapper = (propsMapper, wrappedComponent) => class extends React.Component
 }
 
 export const connect = propsMapper => wrappedComponent => wrapper(propsMapper, wrappedComponent)
+
+const wrapWithLoader = wrappedComponent => props => props
+  ? wrappedComponent(props)
+  : <div>Loading... (fancy loader gif here)</div>
+
+export const connectWithLoader = propsMapper => wrappedComponent => wrapper(propsMapper, wrapWithLoader(wrappedComponent))

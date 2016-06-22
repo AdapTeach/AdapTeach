@@ -2,7 +2,7 @@ import React from 'react'
 
 import {categoryData} from 'domain-data'
 import {CategoryParentHierarchy} from 'components'
-import {connect} from 'util'
+import {connectWithLoader} from 'util'
 
 const DisplayCategory = ({category}) =>
   <div>
@@ -13,10 +13,6 @@ const DisplayCategory = ({category}) =>
     </h3>
   </div>
 
-const delayRenderUntilPropsLoaded = props => props
-  ? <DisplayCategory {...props}/>
-  : <div>Loading category details...</div>
-
 const withProps = props => categoryData.find(props.params.id).map(category => ({category}))
 
-export const component = connect(withProps)(delayRenderUntilPropsLoaded)
+export const component = connectWithLoader(withProps)(DisplayCategory)

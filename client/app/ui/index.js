@@ -29,7 +29,6 @@ export const App = () =>
  */
 
 export const reducer = combineReducers({
-  category: category.reducer,
   item: item.reducer,
   composite: composite.reducer
 })
