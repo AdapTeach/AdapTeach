@@ -5,5 +5,3 @@ import {component} from './component'
 
 export const route =
   <Route path="create" component={component}/>
-
-export {reducer} from './model'

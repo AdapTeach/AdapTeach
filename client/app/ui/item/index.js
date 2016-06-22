@@ -10,7 +10,3 @@ export const route =
     {create.route}
     {display.route}
   </Route>
-
-export const reducer = combineReducers({
-  create: create.reducer
-})

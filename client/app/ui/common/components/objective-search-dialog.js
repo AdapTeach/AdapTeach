@@ -7,10 +7,11 @@ import SearchBar from 'react-search-bar'
 
 class ObjectiveSearchDialog extends React.Component {
 
+  state = {open: true}
+
   constructor(props) {
     super(props)
     this.objectivesByName = {}
-    this.state = {open: true}
   }
 
   render() {

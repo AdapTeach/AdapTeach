@@ -1,7 +1,6 @@
 import React from 'react'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
-import {createContainerComponent} from 'util'
 import {router, path} from 'router'
 
 import {categoryData} from 'domain-data'
