@@ -1,9 +1,9 @@
 import React from 'react'
-import { connect } from 'react-redux'
 
-import {compositeRepo} from 'domain-data'
+import {compositeData} from 'domain-data'
+import {connectWithLoader} from 'util'
 
-const ViewComposite = ({composite}) => (
+const DisplayComposite = ({composite}) => (
   <div>
     <h1>View Composite</h1>
     <h2>{composite.name}</h2>
@@ -20,12 +20,7 @@ const ViewComposite = ({composite}) => (
   </div>
 )
 
-const buildProps = (state, props) => ({composite: compositeRepo.find(props.params.id)})
 
-const delayRenderUntilPropsLoaded = (props) => {
-  if (!props.composite)
-    return <div>Loading composite details...</div>
-  return <ViewComposite {...props}/>
-}
+const withProps = props => compositeData.find(props.params.id).map(composite => ({composite}))
 
-export const component = connect(buildProps)(delayRenderUntilPropsLoaded);
+export const component = connectWithLoader(withProps)(DisplayComposite)

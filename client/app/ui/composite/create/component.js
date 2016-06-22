@@ -1,14 +1,18 @@
 import React from 'react'
-import {connect} from 'react-redux'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 
-import {compositeRepo} from 'domain-data'
+import {router, path} from 'router'
+import {compositeData} from 'domain-data'
 import {ObjectiveSearchDialog} from 'components'
 
-import {actions, getState} from './model'
-
 class CreateComposite extends React.Component {
+
+  state = {
+    name: '',
+    description: '',
+    components: []
+  }
 
   render() {
     return (
@@ -20,9 +24,9 @@ class CreateComposite extends React.Component {
           <TextField onChange={::this.onDescriptionChange} hintText="Description"/>
           <br/>
           <label>Components</label>
-          <ObjectiveSearchDialog onSelect={::this.props.actions.addComponent}></ObjectiveSearchDialog>
+          <ObjectiveSearchDialog onSelect={::this.onComponentAdd}></ObjectiveSearchDialog>
           <br/>
-          {this.props.components.map(c =>
+          {this.state.components.map(c =>
             <div key={c.uuid}>{c.name}</div>
           )}
           <RaisedButton onClick={::this.create} primary label="Create"/>
@@ -32,23 +36,29 @@ class CreateComposite extends React.Component {
   }
 
   onNameChange(ev) {
-    this.props.actions.setName(ev.target.value)
+    this.setState({name: ev.target.value})
   }
 
   onDescriptionChange(ev) {
-    this.props.actions.setDescription(ev.target.value)
+    this.setState({description: ev.target.value})
+  }
+
+  onComponentAdd(component) {
+    this.setState({
+      components: [...this.state.components, component]
+    })
   }
 
   create() {
-    this.props.actions.createAndDisplay()
+    compositeData.create({
+      name: this.state.name,
+      description: this.state.description,
+      componentIds: this.state.components.map(c => c.uuid)
+    })
+      .then(created => router.goTo(path.composite.display(created.uuid)))
+      .catch(::console.error)
   }
 
 }
 
-
-const withProps = () => ({
-  ...getState(),
-  actions
-})
-
-export const component = connect(withProps)(CreateComposite)
+export const component = CreateComposite

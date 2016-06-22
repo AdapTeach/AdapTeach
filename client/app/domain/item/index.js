@@ -14,4 +14,4 @@ class ItemData extends DataStore {
 
 }
 
-export const itemData = new ItemData(eventQueue, endpoint)
+export const itemData = new ItemData()

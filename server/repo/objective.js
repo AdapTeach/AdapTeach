@@ -24,6 +24,21 @@ function buildCompositeSearchQuery(name) {
   return {statement, parameters}
 }
 
+function *find(uuid) {
+  // OPTIONAL MATCH (o) -[:IN_CATEGORY]-> (c)
+  // OPTIONAL MATCH (c) -[:CHILD_OF*]-> (p)
+  // OPTIONAL MATCH (o) -[:COMPOSED_OF]-> (item:Item) -[:IN_CATEGORY]-> (category:Category)
+  // OPTIONAL MATCH (o) -[:COMPOSED_OF]-> (composite:Composite)
+  // RETURN o, c, collect(p) as parents
+  const statement = `
+    MATCH (o:Objective {uuid: {uuid}}) 
+    RETURN o`
+  const result = yield cypher.send(statement, {uuid})
+  const row = result[0]
+  return row.o
+
+}
+
 function *search(name) {
   const itemSearchQuery = buildItemSearchQuery(name)
   const compositeSearchQuery = buildCompositeSearchQuery(name)
@@ -38,5 +53,6 @@ function *search(name) {
 }
 
 module.exports = {
+  find,
   search
 }

@@ -1,6 +1,6 @@
 function InvalidArgumentError(message) {
   this.name = "InvalidArgumentError"
-  this.message = message || "Message par défaut"
+  this.message = message || "Invalid Argument Error"
   this.stack = (new Error()).stack
 }
 InvalidArgumentError.prototype = Object.create(Error.prototype)

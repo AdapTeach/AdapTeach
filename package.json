@@ -7,7 +7,8 @@
     "start": "npm-run-all --parallel dev:*",
     "dev:server": "node server/server.js",
     "dev:client": "webpack-dev-server --hot --inline --content-base client/ --open",
-    "test": "gulp test-once"
+    "test": "gulp test-once",
+    "tdd": "gulp tdd"
   },
   "author": "micouz@github",
   "license": "ISC",

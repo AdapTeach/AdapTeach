@@ -4,10 +4,11 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import SearchBar from 'react-search-bar'
+import {objectiveData} from 'domain-data'
 
 class ObjectiveSearchDialog extends React.Component {
 
-  state = {open: true}
+  state = {open: false}
 
   constructor(props) {
     super(props)
@@ -43,7 +44,6 @@ class ObjectiveSearchDialog extends React.Component {
             onChange={::this.updateSuggestions}
             onSubmit={::this.onObjectiveSelected}
           />
-          The actions in this window were passed in as an array of React objects.
         </Dialog>
       </span>
     )
@@ -58,7 +58,7 @@ class ObjectiveSearchDialog extends React.Component {
   }
 
   updateSuggestions(input, resolve) {
-    axios.get(`http://localhost:8000/api/objective/search/${input}`)
+    objectiveData.search({name: input})
       .then(response => {
         const items = response.data.items
         const composites = response.data.composites

@@ -1,10 +1,10 @@
 import React from 'react'
-import {connect} from 'react-redux'
+import {connectWithLoader} from 'util'
 
-import {itemRepo, categoryRepo} from 'domain-data'
+import {itemData} from 'domain-data'
 import {CategoryParentHierarchy, CategoryLink} from 'components'
 
-const ViewItem = ({item}) => (
+const DisplayItem = ({item}) => (
   <div>
     <h1>View Item</h1>
     <h2>{item.name}</h2>
@@ -16,15 +16,7 @@ const ViewItem = ({item}) => (
   </div>
 )
 
-const buildProps = (state, props) => ({
-  item: itemRepo.find(props.params.id)
-})
+const withProps = props => itemData.find(props.params.id).map(item => ({item}))
 
-const delayRenderUntilPropsLoaded = (props) => {
-  if (!props.item)
-    return <div>Loading item details...</div>
-  return <ViewItem {...props}/>
-}
-
-export const component = connect(buildProps)(delayRenderUntilPropsLoaded);
+export const component = connectWithLoader(withProps)(DisplayItem);
 

@@ -1,15 +1,11 @@
-import { createStore, combineReducers, applyMiddleware } from 'redux'
-import { syncHistory, routeReducer } from 'react-router-redux'
+import {createStore, combineReducers, applyMiddleware} from 'redux'
+import {syncHistory, routeReducer} from 'react-router-redux'
 import deepFreeze from 'deep-freeze'
 
 import environment from './environment'
-import {domainReducer} from '../domain'
-import {reducer as uiReducer} from '../ui'
 import {history} from 'router'
 
 const reducer = combineReducers({
-  ui: uiReducer,
-  domain: domainReducer,
   routing: routeReducer
 })
 

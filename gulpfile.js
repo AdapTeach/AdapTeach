@@ -39,4 +39,4 @@ gulp.task('test-once', () => {
 //     .pipe(gulp.dest('client/dist/'))
 // )
 
-gulp.task('default', ['mocha', 'watch'])
+gulp.task('tdd', ['mocha', 'watch'])

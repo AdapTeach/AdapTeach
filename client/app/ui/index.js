@@ -1,6 +1,5 @@
 import React from 'react'
 import {Router} from 'react-router'
-import {combineReducers} from 'redux'
 
 import {history} from 'router'
 
@@ -16,18 +15,3 @@ export const App = () =>
     {composite.route}
     {item.route}
   </Router>
-
-/*
- <Route path="composite">
- <Route path="create" component={CreateComposite}/>
- <Route path=":id" component={ViewComposite}/>
- </Route>
- <Route path="item">
- <Route path="create" component={CreateItem}/>
- <Route path=":id" component={ViewItem}/>
- </Route>
- */
-
-export const reducer = combineReducers({
-  composite: composite.reducer
-})

@@ -1,5 +1,6 @@
 const uuid = require('node-uuid')
 
+const InvalidArgumentError = require('../error/invalid-argument')
 const cypher = require('./graph/cypher')
 
 function compositeFromRow(row) {
@@ -18,6 +19,7 @@ function addCategoriesToItems(items, categories) {
 }
 
 const create = function *(compositeFields) {
+  if (!compositeFields.name) throw new InvalidArgumentError('Name is missing on Composite to create', compositeFields)
   // The second, long query will not return created Composite if the componentIds array is empty
   var statement = `
     CREATE (c:Composite:Objective {uuid: {uuid}, name: {name}, description: {description}})

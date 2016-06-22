@@ -11,6 +11,7 @@ function itemFromRow(row) {
   addParentHierarchyToCategory(item.category, parents)
   return item;
 }
+
 const create = function *(itemData) {
   if (!itemData.categoryId) throw new InvalidArgumentError('item.categoryId is required')
   const statement = `
