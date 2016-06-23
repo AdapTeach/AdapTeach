@@ -4,7 +4,7 @@
   "description": "Adaptive Learning for Each and everyone of us",
   "main": "server/server.js",
   "scripts": {
-    "start": "npm-run-all --parallel dev:*",
+    "start": "npm-run-all --parallel dev:server dev:client",
     "dev:server": "node server/server.js",
     "dev:client": "webpack-dev-server --hot --inline --content-base client/ --open",
     "test": "gulp test-once",

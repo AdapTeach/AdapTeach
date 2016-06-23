@@ -5,7 +5,7 @@ import * as create from './create'
 import * as display from './display'
 
 export const route =
-  <Route path="composite">
+  <Route path="quiz">
     {create.route}
     {display.route}
   </Route>

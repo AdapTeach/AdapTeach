@@ -58,15 +58,26 @@ class ObjectiveSearchDialog extends React.Component {
   }
 
   updateSuggestions(input, resolve) {
-    objectiveData.search({name: input})
-      .then(response => {
-        const items = response.data.items
-        const composites = response.data.composites
-        const objectives = items.concat(composites)
-        objectives.forEach(o => this.objectivesByName[o.name] = o)
-        const names = objectives.map(o => o.name)
-        resolve(names)
-      })
+    // TODO Remove duplicate code
+    if (this.props.filter === 'items') {
+      objectiveData.search({name: input})
+        .then(response => {
+          const items = response.data.items
+          items.forEach(i => this.objectivesByName[i.name] = i)
+          const names = items.map(o => o.name)
+          resolve(names)
+        })
+    } else {
+      objectiveData.search({name: input})
+        .then(response => {
+          const items = response.data.items
+          const composites = response.data.composites
+          const objectives = items.concat(composites)
+          objectives.forEach(o => this.objectivesByName[o.name] = o)
+          const names = objectives.map(o => o.name)
+          resolve(names)
+        })
+    }
   }
 
   onObjectiveSelected(name) {
