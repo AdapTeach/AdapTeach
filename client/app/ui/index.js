@@ -13,12 +13,12 @@ import {Navigation} from './navigation'
 
 export const UI = () =>
   <div>
-    <Navigation></Navigation>
+    <Navigation/>
     <Router history={history}>
-      {home.route}
       {category.route}
       {composite.route}
       {item.route}
       {quiz.route}
+      {home.route}
     </Router>
   </div>

@@ -5,4 +5,4 @@ const component = () =>
   <h2>Home</h2>
 
 export const route =
-  <Route path="/" component={component}/>
+  <Route path="*" component={component}/>

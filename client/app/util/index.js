@@ -1,7 +1,4 @@
 export * from './connect'
-export {createContainerComponent} from './createContainerComponent'
-export {createReducer} from './createReducer'
 export {DataStore} from './DataStore'
 export {Endpoint} from './Endpoint'
 export {eventQueue} from './eventQueue'
-export {Repo} from './Repo'
