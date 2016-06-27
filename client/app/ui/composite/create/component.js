@@ -49,7 +49,8 @@ class CreateComposite extends React.Component {
     })
   }
 
-  create() {
+  create(e) {
+    e.preventDefault()
     compositeData.create({
       name: this.state.name,
       description: this.state.description,

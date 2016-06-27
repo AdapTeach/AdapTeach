@@ -1,10 +1,6 @@
-import endpoint from './endpoint'
+import {DataStore, eventQueue, Endpoint} from 'util'
 
-import {Repo, DataStore, eventQueue} from 'util'
-
-export const compositeRepo = Repo('composite', endpoint)
-
-export {compositeReducer} from './reducer'
+const endpoint = Endpoint('composite')
 
 class CompositeData extends DataStore {
 

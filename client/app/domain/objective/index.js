@@ -1,6 +1,6 @@
-import endpoint from './endpoint'
+import {DataStore, eventQueue, Endpoint} from 'util'
 
-import {DataStore, eventQueue} from 'util'
+const endpoint = Endpoint('objective')
 
 class ObjectiveData extends DataStore {
 

@@ -1,10 +1,6 @@
-import endpoint from './endpoint'
+import {DataStore, eventQueue, Endpoint} from 'util'
 
-import {Repo, DataStore, eventQueue} from 'util'
-
-export const itemRepo = Repo('item', endpoint)
-
-export {itemReducer} from './reducer'
+const endpoint = Endpoint('item')
 
 class ItemData extends DataStore {
 

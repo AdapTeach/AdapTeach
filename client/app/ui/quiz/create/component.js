@@ -20,12 +20,18 @@ class CreateQuiz extends React.Component {
       <div>
         <h2>Create Quiz</h2>
         <form>
-          <ObjectiveSearchDialog filter='items' onSelect={::this.onItemAdd}></ObjectiveSearchDialog>
           <label>Assessed Items</label>
-          <br/>
+          <ObjectiveSearchDialog filter='items' onSelect={::this.onItemAdd}></ObjectiveSearchDialog>
           {this.state.assessedItems.map(i =>
             <div key={i.uuid}>{i.name}</div>
           )}
+          <br/>
+          <label>Prerequisites</label>
+          <ObjectiveSearchDialog onSelect={::this.onPrerequisiteAdd}></ObjectiveSearchDialog>
+          {this.state.prerequisites.map(p =>
+            <div key={p.uuid}>{p.name}</div>
+          )}
+          <br/>
           <TextField onChange={::this.onQuestionChange} hintText="Question"/>
           <br/>
           <RaisedButton onClick={::this.create} primary label="Create"/>
@@ -43,13 +49,25 @@ class CreateQuiz extends React.Component {
     })
   }
 
+  onPrerequisiteAdd(prerequisite) {
+    this.setState({
+      prerequisites: [
+        ...this.state.prerequisites,
+        prerequisite
+      ]
+    })
+  }
+
   onQuestionChange(ev) {
     this.setState({question: ev.target.value})
   }
 
-  create() {
+  create(e) {
+    e.preventDefault()
     quizData.create({
       question: this.state.question,
+      assessedItemIds: this.state.assessedItems.map(i => i.uuid),
+      prerequisiteIds: this.state.prerequisites.map(p => p.uuid)
     })
       .then(created => router.goTo(path.quiz.display(created.uuid)))
       .catch(::console.error)

@@ -10,14 +10,14 @@ injectTapEventPlugin()
 
 import store from './store'
 
-import {App} from '../ui'
+import {UI} from '../ui'
 
 const muiTheme = getMuiTheme({})
 
 render(
   <MuiThemeProvider muiTheme={muiTheme}>
     <Provider store={store}>
-      <App/>
+      <UI/>
     </Provider>
   </MuiThemeProvider>,
   document.getElementById('root')

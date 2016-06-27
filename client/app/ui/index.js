@@ -11,7 +11,7 @@ import * as quiz from './quiz'
 
 import {Navigation} from './navigation'
 
-export const App = () =>
+export const UI = () =>
   <div>
     <Navigation></Navigation>
     <Router history={history}>
