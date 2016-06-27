@@ -18,7 +18,7 @@ class CreateItem extends React.Component {
     return (
       <div>
         <h2>Create Item</h2>
-        <form>
+        <form onSubmit={::this.create}>
           <TextField value={this.state.name} onChange={::this.onNameChange} hintText="Name"/><br/>
           <TextField value={this.state.description} onChange={::this.onDescriptionChange} hintText="Description"/><br/>
           <label>Category</label>
@@ -51,6 +51,7 @@ class CreateItem extends React.Component {
 
   create(e) {
     e.preventDefault()
+    if (!this.canSubmit()) return
     itemData.create({
       name: this.state.name,
       description: this.state.description,

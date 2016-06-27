@@ -19,7 +19,7 @@ class CreateQuiz extends React.Component {
     return (
       <div>
         <h2>Create Quiz</h2>
-        <form>
+        <form onSubmit={::this.create}>
           <label>Assessed Items</label>
           <ObjectiveSearchDialog filter='items' onSelect={::this.onItemAdd}></ObjectiveSearchDialog>
           {this.state.assessedItems.map(i =>

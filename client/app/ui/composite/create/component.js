@@ -18,7 +18,7 @@ class CreateComposite extends React.Component {
     return (
       <div>
         <h2>Create Composite Objective</h2>
-        <form>
+        <form onSubmit={::this.create}>
           <TextField onChange={::this.onNameChange} hintText="Name"/>
           <br/>
           <TextField onChange={::this.onDescriptionChange} hintText="Description"/>
