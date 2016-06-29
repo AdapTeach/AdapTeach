@@ -12,7 +12,7 @@ const create = function *(category) {
 }
 
 const createRoot = function *(category) {
-  const statement = 'CREATE (c:Category {uuid: {uuid}, name: {name}}) RETURN c'
+  const statement = 'CREATE (c:Category:RootCategory {uuid: {uuid}, name: {name}}) RETURN c'
   const parameters = {
     uuid: uuid.v4(),
     name: category.name

@@ -5,7 +5,7 @@
   "main": "server/server.js",
   "scripts": {
     "start": "npm-run-all --parallel dev:server dev:client",
-    "dev:server": "node server/server.js",
+    "dev:server": "nodemon server/server.js",
     "dev:client": "webpack-dev-server --hot --inline --content-base client/ --open",
     "test": "gulp test-once",
     "tdd": "gulp tdd"
@@ -43,6 +43,7 @@
     "immutable": "^3.7.6",
     "kcors": "^1.0.1",
     "material-ui": "^0.15.0",
+    "nodemon": "^1.9.2",
     "npm-run-all": "^2.2.0",
     "ramda": "^0.21.0",
     "react": "^15.1.0",

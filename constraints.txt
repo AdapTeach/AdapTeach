@@ -1,0 +1,21 @@
+/////////////////
+// Assessment //
+///////////////
+// CREATE CONSTRAINT ON (n:Assessment) ASSERT exists(n.uuid) // EE
+CREATE CONSTRAINT ON (n:Assessment) ASSERT n.uuid IS UNIQUE
+
+///////////////
+// Category //
+/////////////
+// CREATE CONSTRAINT ON (n:Category) ASSERT exists(n.uuid) // EE
+CREATE CONSTRAINT ON (n:Category) ASSERT n.uuid IS UNIQUE
+// CREATE CONSTRAINT ON (n:Category) ASSERT exists(n.name) // EE
+CREATE INDEX ON :Category(name)
+CREATE CONSTRAINT ON (n:RootCategory) ASSERT n.name IS UNIQUE
+
+///////////////////////////////////
+// Objective (Item & Composite) //
+/////////////////////////////////
+CREATE CONSTRAINT ON (n:Objective) ASSERT n.uuid IS UNIQUE
+CREATE INDEX ON :Objective(name)
+CREATE INDEX ON :Item(name)

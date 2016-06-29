@@ -5,8 +5,15 @@ const create = function *(quiz) {
   if (!quiz) {
     const item = yield itemAPI.create()
     quiz = {
-      question: 'Test Quiz ?',
-      assessedItemIds: [item.uuid]
+      assessedItemIds: [item.uuid],
+      prerequisiteIds: [],
+      activelyRecalledItemIds: [],
+      passivelyRecalledItemIds: [],
+      question: 'Test Question ?',
+      answers: [
+        {text: 'Yes', correct: true},
+        {text: 'No', correct: false}
+      ]
     }
   }
   const response = yield api.post('/api/quiz').send(quiz).expect(201).end()

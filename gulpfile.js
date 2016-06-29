@@ -25,7 +25,7 @@ gulp.task('mocha', () => {
   process.env.PORT = 8001
   return gulp.src([PATH_TO_TESTS])
     .pipe(mocha({
-      reporter: 'nyan'
+      reporter: 'dot'
     }))
 })
 
