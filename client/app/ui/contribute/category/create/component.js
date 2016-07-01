@@ -42,7 +42,7 @@ class CreateCategory extends React.Component {
     categoryData.create({
       name: this.state.name,
       parentId: this.state.parent.uuid
-    }).then(created => router.goTo(path.category.display(created.uuid)))
+    }).then(created => router.goTo(path.contribute.category.display(created.uuid)))
   }
 
 }

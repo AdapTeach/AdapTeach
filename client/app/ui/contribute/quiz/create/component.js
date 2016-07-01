@@ -154,7 +154,7 @@ class CreateQuiz extends React.Component {
       passivelyRecalledItemIds: this.state.passivelyRecalledItems.map(i => i.uuid),
       answers: this.state.answers
     })
-      .then(created => router.goTo(path.quiz.display(created.uuid)))
+      .then(created => router.goTo(path.contribute.quiz.display(created.uuid)))
       .catch(::console.error)
   }
 

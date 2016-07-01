@@ -56,7 +56,7 @@ class CreateComposite extends React.Component {
       description: this.state.description,
       componentIds: this.state.components.map(c => c.uuid)
     })
-      .then(created => router.goTo(path.composite.display(created.uuid)))
+      .then(created => router.goTo(path.contribute.composite.display(created.uuid)))
       .catch(::console.error)
   }
 

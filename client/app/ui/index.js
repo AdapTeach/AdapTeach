@@ -1,24 +1,14 @@
 import React from 'react'
-import {Router} from 'react-router'
+import {Router, Route} from 'react-router'
 
 import {history} from 'router'
 
-import * as home from './home'
-import * as category from './category'
-import * as composite from './composite'
-import * as item from './item'
-import * as quiz from './quiz'
+import * as contribute from './contribute'
 
-import {Navigation} from './navigation'
+import {Home} from './home'
 
 export const UI = () =>
-  <div>
-    <Navigation/>
-    <Router history={history}>
-      {category.route}
-      {composite.route}
-      {item.route}
-      {quiz.route}
-      {home.route}
-    </Router>
-  </div>
+  <Router history={history}>
+    {contribute.route}
+    <Route path="*" component={Home}/>
+  </Router>

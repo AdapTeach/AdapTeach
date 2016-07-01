@@ -13,19 +13,19 @@ export class Navigation extends React.Component {
   }
 
   goToCreateCategory() {
-    router.goTo(path.category.create);
+    router.goTo(path.contribute.category.create);
   }
 
   goToCreateItem() {
-    router.goTo(path.item.create);
+    router.goTo(path.contribute.item.create);
   }
 
   goToCreateComposite() {
-    router.goTo(path.composite.create);
+    router.goTo(path.contribute.composite.create);
   }
 
   goToCreateQuiz() {
-    router.goTo(path.quiz.create);
+    router.goTo(path.contribute.quiz.create);
   }
 
 }

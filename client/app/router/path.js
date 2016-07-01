@@ -1,22 +1,26 @@
 export const path = {
 
-  category: {
-    create: '/category/create',
-    display: id => `/category/${id}`
-  },
+  contribute: {
 
-  item: {
-    create: '/item/create',
-    display: id => `/item/${id}`
-  },
+    category: {
+      create: '/contribute/category/create',
+      display: id => `/contribute/category/${id}`
+    },
 
-  composite: {
-    create: '/composite/create',
-    display: id => `/composite/${id}`
-  },
+    item: {
+      create: '/contribute/item/create',
+      display: id => `/contribute/item/${id}`
+    },
 
-  quiz: {
-    create: '/quiz/create',
-    display: id => `/quiz/${id}`
+    composite: {
+      create: '/contribute/composite/create',
+      display: id => `/contribute/composite/${id}`
+    },
+
+    quiz: {
+      create: '/contribute/quiz/create',
+      display: id => `/contribute/quiz/${id}`
+    }
   }
+
 }

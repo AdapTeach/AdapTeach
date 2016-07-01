@@ -12,10 +12,8 @@ module.exports = {
   resolve: {
     alias: {
       'domain-data$': path.resolve(__dirname, 'client/app/domain'),
-      navigation$: path.resolve(__dirname, 'client/app/navigation'),
       router$: path.resolve(__dirname, 'client/app/router'),
       components$: path.resolve(__dirname, 'client/app/ui/common/components'),
-      store$: path.resolve(__dirname, 'client/app/main/store'),
       util$: path.resolve(__dirname, 'client/app/util')
     }
   },

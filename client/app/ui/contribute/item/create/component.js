@@ -57,7 +57,7 @@ class CreateItem extends React.Component {
       description: this.state.description,
       categoryId: this.state.category.uuid
     })
-      .then(created => router.goTo(path.item.display(created.uuid)))
+      .then(created => router.goTo(path.contribute.item.display(created.uuid)))
   }
 
 }
