@@ -5,7 +5,7 @@ const exit = require('gulp-exit')
 const webpack = require('webpack-stream')
 
 const PATH_TO_SERVER_SOURCE = 'server/**/*.js'
-const PATH_TO_TESTS = 'test/**/*.js'
+const PATH_TO_TESTS = 'supertest/**/*.js'
 
 // gulp.task('nodemon', () => {
 //   nodemon({

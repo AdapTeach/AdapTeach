@@ -31,6 +31,14 @@ app.use(function *handleErrors(next) {
   }
 })
 
+app.use(function *extractLoggedUserProfileFromToken(next) {
+  this.loggedUser = {
+    uuid: '3d92ef53-3343-438e-b539-c920b364f931',
+    name: 'micouz'
+  }
+  yield next
+})
+
 // Routers
 glob('server/router/*.js').then(routerPaths =>
   routerPaths.forEach(routerPath => {

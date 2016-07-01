@@ -13,7 +13,7 @@ module.exports = {
     alias: {
       'domain-data$': path.resolve(__dirname, 'client/app/domain'),
       router$: path.resolve(__dirname, 'client/app/router'),
-      components$: path.resolve(__dirname, 'client/app/ui/common/components'),
+      components$: path.resolve(__dirname, 'client/app/ui/common'),
       util$: path.resolve(__dirname, 'client/app/util')
     }
   },

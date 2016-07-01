@@ -1,8 +1,8 @@
 const expect = require('chai').expect
 
-const api = require('./util/api')
-const compositeAPI = require('./util/compositeAPI')
-const itemAPI = require('./util/itemAPI')
+const api = require('./api/api')
+const compositeAPI = require('./api/compositeAPI')
+const itemAPI = require('./api/itemAPI')
 
 describe('Composite API', () => {
 

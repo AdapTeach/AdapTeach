@@ -1,8 +1,8 @@
 const expect = require('chai').expect
 
-const quizAPI = require('./util/quizAPI')
-const itemAPI = require('./util/itemAPI')
-const compositeAPI = require('./util/compositeAPI')
+const quizAPI = require('./api/quizAPI')
+const itemAPI = require('./api/itemAPI')
+const compositeAPI = require('./api/compositeAPI')
 
 const answers = [
   {text: 'Yes', correct: true},

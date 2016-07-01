@@ -21,6 +21,12 @@ export const path = {
       create: '/contribute/quiz/create',
       display: id => `/contribute/quiz/${id}`
     }
+  },
+
+  profile: {
+
+    objectives: '/profile/objectives'
+
   }
 
 }

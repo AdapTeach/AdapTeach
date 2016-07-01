@@ -1,7 +1,7 @@
 import React from 'react'
 import Rx from 'rxjs'
 
-const wrapper = (propsMapper, wrappedComponent) => class extends React.Component {
+const wrapper = (propsMapper, WrappedComponent) => class extends React.Component {
 
   componentWillMount() {
     this.props$ = new Rx.BehaviorSubject(this.props)
@@ -21,18 +21,18 @@ const wrapper = (propsMapper, wrappedComponent) => class extends React.Component
   }
 
   render() {
-    // if (this.internalProps)
-    return wrappedComponent(this.internalProps)
-    // else
-    //   return <div>Loading...</div>
+    if (this.internalProps)
+      return <WrappedComponent {...this.internalProps}></WrappedComponent>
+    else
+      return <div>Loading...</div>
   }
 
 }
 
 export const connect = propsMapper => wrappedComponent => wrapper(propsMapper, wrappedComponent)
 
-const wrapWithLoader = wrappedComponent => props => props
-  ? wrappedComponent(props)
+const wrapWithLoader = WrappedComponent => props => props
+  ? <WrappedComponent {...props}></WrappedComponent>
   : <div>Loading... (fancy loader gif here)</div>
 
 export const connectWithLoader = propsMapper => wrappedComponent => wrapper(propsMapper, wrapWithLoader(wrappedComponent))

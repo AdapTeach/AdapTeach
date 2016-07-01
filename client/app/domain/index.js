@@ -1,5 +1,6 @@
 export * from './category'
 export * from './composite'
 export * from './item'
+export * from './loggedUser'
 export * from './objective'
 export * from './quiz'
