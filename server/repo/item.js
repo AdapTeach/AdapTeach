@@ -4,10 +4,10 @@ const cypher = require('./graph/cypher')
 const InvalidArgumentError = require('../error/invalid-argument')
 const addParentHierarchyToCategory = require('./util').addParentHierarchyToCategory
 
-function itemFromRow(row) {
-  const item = row.i
-  item.category = row.c
-  const parents = row.parents
+function itemFromRecord(row) {
+  const item = row.get('i').properties
+  item.category = row.get('c').properties
+  const parents = row.get('parents').map(node => node.properties)
   addParentHierarchyToCategory(item.category, parents)
   return item;
 }
@@ -26,10 +26,10 @@ const create = function *(itemData) {
     name: itemData.name,
     description: itemData.description ? itemData.description : ''
   }
-  const result = yield cypher.send(statement, parameters)
-  const row = result[0]
-  if (!row) throw new InvalidArgumentError(`No Category exists for id ${itemData.categoryId}`)
-  return itemFromRow(row)
+  const records = yield cypher.send(statement, parameters)
+  const record = records[0]
+  if (!record) throw new InvalidArgumentError(`No Category exists for id ${itemData.categoryId}`)
+  return itemFromRecord(record)
 }
 
 const find = function *(uuid) {
@@ -40,7 +40,7 @@ const find = function *(uuid) {
   const result = yield cypher.send(statement, {uuid})
   const row = result[0]
   if (!row) throw new InvalidArgumentError(`No Item found for id ${uuid}`)
-  return itemFromRow(row)
+  return itemFromRecord(row)
 }
 
 module.exports = {

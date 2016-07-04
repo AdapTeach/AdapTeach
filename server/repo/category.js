@@ -17,8 +17,15 @@ const createRoot = function *(category) {
     uuid: uuid.v4(),
     name: category.name
   }
-  const result = yield cypher.send(statement, parameters)
-  return result[0].c
+  const records = yield cypher.send(statement, parameters)
+  return records[0].get('c').properties
+}
+
+function categoryFromRecord(record) {
+  const created = record.get('c').properties
+  const parents = record.get('parents').map(node => node.properties)
+  addParentHierarchy(created, parents);
+  return created;
 }
 
 const createChild = function *(category) {
@@ -33,15 +40,8 @@ const createChild = function *(category) {
     uuid: uuid.v4(),
     name: category.name
   }
-  const result = yield cypher.send(statement, parameters)
-  return categoryFromRow(result[0])
-}
-
-function categoryFromRow(row) {
-  const created = row.c
-  const parents = row.parents
-  addParentHierarchy(created, parents);
-  return created;
+  const records = yield cypher.send(statement, parameters)
+  return categoryFromRecord(records[0])
 }
 
 const find = function *(uuid) {
@@ -49,14 +49,8 @@ const find = function *(uuid) {
     MATCH (c:Category {uuid: {uuid}})
     OPTIONAL MATCH (c) -[:CHILD_OF*]-> (p)
     RETURN c, collect(p) as parents`
-  const result = yield cypher.send(statement, {uuid})
-  return categoryFromRow(result[0])
-}
-
-// TODO Delete ?
-const list = function *() {
-  const result = yield cypher.send('MATCH (c:Category) RETURN collect(c) as categories')
-  return result[0].categories
+  const records = yield cypher.send(statement, {uuid})
+  return categoryFromRecord(records[0])
 }
 
 const search = function *(name) {
@@ -67,13 +61,12 @@ const search = function *(name) {
     RETURN c, collect(p) as parents`
   const nameRegex = `(?i)${name}.*`
   const parameters = {nameRegex}
-  const result = yield cypher.send(statement, parameters)
-  return result.map(categoryFromRow)
+  const records = yield cypher.send(statement, parameters)
+  return records.map(categoryFromRecord)
 }
 
 module.exports = {
   create,
   find,
-  list,
   search
 }
