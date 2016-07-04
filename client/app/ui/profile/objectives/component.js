@@ -11,7 +11,10 @@ class Objectives extends React.Component {
       <h1>Personal Objectives :</h1>
       <ObjectiveSearchDialog onSelect={::this.onObjectiveSelected}></ObjectiveSearchDialog>
       {this.props.objectives.map(objective =>
-        <div key={objective.uuid}>{objective.name}</div>
+        <div key={objective.uuid}>
+          {objective.name}
+          <button onClick={this.onRemoveButtonClick(objective)}>X</button>
+        </div>
       )}
     </div>
   }
@@ -20,10 +23,13 @@ class Objectives extends React.Component {
     loggedUser.addObjective(objective)
   }
 
+  onRemoveButtonClick(objective) {
+    return () => loggedUser.removeObjective(objective)
+  }
+
 }
 
 const propsMapper = props => loggedUser.objective$
-  .startWith([])
   .map(objectives => ({objectives}))
 
 export const component = connectWithLoader(propsMapper)(Objectives)
