@@ -2,8 +2,6 @@ const assessmentRepo = require('./assessment')
 const categoryRepo = require('./category')
 const compositeRepo = require('./composite')
 const itemRepo = require('./item')
-const objectiveRepo = require('./objective')
-const quizRepo = require('./quiz')
 const userRepo = require('./user')
 
 function *createAssessment() {
