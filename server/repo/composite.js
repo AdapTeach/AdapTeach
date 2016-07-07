@@ -3,12 +3,14 @@ const uuid = require('node-uuid')
 const InvalidArgumentError = require('../error/invalid-argument')
 const cypher = require('./graph/cypher')
 
-function compositeFromRow(row) {
-  const composite = row.c
-  const items = row.items || []
-  const categories = row.categories || []
+function compositeFromRecord(record) {
+  const composite = record.get('c').properties
+  const itemNodes = record.keys.indexOf('items') >= 0 ? record.get('items') : []
+  const categoryNodes = record.keys.indexOf('categories') >= 0 ? record.get('categories') : []
+  const items = itemNodes.map(node => node.properties)
+  const categories = categoryNodes.map(node => node.properties)
   addCategoriesToItems(items, categories)
-  const composites = row.composites || []
+  const composites = record.composites || []
   composite.components = {items, composites}
   return composite
 }
@@ -41,7 +43,7 @@ const create = function *(compositeFields) {
     componentIds: compositeFields.componentIds
   }
   const result = yield cypher.send(statement, parameters)
-  return compositeFromRow(result[0])
+  return compositeFromRecord(result[0])
 }
 
 const find = function *(uuid) {
@@ -51,7 +53,7 @@ const find = function *(uuid) {
     OPTIONAL MATCH (c) -[:COMPOSED_OF]-> (composite:Composite)
     RETURN c, collect(item) as items, collect(category) as categories, collect(composite) as composites`
   const result = yield cypher.send(statement, {uuid})
-  return compositeFromRow(result[0])
+  return compositeFromRecord(result[0])
 }
 
 module.exports = {

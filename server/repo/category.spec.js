@@ -40,7 +40,6 @@ describe('categoryRepo', () => {
 
   })
 
-
   describe('when child Category is created', () => {
     var parent
     var child

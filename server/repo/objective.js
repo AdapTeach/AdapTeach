@@ -33,22 +33,30 @@ function *find(uuid) {
   const statement = `
     MATCH (o:Objective {uuid: {uuid}}) 
     RETURN o`
-  const result = yield cypher.send(statement, {uuid})
-  const row = result[0]
-  return row.o
+  const records = yield cypher.send(statement, {uuid})
+  const record = records[0]
+  return record.get('o').properties
 
 }
 
 function *search(name) {
-  const itemSearchQuery = buildItemSearchQuery(name)
-  const compositeSearchQuery = buildCompositeSearchQuery(name)
-  const result = yield cypher.sendMany([itemSearchQuery, compositeSearchQuery])
-  const items = result[0].map(row => {
-    const item = row.item
-    item.category = row.category
+  const statement = `
+    MATCH (objective:Objective)
+    OPTIONAL MATCH (objective) -[:IN_CATEGORY]-> (category)
+    WHERE objective.name =~ {nameRegex}
+    RETURN objective, category`
+  const params = {
+    nameRegex: buildNameRegex(name)
+  }
+  const records = yield cypher.send(statement, params)
+  const itemRecords = records.filter(record => record.get('category'))
+  const compositeRecords = records.filter(record => !record.get('category'))
+  const items = itemRecords.map(record => {
+    const item = record.get('objective').properties
+    item.category = record.get('category').properties
     return item
   })
-  const composites = result[1].map(row => row.composite)
+  const composites = compositeRecords.map(record => record.get('objective').properties)
   return {items, composites}
 }
 

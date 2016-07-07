@@ -27,6 +27,15 @@ function *createItem() {
   return item
 }
 
+function *createComposite() {
+  const item = yield createItem()
+  const composite = yield compositeRepo.create({
+    name: 'Stub Composite',
+    componentIds: [item.uuid]
+  })
+  return composite
+}
+
 function *createUser() {
   const user = yield userRepo.create({name: 'Stub User'})
   return user
@@ -35,6 +44,7 @@ function *createUser() {
 module.exports = {
   category: createCategory,
   categoryWithGrandparent: createCategoryWithGrandparent,
+  composite: createComposite,
   item: createItem,
   user: createUser
 }

@@ -97,7 +97,6 @@ describe('itemRepo', () => {
     })
 
     it('returns Category hierarchy when creating item', function *() {
-      console.log(item)
       expect(item.category.parent.uuid).toEqual(parentCategory.uuid)
       expect(item.category.parent.parent.uuid).toEqual(grandparentCategory.uuid)
     })
