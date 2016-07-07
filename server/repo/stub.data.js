@@ -6,6 +6,15 @@ const objectiveRepo = require('./objective')
 const quizRepo = require('./quiz')
 const userRepo = require('./user')
 
+function *createAssessment() {
+  const item = yield createItem()
+  const assessment = yield assessmentRepo.create({
+    name: 'Test Assessment',
+    testedItemIds: [item.uuid]
+  })
+  return assessment
+}
+
 function *createCategory() {
   const category = yield categoryRepo.create({name: 'Stub Category'})
   return category
@@ -18,15 +27,6 @@ function *createCategoryWithGrandparent() {
   return category
 }
 
-function *createItem() {
-  const category = yield createCategory()
-  const item = yield itemRepo.create({
-    name: 'Test Item',
-    categoryId: category.uuid
-  })
-  return item
-}
-
 function *createComposite() {
   const item = yield createItem()
   const composite = yield compositeRepo.create({
@@ -36,12 +36,22 @@ function *createComposite() {
   return composite
 }
 
+function *createItem() {
+  const category = yield createCategory()
+  const item = yield itemRepo.create({
+    name: 'Test Item',
+    categoryId: category.uuid
+  })
+  return item
+}
+
 function *createUser() {
   const user = yield userRepo.create({name: 'Stub User'})
   return user
 }
 
 module.exports = {
+  assessment: createAssessment,
   category: createCategory,
   categoryWithGrandparent: createCategoryWithGrandparent,
   composite: createComposite,
