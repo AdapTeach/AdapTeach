@@ -1,5 +1,7 @@
 const path = require('path')
 
+const neatPaths = require('node-neat').includePaths
+
 module.exports = {
   entry: {
     app: './client/app/main/main.js'
@@ -10,6 +12,7 @@ module.exports = {
     filename: 'bundle.js'
   },
   resolve: {
+    modulesDirectories: ['node_modules'],
     alias: {
       'domain-data$': path.resolve(__dirname, 'client/app/domain'),
       router$: path.resolve(__dirname, 'client/app/router'),
@@ -29,7 +32,8 @@ module.exports = {
         query: {
           presets: ['es2015', 'react', 'stage-0']
         }
-      }
+      },
+      {test: /\.scss$/, loader: "style!css!sass?includePaths[]=" + neatPaths}
     ]
   }
 }

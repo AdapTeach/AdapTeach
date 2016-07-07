@@ -1,0 +1,10 @@
+@import "bourbon";
+@import "~bourbon-neat";
+
+#root {
+  @include outer-container;
+  h2 {
+    @include span-columns(3);
+    @include linear-gradient(to top, red, orange);
+  }
+}
