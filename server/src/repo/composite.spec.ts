@@ -1,7 +1,7 @@
-const expect = require('expect')
+import * as expect from 'expect'
+import {InvalidArgumentError} from '../error/InvalidArgumentError'
 const stub = require('./stub.data')
 const compositeRepo = require('./composite')
-const InvalidArgumentError = require('../error/invalid-argument')
 
 describe('Composite API', () => {
 

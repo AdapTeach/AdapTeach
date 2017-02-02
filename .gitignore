@@ -1,5 +1,10 @@
-.idea
-node_modules
-client/build
+/client/node_modules
+/client/npm-debug.log*
 
-npm-debug.log
+/server/build
+/server/node_modules
+/server/static
+/server/npm-debug.log*
+
+# IDE
+/.idea

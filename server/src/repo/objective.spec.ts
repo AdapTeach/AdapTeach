@@ -1,4 +1,4 @@
-const expect = require('expect')
+import * as expect from 'expect'
 const stub = require('./stub.data')
 const objectiveRepo = require('./objective')
 

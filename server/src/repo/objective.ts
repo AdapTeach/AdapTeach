@@ -1,4 +1,4 @@
-const uuid = require('node-uuid')
+import * as uuid from 'node-uuid'
 
 const cypher = require('./graph/cypher')
 

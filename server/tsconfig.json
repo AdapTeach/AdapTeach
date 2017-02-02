@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es6",
+    "sourceMap": true,
+    "noImplicitAny": false,
+    "strictNullChecks": true,
+    "rootDir": "./src",
+    "outDir": "./build"
+  },
+  "exclude": [
+    "build",
+    "node_modules",
+    "static"
+    //,"**/*.spec.ts" TODO Make sure specs are not compiled into production build
+  ]
+}

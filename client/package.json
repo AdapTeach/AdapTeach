@@ -1,0 +1,40 @@
+{
+  "name": "AdapTeach-client",
+  "version": "0.0.1",
+  "description": "Adaptive Learning for Each and everyone of us",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:AdapTeach/AdapTeach.git"
+  },
+  "author": {
+    "name": "Mikael Couzic",
+    "email": "mikaelcouzic@gmail.com",
+    "url": "https://github.com/micouz"
+  },
+  "scripts": {
+    "start": "npm run dev",
+    "dev": "NODE_ENV=development webpack-dev-server --inline",
+    "lint": "tslint -c ../tslint.json './src/**/*.ts'",
+    "build": "rm -rf ../server/static && NODE_ENV=production webpack && cp -r assets ../server/static/assets",
+    "test": "mocha --opts mocha.opts",
+    "tdd": "mocha --opts mocha.opts --watch"
+  },
+  "dependencies": {
+    "immupdate": "0.4.0",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "rxjs": "^5.1.0",
+    "sparix": "0.0.7-alpha.23"
+  },
+  "devDependencies": {
+    "@types/react": "^15.0.6",
+    "@types/react-dom": "^0.14.22",
+    "awesome-typescript-loader": "^3.0.0-beta.18",
+    "html-webpack-plugin": "^2.28.0",
+    "tslint": "^4.4.2",
+    "typescript": "^2.1.5",
+    "webpack": "^2.2.1",
+    "webpack-dev-server": "^2.2.0"
+  }
+}

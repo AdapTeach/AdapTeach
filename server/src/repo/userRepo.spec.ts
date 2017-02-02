@@ -1,20 +1,20 @@
-const expect = require('expect')
+import * as expect from 'expect'
+import {userRepo} from './userRepo'
 const stub = require('./stub.data')
-const userRepo = require('./user')
 
 describe('userRepo', () => {
 
-  it('creates User', function *() {
+  it('creates User', async() => {
     const userData = {
       name: 'Test User'
     }
-    const user = yield userRepo.create(userData)
+    const user = await userRepo.create(userData)
     expect(user.uuid).toExist()
     expect(user.name).toEqual(userData.name)
   })
 
   describe('when User exists', () => {
-    var user
+    let user
     beforeEach(function *() {
       user = yield stub.user()
     })
@@ -28,7 +28,7 @@ describe('userRepo', () => {
     })
 
     describe('when a personal Objective is defined', () => {
-      var objective
+      let objective
       beforeEach(function *() {
         objective = yield stub.item()
         yield userRepo.addObjective(user.uuid, objective.uuid)

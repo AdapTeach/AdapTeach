@@ -1,8 +1,8 @@
-const expect = require('expect')
+import * as expect from 'expect'
+import {InvalidArgumentError} from '../error/InvalidArgumentError'
 const stub = require('./stub.data')
 const itemRepo = require('./item')
 const categoryRepo = require('./category')
-const InvalidArgumentError = require('../error/invalid-argument')
 
 describe('itemRepo', () => {
 
@@ -68,7 +68,7 @@ describe('itemRepo', () => {
   })
 
   describe('when Item is created', () => {
-    var item
+    let item
     beforeEach(function *() {
       item = yield stub.item()
     })
@@ -81,10 +81,10 @@ describe('itemRepo', () => {
   })
 
   describe('when Category has grandparent', () => {
-    var grandparentCategory
-    var parentCategory
-    var category
-    var item
+    let grandparentCategory
+    let parentCategory
+    let category
+    let item
 
     beforeEach(function *() {
       grandparentCategory = yield categoryRepo.create({name: 'Grandparent Category'})

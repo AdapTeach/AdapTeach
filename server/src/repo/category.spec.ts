@@ -1,12 +1,12 @@
-const expect = require('expect')
+import * as expect from 'expect'
 const stub = require('./stub.data')
 const categoryRepo = require('./category')
 
 describe('categoryRepo', () => {
 
   describe('when root Category is created', () => {
-    var categoryData
-    var category
+    let categoryData
+    let category
     beforeEach(function *() {
       categoryData = {name: 'Test Category'}
       category = yield categoryRepo.create(categoryData)
@@ -41,8 +41,8 @@ describe('categoryRepo', () => {
   })
 
   describe('when child Category is created', () => {
-    var parent
-    var child
+    let parent
+    let child
 
     beforeEach(function *() {
       parent = yield categoryRepo.create({name: 'Parent Category'})
@@ -62,7 +62,7 @@ describe('categoryRepo', () => {
     })
 
     describe('when grandchild Category is created', () => {
-      var grandchild
+      let grandchild
       beforeEach(function *() {
         grandchild = yield categoryRepo.create({name: 'Grandchild Category', parentId: child.uuid})
       })

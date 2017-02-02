@@ -1,7 +1,7 @@
-const uuid = require('node-uuid')
+import * as uuid from 'node-uuid'
+import {InvalidArgumentError} from '../error/InvalidArgumentError'
+import {cypher} from './graph/cypher'
 
-const cypher = require('./graph/cypher')
-const InvalidArgumentError = require('../error/invalid-argument')
 const addParentHierarchyToCategory = require('./util').addParentHierarchyToCategory
 
 function itemFromRecord(row) {
@@ -9,10 +9,10 @@ function itemFromRecord(row) {
   item.category = row.get('c').properties
   const parents = row.get('parents').map(node => node.properties)
   addParentHierarchyToCategory(item.category, parents)
-  return item;
+  return item
 }
 
-const create = function *(itemData) {
+const create = async(itemData) => {
   if (!itemData.categoryId) throw new InvalidArgumentError('item.categoryId is required')
   const statement = `
     MATCH (c:Category {uuid: {categoryId}})
@@ -26,7 +26,7 @@ const create = function *(itemData) {
     name: itemData.name,
     description: itemData.description ? itemData.description : ''
   }
-  const records = yield cypher.send(statement, parameters)
+  const records = await cypher.send(statement, parameters)
   const record = records[0]
   if (!record) throw new InvalidArgumentError(`No Category exists for id ${itemData.categoryId}`)
   return itemFromRecord(record)
