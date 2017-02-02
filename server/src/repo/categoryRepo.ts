@@ -1,7 +1,6 @@
 import * as uuid from 'node-uuid'
 import {cypher} from './graph/cypher'
-
-const addParentHierarchy = require('./util').addParentHierarchyToCategory
+import {addParentHierarchyToCategory} from './util/addParentHierarchyToCategory'
 
 const create = async(category) => {
    if (category.parentId) {
@@ -24,7 +23,7 @@ const createRoot = async(category) => {
 function categoryFromRecord(record) {
    const created = record.get('c').properties
    const parents = record.get('parents').map(node => node.properties)
-   addParentHierarchy(created, parents)
+   addParentHierarchyToCategory(created, parents)
    return created
 }
 
@@ -65,7 +64,7 @@ const search = async(name) => {
    return records.map(categoryFromRecord)
 }
 
-module.exports = {
+export const categoryRepo = {
    create,
    find,
    search

@@ -55,7 +55,7 @@ const find = async(uuid) => {
    return compositeFromRecord(result[0])
 }
 
-module.exports = {
+export const compositeRepo = {
    create,
    find
 }

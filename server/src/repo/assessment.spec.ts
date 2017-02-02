@@ -1,7 +1,7 @@
 import {InvalidArgumentError} from '../error/InvalidArgumentError'
 import * as expect from 'expect'
 import {assessmentRepo} from './assessmentRepo'
-const stub = require('./stub.data')
+import {stub} from './stubFactory'
 
 const YES_OR_NO = [
    {text: 'Yes', correct: true},

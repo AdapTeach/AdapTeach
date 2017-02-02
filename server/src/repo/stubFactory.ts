@@ -1,8 +1,8 @@
 import {userRepo} from './userRepo'
 import {assessmentRepo} from './assessmentRepo'
-const categoryRepo = require('./category')
-const compositeRepo = require('./composite')
-const itemRepo = require('./item')
+import {categoryRepo} from './categoryRepo'
+import {compositeRepo} from './compositeRepo'
+import {itemRepo} from './itemRepo'
 
 const createAssessment = async() => {
    const item = await createItem()
@@ -38,7 +38,7 @@ const createItem = async() => {
 
 const createUser = () => userRepo.create({name: 'Stub User'})
 
-module.exports = {
+export const stub = {
    assessment: createAssessment,
    category: createCategory,
    categoryWithGrandparent: createCategoryWithGrandparent,

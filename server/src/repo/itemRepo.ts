@@ -1,8 +1,7 @@
 import * as uuid from 'node-uuid'
 import {InvalidArgumentError} from '../error/InvalidArgumentError'
 import {cypher} from './graph/cypher'
-
-const addParentHierarchyToCategory = require('./util').addParentHierarchyToCategory
+import {addParentHierarchyToCategory} from './util/addParentHierarchyToCategory'
 
 function itemFromRecord(row) {
    const item = row.get('i').properties
@@ -43,7 +42,7 @@ const find = async(uuid) => {
    return itemFromRecord(row)
 }
 
-module.exports = {
+export const itemRepo = {
    create,
    find
 }

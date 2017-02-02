@@ -59,7 +59,7 @@ const search = async(name) => {
    return {items, composites}
 }
 
-module.exports = {
+export const objectiveRepo = {
    find,
    search
 }

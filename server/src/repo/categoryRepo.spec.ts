@@ -1,6 +1,5 @@
 import * as expect from 'expect'
-const stub = require('./stub.data')
-const categoryRepo = require('./category')
+import {categoryRepo} from './categoryRepo'
 
 describe('categoryRepo', () => {
 

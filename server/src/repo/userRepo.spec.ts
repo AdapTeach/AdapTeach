@@ -1,6 +1,6 @@
 import * as expect from 'expect'
 import {userRepo} from './userRepo'
-const stub = require('./stub.data')
+import {stub} from './stubFactory'
 
 describe('userRepo', () => {
 

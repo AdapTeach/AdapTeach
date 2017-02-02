@@ -1,6 +1,6 @@
 import * as expect from 'expect'
-const stub = require('./stub.data')
-const objectiveRepo = require('./objective')
+import {stub} from './stubFactory'
+import {objectiveRepo} from './objectiveRepo'
 
 describe('Objective API', () => {
 

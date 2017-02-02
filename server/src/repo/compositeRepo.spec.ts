@@ -1,7 +1,7 @@
 import * as expect from 'expect'
 import {InvalidArgumentError} from '../error/InvalidArgumentError'
-const stub = require('./stub.data')
-const compositeRepo = require('./composite')
+import {stub} from './stubFactory'
+import {compositeRepo} from './compositeRepo'
 
 describe('Composite API', () => {
 

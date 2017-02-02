@@ -1,8 +1,8 @@
 import * as expect from 'expect'
 import {InvalidArgumentError} from '../error/InvalidArgumentError'
-const stub = require('./stub.data')
-const itemRepo = require('./item')
-const categoryRepo = require('./category')
+import {categoryRepo} from './categoryRepo'
+import {itemRepo} from './itemRepo'
+import {stub} from './stubFactory'
 
 describe('itemRepo', () => {
 
