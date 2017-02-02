@@ -19,7 +19,7 @@ function addCategoriesToItems(items, categories) {
    return items
 }
 
-const create = function *(compositeFields) {
+const create = async(compositeFields) => {
    if (!compositeFields.name) throw new InvalidArgumentError('Name is missing on Composite to create')
    // The second, long query will not return created Composite if the componentIds array is empty
    let statement = `
@@ -41,17 +41,17 @@ const create = function *(compositeFields) {
       description: compositeFields.description || '',
       componentIds: compositeFields.componentIds
    }
-   const result = yield cypher.send(statement, parameters)
+   const result = await cypher.send(statement, parameters)
    return compositeFromRecord(result[0])
 }
 
-const find = function *(uuid) {
+const find = async(uuid) => {
    const statement = `
     MATCH (c:Composite {uuid: {uuid}})
     OPTIONAL MATCH (c) -[:COMPOSED_OF]-> (item:Item) -[:IN_CATEGORY]-> (category:Category)
     OPTIONAL MATCH (c) -[:COMPOSED_OF]-> (composite:Composite)
     RETURN c, collect(item) as items, collect(category) as categories, collect(composite) as composites`
-   const result = yield cypher.send(statement, {uuid})
+   const result = await cypher.send(statement, {uuid})
    return compositeFromRecord(result[0])
 }
 

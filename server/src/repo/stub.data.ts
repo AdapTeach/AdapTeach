@@ -17,26 +17,23 @@ const createCategory = () => categoryRepo.create({name: 'Stub Category'})
 const createCategoryWithGrandparent = async() => {
    const grandparentCategory = await categoryRepo.create({name: 'Grandparent Category'})
    const parentCategory = await categoryRepo.create({name: 'Parent Category', parentId: grandparentCategory.uuid})
-   const category = await categoryRepo.create({name: 'Category with Grandparent', parentId: parentCategory.uuid})
-   return category
+   return await categoryRepo.create({name: 'Category with Grandparent', parentId: parentCategory.uuid})
 }
 
 const createComposite = async() => {
    const item = await createItem()
-   const composite = await compositeRepo.create({
+   return await compositeRepo.create({
       name: 'Stub Composite',
       componentIds: [item.uuid]
    })
-   return composite
 }
 
 const createItem = async() => {
    const category = await createCategory()
-   const item = await itemRepo.create({
+   return await itemRepo.create({
       name: 'Test Item',
       categoryId: category.uuid
    })
-   return item
 }
 
 const createUser = () => userRepo.create({name: 'Stub User'})

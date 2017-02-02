@@ -44,16 +44,16 @@ const createChild = async(category) => {
    return categoryFromRecord(records[0])
 }
 
-const find = function *(uuid) {
+const find = async(uuid) => {
    const statement = `
     MATCH (c:Category {uuid: {uuid}})
     OPTIONAL MATCH (c) -[:CHILD_OF*]-> (p)
     RETURN c, collect(p) as parents`
-   const records = yield cypher.send(statement, {uuid})
+   const records = await cypher.send(statement, {uuid})
    return categoryFromRecord(records[0])
 }
 
-const search = function *(name) {
+const search = async(name) => {
    const statement = `
     MATCH (c:Category)
     WHERE c.name  =~ {nameRegex}
@@ -61,7 +61,7 @@ const search = function *(name) {
     RETURN c, collect(p) as parents`
    const nameRegex = `(?i)${name}.*`
    const parameters = {nameRegex}
-   const records = yield cypher.send(statement, parameters)
+   const records = await cypher.send(statement, parameters)
    return records.map(categoryFromRecord)
 }
 

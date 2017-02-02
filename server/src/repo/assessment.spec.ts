@@ -29,37 +29,37 @@ describe('Assessment API', () => {
       expect(created.answers).toEqual(quiz.answers)
    })
 
-   it('prevents Assessment creation when type is not defined', function *() {
-      const item = yield stub.item()
+   it('prevents Assessment creation when type is not defined', async() => {
+      const item = await stub.item()
       const lackingType = {
          assessedItemIds: [item.uuid],
          question: 'Lacking type ?',
          answers: YES_OR_NO
       }
       try {
-         yield assessmentRepo.create(lackingType)
+         await assessmentRepo.create(lackingType)
          throw Error('Should have failed')
       } catch (error) {
          expect(error).toBeA(InvalidArgumentError)
       }
    })
 
-   it('creates Quiz with multiple assessedItems', function *() {
-      const item1 = yield stub.item()
-      const item2 = yield stub.item()
+   it('creates Quiz with multiple assessedItems', async() => {
+      const item1 = await stub.item()
+      const item2 = await stub.item()
       const quiz = {
          type: 'Quiz',
          assessedItemIds: [item1.uuid, item2.uuid],
          question: 'Multiple assessedItems ?',
          answers: YES_OR_NO
       }
-      const created = yield assessmentRepo.create(quiz)
+      const created = await assessmentRepo.create(quiz)
       expect(created.assessedItems.map(i => i.uuid)).toEqual(quiz.assessedItemIds)
    })
 
-   it('creates Quiz with single Item as prerequisite', function *() {
-      const assessedItem = yield stub.item()
-      const preq = yield stub.item()
+   it('creates Quiz with single Item as prerequisite', async() => {
+      const assessedItem = await stub.item()
+      const preq = await stub.item()
       const quiz = {
          type: 'Quiz',
          assessedItemIds: [assessedItem.uuid],
@@ -67,14 +67,14 @@ describe('Assessment API', () => {
          question: 'Single prerequisite ?',
          answers: YES_OR_NO
       }
-      const created = yield assessmentRepo.create(quiz)
+      const created = await assessmentRepo.create(quiz)
       expect(created.prerequisites.map(preq => preq.uuid)).toEqual(quiz.prerequisiteIds)
    })
 
-   it('creates Quiz with multiple Items as prerequisites', function *() {
-      const assessedItem = yield stub.item()
-      const preq1 = yield stub.item()
-      const preq2 = yield stub.item()
+   it('creates Quiz with multiple Items as prerequisites', async() => {
+      const assessedItem = await stub.item()
+      const preq1 = await stub.item()
+      const preq2 = await stub.item()
       const quiz = {
          type: 'Quiz',
          assessedItemIds: [assessedItem.uuid],
@@ -82,13 +82,13 @@ describe('Assessment API', () => {
          question: 'Multiple prerequisites ?',
          answers: YES_OR_NO
       }
-      const created = yield assessmentRepo.create(quiz)
+      const created = await assessmentRepo.create(quiz)
       expect(created.prerequisites.map(preq => preq.uuid)).toEqual(quiz.prerequisiteIds)
    })
 
-   it('creates Quiz with single Composite as prerequisite', function *() {
-      const assessedItem = yield stub.item()
-      const preq = yield stub.composite()
+   it('creates Quiz with single Composite as prerequisite', async() => {
+      const assessedItem = await stub.item()
+      const preq = await stub.composite()
       const quiz = {
          type: 'Quiz',
          assessedItemIds: [assessedItem.uuid],
@@ -96,14 +96,14 @@ describe('Assessment API', () => {
          question: 'Single composite as prerequisite ?',
          answers: YES_OR_NO
       }
-      const created = yield assessmentRepo.create(quiz)
+      const created = await assessmentRepo.create(quiz)
       expect(created.prerequisites.map(preq => preq.uuid)).toEqual(quiz.prerequisiteIds)
    })
 
-   it('creates Quiz with multiple Composites as prerequisites', function *() {
-      const assessedItem = yield stub.item()
-      const preq1 = yield stub.composite()
-      const preq2 = yield stub.composite()
+   it('creates Quiz with multiple Composites as prerequisites', async() => {
+      const assessedItem = await stub.item()
+      const preq1 = await stub.composite()
+      const preq2 = await stub.composite()
       const quiz = {
          type: 'Quiz',
          assessedItemIds: [assessedItem.uuid],
@@ -111,13 +111,13 @@ describe('Assessment API', () => {
          question: 'Multiple prerequisites ?',
          answers: YES_OR_NO
       }
-      const created = yield assessmentRepo.create(quiz)
+      const created = await assessmentRepo.create(quiz)
       expect(created.prerequisites.map(preq => preq.uuid)).toEqual(quiz.prerequisiteIds)
    })
 
-   it('creates Quiz with single activelyRecalledItem', function *() {
-      const assessedItem = yield stub.item()
-      const actively = yield stub.item()
+   it('creates Quiz with single activelyRecalledItem', async() => {
+      const assessedItem = await stub.item()
+      const actively = await stub.item()
       const quiz = {
          type: 'Quiz',
          assessedItemIds: [assessedItem.uuid],
@@ -125,15 +125,15 @@ describe('Assessment API', () => {
          question: 'Single actively recalled Item ?',
          answers: YES_OR_NO
       }
-      const created = yield assessmentRepo.create(quiz)
+      const created = await assessmentRepo.create(quiz)
       expect(created.activelyRecalledItems.map(i => i.uuid)).toEqual(quiz.activelyRecalledItemIds)
    })
 
 
-   it('creates Quiz with multiple activelyRecalledItems', function *() {
-      const assessedItem = yield stub.item()
-      const actively1 = yield stub.item()
-      const actively2 = yield stub.item()
+   it('creates Quiz with multiple activelyRecalledItems', async() => {
+      const assessedItem = await stub.item()
+      const actively1 = await stub.item()
+      const actively2 = await stub.item()
       const quiz = {
          type: 'Quiz',
          assessedItemIds: [assessedItem.uuid],
@@ -141,13 +141,13 @@ describe('Assessment API', () => {
          question: 'Single actively recalled Item ?',
          answers: YES_OR_NO
       }
-      const created = yield assessmentRepo.create(quiz)
+      const created = await assessmentRepo.create(quiz)
       expect(created.activelyRecalledItems.map(i => i.uuid)).toEqual(quiz.activelyRecalledItemIds)
    })
 
-   it('creates Quiz with single passivelyRecalledItem', function *() {
-      const assessedItem = yield stub.item()
-      const passively = yield stub.item()
+   it('creates Quiz with single passivelyRecalledItem', async() => {
+      const assessedItem = await stub.item()
+      const passively = await stub.item()
       const quiz = {
          type: 'Quiz',
          assessedItemIds: [assessedItem.uuid],
@@ -155,14 +155,14 @@ describe('Assessment API', () => {
          question: 'Single actively recalled Item ?',
          answers: YES_OR_NO
       }
-      const created = yield assessmentRepo.create(quiz)
+      const created = await assessmentRepo.create(quiz)
       expect(created.passivelyRecalledItems.map(i => i.uuid)).toEqual(quiz.passivelyRecalledItemIds)
    })
 
-   it('creates Quiz with multiple passivelyRecalledItems', function *() {
-      const assessedItem = yield stub.item()
-      const passively1 = yield stub.item()
-      const passively2 = yield stub.item()
+   it('creates Quiz with multiple passivelyRecalledItems', async() => {
+      const assessedItem = await stub.item()
+      const passively1 = await stub.item()
+      const passively2 = await stub.item()
       const quiz = {
          type: 'Quiz',
          assessedItemIds: [assessedItem.uuid],
@@ -170,7 +170,7 @@ describe('Assessment API', () => {
          question: 'Single actively recalled Item ?',
          answers: YES_OR_NO
       }
-      const created = yield assessmentRepo.create(quiz)
+      const created = await assessmentRepo.create(quiz)
       expect(created.passivelyRecalledItems.map(i => i.uuid)).toEqual(quiz.passivelyRecalledItemIds)
    })
 
@@ -181,12 +181,12 @@ describe('Assessment API', () => {
       let passively
       let quiz
 
-      beforeEach(function *() {
-         assessedItem = yield stub.item()
-         preq = yield stub.composite()
-         actively = yield stub.item()
-         passively = yield stub.item()
-         quiz = yield assessmentRepo.create({
+      beforeEach(async() => {
+         assessedItem = await stub.item()
+         preq = await stub.composite()
+         actively = await stub.item()
+         passively = await stub.item()
+         quiz = await assessmentRepo.create({
             type: 'Quiz',
             assessedItemIds: [assessedItem.uuid],
             prerequisiteIds: [preq.uuid],
@@ -197,14 +197,14 @@ describe('Assessment API', () => {
          })
       })
 
-      it('creates Quiz', function *() {
+      it('creates Quiz', async() => {
          expect(quiz.prerequisites.length).toEqual(1)
          expect(quiz.activelyRecalledItems.length).toEqual(1)
          expect(quiz.passivelyRecalledItems.length).toEqual(1)
       })
 
-      it('finds Quiz by uuid', function *() {
-         const found = yield assessmentRepo.find(quiz.uuid)
+      it('finds Quiz by uuid', async() => {
+         const found = await assessmentRepo.find(quiz.uuid)
          expect(found.uuid).toEqual(quiz.uuid)
          expect(found.assessedItems[0].uuid).toEqual(assessedItem.uuid)
       })
