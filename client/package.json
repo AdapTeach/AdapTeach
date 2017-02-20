@@ -21,20 +21,33 @@
     "tdd": "mocha --opts mocha.opts --watch"
   },
   "dependencies": {
+    "@blueprintjs/core": "^1.9.0",
+    "axios": "^0.15.3",
     "immupdate": "0.4.0",
+    "ramda": "^0.23.0",
     "react": "^15.4.2",
+    "react-addons-css-transition-group": "^15.4.2",
+    "react-autosuggest": "^8.0.0",
     "react-dom": "^15.4.2",
+    "react-router": "^3.0.2",
     "rxjs": "^5.1.0",
-    "sparix": "0.0.7-alpha.23"
+    "sparix": "0.0.7-alpha.24"
   },
   "devDependencies": {
-    "@types/react": "^15.0.6",
-    "@types/react-dom": "^0.14.22",
+    "@types/pure-render-decorator": "^0.2.27",
+    "@types/ramda": "0.0.3",
+    "@types/react": "^15.0.11",
+    "@types/react-addons-css-transition-group": "^15.0.1",
+    "@types/react-dom": "^0.14.23",
+    "@types/react-router": "^3.0.4",
     "awesome-typescript-loader": "^3.0.0-beta.18",
+    "css-loader": "^0.26.1",
     "html-webpack-plugin": "^2.28.0",
+    "source-map-loader": "^0.1.5",
+    "style-loader": "^0.13.1",
     "tslint": "^4.4.2",
-    "typescript": "^2.1.5",
+    "typescript": "^2.2.0",
     "webpack": "^2.2.1",
-    "webpack-dev-server": "^2.2.0"
+    "webpack-dev-server": "^2.4.1"
   }
 }

@@ -1,8 +1,8 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import {App} from './components/App';
+import * as React from 'react'
+import * as ReactDOM from 'react-dom'
+import {UI} from './ui/UI'
 
 ReactDOM.render(
-   <App />,
-   document.getElementById('app')
+   <UI />,
+   document.getElementById('ui')
 )

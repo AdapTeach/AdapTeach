@@ -52,4 +52,4 @@ glob(path.resolve(__dirname, 'routes/*.' + extension)).then(R.forEach((routerPat
 
 app.use(serve(path.resolve(__dirname, '../static')))
 
-app.listen(8021)
+app.listen(8000)
