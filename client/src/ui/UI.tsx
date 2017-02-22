@@ -1,15 +1,31 @@
 import * as React from 'react'
-import {Router, Route, browserHistory} from 'react-router'
-import {CreateCategory} from './contribute/category/CreateCategory'
+import {BrowserRouter as Router, Route, Link} from 'react-router-dom'
 
-const Home = () => <h1>Home</h1>
+const Fail: React.StatelessComponent<{}> = () => <h1>Fail</h1>
 
 export const UI = () =>
-   <Router history={browserHistory}>
-      <Route path='/' component={CreateCategory}/>
+   <Router>
+      <div>
+         <ul>
+            <li><Link to='/'>Home</Link></li>
+            <li><Link to='/contribute'>Contribute</Link></li>
+            <li><Link to='/test'>Test</Link></li>
+         </ul>
+
+         <hr/>
+
+         <Route exact path='/' component={Home}/>
+         <Route exact path='/' component={Home}/>
+         <Route path='/test' component={Test}/>
+      </div>
    </Router>
 
-// <Route path='about' component={About}/>
-// <Route path='inbox' component={Inbox}>
-//    <Route path='messages/:id' component={Message}/>
-// </Route>
+const Home: React.StatelessComponent<{}> = () => <h1>Home</h1>
+
+const Test: React.StatelessComponent<{match: any}> = ({match}) =>
+   <div>
+      <h1>Test</h1>
+      <Route path={`${match.url}/nested`} component={Nested}/>
+   </div>
+
+const Nested: React.StatelessComponent<{}> = () => <h1>Nested</h1>

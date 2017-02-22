@@ -13,6 +13,8 @@ module.exports = {
 
    devtool: 'cheap-module-eval-source-map',
 
+   devServer: {historyApiFallback: true},
+
    resolve: {
       extensions: ['.webpack.js', '.web.js', '.ts', '.tsx', '.js']
    },
