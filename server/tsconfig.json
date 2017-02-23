@@ -5,6 +5,7 @@
     "sourceMap": true,
     "noImplicitAny": false,
     "strictNullChecks": true,
+    "allowSyntheticDefaultImports": true,
     "rootDir": "./src",
     "outDir": "./build"
   },

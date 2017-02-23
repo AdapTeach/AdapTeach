@@ -1,16 +1,19 @@
 import * as React from 'react'
+import {Route} from 'react-router-dom'
 import * as Autosuggest from 'react-autosuggest'
 import {F} from 'ramda'
 import {BehaviorSubject, Observable} from 'rxjs'
 import {Button} from '@blueprintjs/core'
-import {connect} from '../../../util/connect'
-import {categoryEndpoint} from '../../../endpoint/index'
-import {Category} from '../../../core/domain/Category'
-import {createCategoryStore} from '../../../core/state/index'
-import {path} from '../../../router/path'
-import {router} from '../../../router/router'
+import {connect} from '../../../../util/connect'
+import {categoryEndpoint} from '../../../../endpoint/index'
+import {Category} from '../../../../core/domain/Category'
+import {createCategoryStore} from '../../../../core/state/index'
+import {path} from '../../../../router/path'
+import {router} from '../../../../router/router'
 
 const inputValue$ = new BehaviorSubject<string>('')
+
+const goToDisplay = (category: Category) => router.goTo(path.contribute.category.display(category.uuid))
 
 inputValue$
    .filter(input => input.length > 2)
@@ -19,13 +22,12 @@ inputValue$
 
 const onSubmit = e => {
    e.preventDefault()
-   console.log(inputValue$.getValue())
    categoryEndpoint
-      .post({
-         name: inputValue$.getValue()
+      .post({name: inputValue$.getValue()})
+      .subscribe(createdCategory => {
+         inputValue$.next('')
+         goToDisplay(createdCategory)
       })
-      // .subscribe(createdCategory => console.log(createdCategory))
-      .subscribe(createdCategory => router.goTo(path.contribute.category.display(createdCategory.uuid)))
 }
 
 const onSuggestionsFetchRequested = F
@@ -35,7 +37,7 @@ const onSuggestionsClearRequested = () => createCategoryStore.setSuggestions([])
 const getSuggestionValue = (suggestedCategory: Category) => ''
 
 const renderSuggestion = (suggestedCategory: Category) =>
-   <div onClick={() => console.log('Navigate to category')}>
+   <div onClick={() => goToDisplay(suggestedCategory)}>
       {suggestedCategory.name}
    </div>
 
@@ -46,7 +48,7 @@ interface Props {
    suggestions: Category[]
 }
 
-const component: React.StatelessComponent<Props> = ({inputValue, suggestions}) =>
+const Component: React.StatelessComponent<Props> = ({inputValue, suggestions}) =>
    <div>
       <h2>Create Category</h2>
       <form onSubmit={onSubmit}>
@@ -70,16 +72,4 @@ const propsMapper = () => Observable.combineLatest(
    (inputValue, suggestions) => ({inputValue, suggestions})
 )
 
-export const CreateCategory = connect(propsMapper)(component)
-
-// <TextField onChange={::this.onNameChange} hintText="Name" ref="categoryName"/><br/>
-// <label>Parent Category</label>
-//    {this.state.parent
-//       ? <div>{this.state.parent.name}</div>
-//       : <CategorySearch onSelect={::this.onParentChange}/>}
-{/*<RaisedButton onClick={::this.create} primary label="Create"/>*/
-}
-{/*</form>*/
-}
-{/*</div>*/
-}
+export const CreateCategory = connect(propsMapper)(Component)

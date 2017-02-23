@@ -12,7 +12,6 @@ export class CategoryEndpoint extends Endpoint<Category> {
    }
 
    searchByName(name: string): Observable<Category[]> {
-      console.log(name)
       return http.get(`http://localhost:8000/api/${entityTypeName}/search/${name}`)
          .map(r => r.response)
    }

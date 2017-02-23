@@ -1,7 +1,7 @@
 import {InconsistentDatabaseError} from '../error/InconsistentDatabaseError'
 import {InvalidArgumentError} from '../error/InvalidArgumentError'
 import {cypher} from './graph/cypher'
-import * as uuid from 'node-uuid'
+import * as uuid from 'uuid'
 
 const assessmentFromRecord = (record) => {
    const assessmentNode = record.get('assessment')

@@ -1,4 +1,3 @@
-import * as uuid from 'node-uuid'
 import {cypher} from './graph/cypher'
 
 const buildNameRegex = (name) => `(?i)${name}.*`

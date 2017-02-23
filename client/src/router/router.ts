@@ -1,9 +1,13 @@
-import {history} from './history'
+import createHistory from 'history/createBrowserHistory'
+
+const history = createHistory()
 
 export const router = {
 
-  goTo(path) {
-    history.push(path)
-  }
+   history,
+
+   goTo(path) {
+      history.push(path)
+   }
 
 }

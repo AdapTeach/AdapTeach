@@ -11,8 +11,8 @@ export class Endpoint<T> {
          .map(r => r.response)
    }
 
-   get(id): Observable<T> {
-      return http.get(`http://localhost:8000/api/${this.entityTypeName}/${id}`)
+   get(uuid: string): Observable<T> {
+      return http.get(`http://localhost:8000/api/${this.entityTypeName}/${uuid}`)
          .map(r => r.response)
    }
 
