@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {CategoryParentHierarchy} from '../../../common/category-parent-hierarchy'
+import {CategoryParentHierarchy} from '../../../common/CategoryParentHierarchy'
 import {Category} from '../../../../core/domain/Category'
 import {connect} from '../../../../util/connect'
 import {categoryEndpoint} from '../../../../endpoint/index'

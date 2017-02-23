@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {CategoryLink} from './category-link'
+import {CategoryLink} from './CategoryLink'
 
 export const CategoryParentHierarchy = ({category}) => {
    const {parent} = category
