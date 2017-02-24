@@ -1,4 +1,5 @@
 export interface Category {
    uuid?: string,
-   name: string
+   name: string,
+   parent?: Category
 }

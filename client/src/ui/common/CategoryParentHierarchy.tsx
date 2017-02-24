@@ -1,7 +1,12 @@
 import * as React from 'react'
 import {CategoryLink} from './CategoryLink'
+import {Category} from '../../core/domain/Category'
 
-export const CategoryParentHierarchy = ({category}) => {
+interface Props {
+   category: Category
+}
+
+export const CategoryParentHierarchy: React.StatelessComponent<Props> = ({category}) => {
    const {parent} = category
    if (!parent) return null
    return <span>
