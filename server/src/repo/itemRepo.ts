@@ -2,6 +2,7 @@ import * as uuid from 'uuid'
 import {InvalidArgumentError} from '../error/InvalidArgumentError'
 import {cypher} from './graph/cypher'
 import {addParentHierarchyToCategory} from './util/addParentHierarchyToCategory'
+import {ItemData} from '../domain/ItemData'
 
 function itemFromRecord(row) {
    const item = row.get('i').properties
@@ -11,8 +12,8 @@ function itemFromRecord(row) {
    return item
 }
 
-const create = async(itemData) => {
-   if (!itemData.categoryId) throw new InvalidArgumentError('item.categoryId is required')
+const create = async(itemData: ItemData) => {
+   if (!itemData.category) throw new InvalidArgumentError('item.category is required')
    const statement = `
     MATCH (c:Category {uuid: {categoryId}})
     CREATE (i:Item:Objective {uuid: {uuid}, name: {name}, description: {description}}) -[:IN_CATEGORY]-> (c)
@@ -20,14 +21,14 @@ const create = async(itemData) => {
     OPTIONAL MATCH (c) -[:CHILD_OF*]-> (p)
     RETURN i, c, collect(p) as parents`
    const parameters = {
-      categoryId: itemData.categoryId,
+      categoryId: itemData.category,
       uuid: uuid.v4(),
       name: itemData.name,
       description: itemData.description ? itemData.description : ''
    }
    const records = await cypher.send(statement, parameters)
    const record = records[0]
-   if (!record) throw new InvalidArgumentError(`No Category exists for id ${itemData.categoryId}`)
+   if (!record) throw new InvalidArgumentError(`No Category exists for id ${itemData.category}`)
    return itemFromRecord(record)
 }
 

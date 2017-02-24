@@ -10,7 +10,7 @@ describe('itemRepo', () => {
       const category = await stub.category()
       const itemData = {
          name: 'Test Item',
-         categoryId: category.uuid
+         category: category.uuid
       }
       const item = await itemRepo.create(itemData)
       expect(item.uuid).toExist()
@@ -18,9 +18,9 @@ describe('itemRepo', () => {
    })
 
    it('prevents Item creation when no category is defined', async() => {
-      const itemWithoutCategory = {
+      const itemWithoutCategory: any = {
          name: 'Item to create',
-         description: 'Whatever'
+         description: 'Whatever',
       }
       try {
          await itemRepo.create(itemWithoutCategory)
@@ -34,7 +34,7 @@ describe('itemRepo', () => {
       const category = await stub.category()
       const created = await itemRepo.create({
          name: 'Item lacking a description',
-         categoryId: category.uuid
+         category: category.uuid
       })
       expect(created.uuid).toExist()
    })
@@ -43,7 +43,7 @@ describe('itemRepo', () => {
       const itemWithInvalidCategoryId = {
          name: 'Item to create',
          description: 'Whatever',
-         categoryId: 'Not a UUID'
+         category: 'Not a UUID'
       }
       try {
          await itemRepo.create(itemWithInvalidCategoryId)
@@ -57,7 +57,7 @@ describe('itemRepo', () => {
       const itemWithNonExistentCategory = {
          name: 'Item to create',
          description: 'Whatever',
-         categoryId: 'b5afa2c7-1e55-4eea-b880-952e56721720'
+         category: 'b5afa2c7-1e55-4eea-b880-952e56721720'
       }
       try {
          await itemRepo.create(itemWithNonExistentCategory)
@@ -92,7 +92,7 @@ describe('itemRepo', () => {
          category = await categoryRepo.create({name: 'Category with Grandparent', parentId: parentCategory.uuid})
          item = await itemRepo.create({
             name: 'Item with deep Category hierarchy',
-            categoryId: category.uuid
+            category: category.uuid
          })
       })
 

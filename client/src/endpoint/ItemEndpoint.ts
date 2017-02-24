@@ -18,10 +18,6 @@ export class ItemEndpoint {
          .map(r => r.response)
          .map((richItem: RichItem) => normalizeItem(richItem))
          .map(({entities, result}) => entities.item[result])
-         .map(item => ({
-            ...item,
-            categoryId: item.category
-         }))
    }
 
 }

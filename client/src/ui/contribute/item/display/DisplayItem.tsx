@@ -8,8 +8,8 @@ const Component: React.StatelessComponent<Item> = (item) => <div>
    <h1>View Item</h1>
    <h3>
       {/*<CategoryParentHierarchy category={category}/>*/}
-      {item.name}
-      {item.categoryId}
+      <div>{item.name}</div>
+      <div>{item.category}</div>
    </h3>
 </div>
 

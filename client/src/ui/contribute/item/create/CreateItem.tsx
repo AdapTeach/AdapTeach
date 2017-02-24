@@ -38,7 +38,7 @@ export class CreateItem extends React.Component<{}, State> {
       itemEndpoint
          .post({
             name: this.state.name,
-            categoryId: this.state.category.uuid
+            category: this.state.category.uuid
          })
          .subscribe(createdItem => router.goTo(path.contribute.item.display(createdItem.uuid)))
    }

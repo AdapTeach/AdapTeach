@@ -1,5 +1,4 @@
-export interface Item {
-   uuid?: string,
+export interface ItemData {
    name: string,
    description?: string,
    category: string

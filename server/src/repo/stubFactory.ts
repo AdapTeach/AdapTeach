@@ -32,7 +32,7 @@ const createItem = async() => {
    const category = await createCategory()
    return await itemRepo.create({
       name: 'Test Item',
-      categoryId: category.uuid
+      category: category.uuid
    })
 }
 
