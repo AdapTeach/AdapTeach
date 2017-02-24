@@ -1,8 +1,8 @@
-import {RichItem} from '../core/domain/RichItem'
 import {normalizeItem} from '../core/domain/norms'
 import {Observable} from 'rxjs'
 import {Item} from '../core/domain/Item'
 import {http} from './http'
+import {logAndReturn} from '../util/logAndReturn'
 
 const entityTypeName = 'item'
 
@@ -16,7 +16,7 @@ export class ItemEndpoint {
    get(uuid: string): Observable<Item> {
       return http.get(`http://localhost:8000/api/${entityTypeName}/${uuid}`)
          .map(r => r.response)
-         .map((richItem: RichItem) => normalizeItem(richItem))
+         .map(normalizeItem)
          .map(({entities, result}) => entities.item[result])
    }
 

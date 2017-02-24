@@ -1,15 +1,25 @@
 import * as React from 'react'
 import {CategoryLink} from './CategoryLink'
 import {Category} from '../../core/domain/Category'
+import {connect} from '../../util/connect'
+import {categoryEndpoint} from '../../endpoint/index'
 
-interface Props {
-   category: Category
-}
-
-export const CategoryParentHierarchy: React.StatelessComponent<Props> = ({category}) => {
+const HierarchyComponent: React.StatelessComponent<Category> = (category) => {
    const {parent} = category
    if (!parent) return null
    return <span>
-      <CategoryParentHierarchy category={parent}/>
-   <CategoryLink category={parent}/> > </span>
+      <ParentHierarchy category={parent}/>
+      <CategoryLink category={parent}/> > </span>
 }
+
+const propsMapper = (props: {category: string}) => categoryEndpoint.get(props.category)
+
+const ParentHierarchy = connect(propsMapper)(HierarchyComponent)
+
+const Component: React.StatelessComponent<Category> = (category) => <span>
+   <ParentHierarchy category={category.uuid}/>
+   {category.name}
+</span>
+
+export const CategoryParentHierarchy = connect(propsMapper)(Component)
+

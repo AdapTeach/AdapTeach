@@ -1,9 +1,15 @@
 import {normalize, schema} from 'normalizr'
 import {RichItem} from './RichItem'
+import {RichCategory} from './RichCategory'
 
-const category = new schema.Entity('category', {}, {idAttribute: 'uuid'})
-category.define({parent: category})
+const categorySchema = new schema.Entity('category', {}, {idAttribute: 'uuid'})
+categorySchema.define({parent: categorySchema})
 
-const itemSchema = new schema.Entity('item', {category}, {idAttribute: 'uuid'})
+const itemSchema = new schema.Entity('item', {
+   category: categorySchema
+}, {idAttribute: 'uuid'})
+
+export const normalizeCategory = (richCategory: RichCategory) => normalize(richCategory, categorySchema)
 
 export const normalizeItem = (richItem: RichItem) => normalize(richItem, itemSchema)
+

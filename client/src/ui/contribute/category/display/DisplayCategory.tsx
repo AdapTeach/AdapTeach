@@ -8,8 +8,7 @@ import {RouteProps} from '../../../../router/RouteProps'
 const Component: React.StatelessComponent<Category> = (category) => <div>
    <h1>View Category</h1>
    <h3>
-      <CategoryParentHierarchy category={category}/>
-      {category.name}
+      <CategoryParentHierarchy category={category.uuid}/>
    </h3>
 </div>
 
