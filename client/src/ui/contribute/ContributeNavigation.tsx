@@ -8,7 +8,7 @@ const goToCreateComposite = () => router.goTo(path.contribute.composite.create)
 const goToCreateQuiz = () => router.goTo(path.contribute.quiz.create)
 
 export const ContributeNavigation: React.StatelessComponent<{}> = () =>
-   <div>
+   <div style={{margin: '20px'}}>
       <button onClick={goToCreateCategory}>Create Category</button>
       <button onClick={goToCreateItem}>Create Item</button>
       <button onClick={goToCreateComposite}>Create Composite</button>

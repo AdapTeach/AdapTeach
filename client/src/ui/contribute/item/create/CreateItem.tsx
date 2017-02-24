@@ -1,21 +1,46 @@
 import * as React from 'react'
 import {Category} from '../../../../core/domain/Category'
 import {CategorySearch} from '../../../common/CategorySearch'
-import {logAndReturn} from '../../../../util/logAndReturn'
+import {itemEndpoint} from '../../../../endpoint/index'
+import {router} from '../../../../router/router'
+import {path} from '../../../../router/path'
 
-interface Form {
+interface State {
    name: string,
-   selectedCategory: Category
+   category?: Category
 }
 
-// const onSubmit = e => {
-//    e.preventDefault()
-//    itemEndpoint
-//       .post({name: inputValue$.getValue()})
-//       .subscribe(createdCategory => goToDisplay(createdCategory))
-// }
+export class CreateItem extends React.Component<{}, State> {
 
-export const CreateItem = () => <div>
-   <h2>Create Item</h2>
-   <CategorySearch onSelect={logAndReturn}/>
-</div>
+   constructor() {
+      super()
+      this.state = {
+         name: ''
+      }
+   }
+
+   render() {
+      return <form onSubmit={this.onSubmit}>
+         <h2>Create Item</h2>
+         <input placeholder='Name' onChange={this.onNameChange}/>
+         <CategorySearch onSelect={category => this.setState({category})}/>
+         <button onClick={this.onSubmit} disabled={!this.canSubmit()}>Create</button>
+      </form>
+   }
+
+   onNameChange = (e) => this.setState({name: e.target.value})
+
+   canSubmit = () => this.state.name.length > 1 && this.state.category
+
+   onSubmit = e => {
+      e.preventDefault()
+      if (!this.canSubmit()) return
+      itemEndpoint
+         .post({
+            name: this.state.name,
+            categoryId: this.state.category.uuid
+         })
+         .subscribe(createdItem => router.goTo(path.contribute.item.display(createdItem.uuid)))
+   }
+
+}

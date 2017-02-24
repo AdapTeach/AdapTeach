@@ -31,7 +31,7 @@ export class CategorySearch extends React.Component<Props, State> {
          renderSuggestion={this.renderSuggestion}
          onSuggestionSelected={this.onSuggestionSelected}
          inputProps={{
-               placeholder: 'Placeholder',
+               placeholder: 'Category',
                value,
                onChange: this.onChange
          }}/>
@@ -58,9 +58,9 @@ export class CategorySearch extends React.Component<Props, State> {
       value: newValue
    })
 
-   onSuggestionSelected = (category: Category) => {
+   onSuggestionSelected = (event, {suggestion}) => {
       this.setState({selected: true})
-      this.props.onSelect(category)
+      this.props.onSelect(suggestion)
    }
 
 }
