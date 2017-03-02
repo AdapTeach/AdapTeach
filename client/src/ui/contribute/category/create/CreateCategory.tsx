@@ -4,12 +4,12 @@ import * as Autosuggest from 'react-autosuggest'
 import {F} from 'ramda'
 import {BehaviorSubject, Observable} from 'rxjs'
 import {Button} from '@blueprintjs/core'
-import {connect} from '../../../../util/connect'
 import {categoryEndpoint} from '../../../../endpoint/index'
 import {Category} from '../../../../core/domain/Category'
 import {createCategoryStore} from '../../../../core/state/index'
 import {path} from '../../../../router/path'
 import {router} from '../../../../router/router'
+import {connect} from 'react-rx-pure-connect'
 
 const inputValue$ = new BehaviorSubject<string>('')
 

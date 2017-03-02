@@ -1,9 +1,9 @@
 import * as React from 'react'
 import {CategoryParentHierarchy} from '../../../common/CategoryParentHierarchy'
 import {Category} from '../../../../core/domain/Category'
-import {connect} from '../../../../util/connect'
 import {categoryEndpoint} from '../../../../endpoint/index'
 import {RouteProps} from '../../../../router/RouteProps'
+import {connect} from 'react-rx-pure-connect'
 
 const Component: React.StatelessComponent<Category> = (category) => <div>
    <h1>View Category</h1>

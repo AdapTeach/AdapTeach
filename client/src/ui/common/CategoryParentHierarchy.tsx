@@ -1,8 +1,8 @@
 import * as React from 'react'
 import {CategoryLink} from './CategoryLink'
 import {Category} from '../../core/domain/Category'
-import {connect} from '../../util/connect'
 import {categoryEndpoint} from '../../endpoint/index'
+import {connect} from 'react-rx-pure-connect'
 
 const HierarchyComponent: React.StatelessComponent<Category> = (category) => {
    const {parent} = category

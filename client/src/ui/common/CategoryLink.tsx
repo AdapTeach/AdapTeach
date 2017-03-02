@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 import {path} from '../../router/path'
 import {Category} from '../../core/domain/Category'
 import {categoryEndpoint} from '../../endpoint/index'
-import {connect} from '../../util/connect'
+import {connect} from 'react-rx-pure-connect'
 
 const Component: React.StatelessComponent<Category> = (category) =>
    <Link to={path.contribute.category.display(category.uuid)}>{category.name}</Link>
