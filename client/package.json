@@ -21,25 +21,20 @@
     "tdd": "mocha --opts mocha.opts --watch"
   },
   "dependencies": {
-    "@blueprintjs/core": "^1.10.0",
     "axios": "^0.15.3",
-    "immupdate": "0.4.0",
     "normalizr": "^3.2.2",
     "ramda": "^0.23.0",
     "react": "^15.4.2",
-    "react-addons-css-transition-group": "^15.4.2",
     "react-autosuggest": "^9.0.0",
     "react-dom": "^15.4.2",
     "react-router-dom": "^4.0.0-beta.6",
     "react-rx-pure-connect": "^1.0.0",
-    "rxjs": "^5.1.0",
-    "sparix": "^1.0.0-beta.1"
+    "rxjs": "^5.2.0",
+    "sparix": "^1.0.0-beta.4"
   },
   "devDependencies": {
-    "@types/pure-render-decorator": "^0.2.27",
     "@types/ramda": "0.0.3",
     "@types/react": "^15.0.14",
-    "@types/react-addons-css-transition-group": "^15.0.1",
     "@types/react-dom": "^0.14.23",
     "awesome-typescript-loader": "^3.0.8",
     "css-loader": "^0.26.2",

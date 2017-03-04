@@ -22,4 +22,3 @@ const Component: React.StatelessComponent<Category> = (category) => <span>
 </span>
 
 export const CategoryParentHierarchy = connect(propsMapper)(Component)
-

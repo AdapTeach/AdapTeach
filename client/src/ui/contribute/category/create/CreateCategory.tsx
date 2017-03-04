@@ -3,7 +3,6 @@ import {Route} from 'react-router-dom'
 import * as Autosuggest from 'react-autosuggest'
 import {F} from 'ramda'
 import {BehaviorSubject, Observable} from 'rxjs'
-import {Button} from '@blueprintjs/core'
 import {categoryEndpoint} from '../../../../endpoint/index'
 import {Category} from '../../../../core/domain/Category'
 import {createCategoryStore} from '../../../../core/state/index'
@@ -62,7 +61,7 @@ const Component: React.StatelessComponent<Props> = ({inputValue, suggestions}) =
                value: inputValue,
                onChange: onInputValueChange
             }}/>
-         <Button onClick={onSubmit}>Create</Button>
+         <button onClick={onSubmit}>Create</button>
       </form>
    </div>
 
