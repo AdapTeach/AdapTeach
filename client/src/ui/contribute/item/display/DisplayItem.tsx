@@ -10,6 +10,7 @@ const Component: React.StatelessComponent<Item> = (item) => <div>
    <h3>
       <CategoryParentHierarchy category={item.category}/>
       <div>{item.name}</div>
+      <div>{item.description}</div>
    </h3>
 </div>
 

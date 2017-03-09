@@ -7,6 +7,7 @@ import {path} from '../../../../router/path'
 
 interface State {
    name: string,
+   description: string,
    category?: Category
 }
 
@@ -15,7 +16,8 @@ export class CreateItem extends React.Component<{}, State> {
    constructor() {
       super()
       this.state = {
-         name: ''
+         name: '',
+         description: ''
       }
    }
 
@@ -23,12 +25,16 @@ export class CreateItem extends React.Component<{}, State> {
       return <form onSubmit={this.onSubmit}>
          <h2>Create Item</h2>
          <input placeholder='Name' onChange={this.onNameChange}/>
+         <br />
+         <input placeholder='Description' onChange={this.onDescriptionChange}/>
          <CategorySearch onSelect={category => this.setState({category})}/>
          <button onClick={this.onSubmit} disabled={!this.canSubmit()}>Create</button>
       </form>
    }
 
    onNameChange = (e) => this.setState({name: e.target.value})
+
+   onDescriptionChange = (e) => this.setState({description: e.target.value})
 
    canSubmit = () => this.state.name.length > 1 && this.state.category
 
@@ -38,6 +44,7 @@ export class CreateItem extends React.Component<{}, State> {
       itemEndpoint
          .post({
             name: this.state.name,
+            description: this.state.description,
             category: this.state.category.uuid
          })
          .subscribe(createdItem => router.goTo(path.contribute.item.display(createdItem.uuid)))
