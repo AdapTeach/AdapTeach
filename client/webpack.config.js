@@ -11,7 +11,7 @@ module.exports = {
       filename: 'bundle.js'
    },
 
-   devtool: 'cheap-module-eval-source-map',
+   devtool: 'eval-source-map',
 
    devServer: {historyApiFallback: true},
 

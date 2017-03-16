@@ -1,6 +1,5 @@
-export interface Item {
-   uuid?: string,
-   name: string,
-   description?: string,
+import {Objective} from './Objective'
+
+export interface Item extends Objective {
    category: string
 }

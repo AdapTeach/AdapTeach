@@ -11,4 +11,9 @@ router.get('/api/objective', async ctx => {
    ctx.body = await objectiveRepo.search(ctx.query.name)
 })
 
+router.get('/api/objective/search/:name', async ctx => {
+   ctx.status = 200
+   ctx.body = await objectiveRepo.search(ctx.params.name)
+})
+
 export default router

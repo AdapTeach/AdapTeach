@@ -44,4 +44,15 @@ describe('Objective API', () => {
 
    })
 
+   describe('for unknown Objective name', () => {
+
+      it('finds no matching Objective', async() => {
+         const found = await objectiveRepo.search('DZIPZDIJPJCIPZIPJDZJPICSDAIPJDZIP')
+         const {composites, items} = found
+         expect(composites.length).toBe(0)
+         expect(items.length).toBe(0)
+      })
+
+   })
+
 })

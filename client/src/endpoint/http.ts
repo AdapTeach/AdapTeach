@@ -1,17 +1,18 @@
-import {Observable, AjaxResponse} from 'rxjs'
+import {Observable} from 'rxjs'
 import {mapObjIndexed} from 'ramda'
 
 export const http = {
 
-   post(url: string, body): Observable<AjaxResponse> {
-      return Observable.ajax.post(url, body)
+   post<T>(url: string, body): Observable<T> {
+      return Observable.ajax.post(url, body, {'Content-Type': 'application/json'})
+         .map(r => r.response)
    },
 
-   get(url: string, params?: Record<string, string>): Observable<AjaxResponse> {
+   get<T>(url: string, params?: Record<string, string>): Observable<T> {
       const queryParams = params
          ? '?' + mapObjIndexed((val, key) => `${key}=${val}&`, params)
          : ''
-      return Observable.ajax.get(url + queryParams)
+      return Observable.ajax.getJSON(url + queryParams)
    }
 
 }

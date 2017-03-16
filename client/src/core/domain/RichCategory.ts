@@ -1,5 +1,7 @@
+import {UUID} from './UUID'
+
 export interface RichCategory {
-   uuid: string,
+   uuid: UUID,
    name: string,
    parent?: RichCategory
 }

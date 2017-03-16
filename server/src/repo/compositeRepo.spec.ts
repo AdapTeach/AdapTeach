@@ -1,35 +1,14 @@
 import * as expect from 'expect'
-import {InvalidArgumentError} from '../error/InvalidArgumentError'
 import {stub} from './stubFactory'
 import {compositeRepo} from './compositeRepo'
 
 describe('Composite API', () => {
 
-   it('creates Composite when componentIds field array is missing', async() => {
-      const composite = await compositeRepo.create({
-         name: 'Empty Composite',
-         description: 'Whatever'
-      })
-      expect(composite.uuid).toExist()
-   })
-
-   it('prevents Composite creation when name is missing', async() => {
-      const compositeWithoutName = {
-         description: 'Whatever'
-      }
-      try {
-         await compositeRepo.create(compositeWithoutName)
-         throw Error('Should throw !')
-      } catch (error) {
-         expect(error).toBeA(InvalidArgumentError)
-      }
-   })
-
-   describe('when Composite with no components is created', () => {
+   describe('when Composite with no subObjective is created', () => {
       const compositeFields = {
          name: 'Empty Composite',
          description: 'Whatever',
-         componentIds: []
+         subObjectives: []
       }
       let composite
 
@@ -58,7 +37,8 @@ describe('Composite API', () => {
          item = await stub.item()
          const compositeFields = {
             name: 'Composite with single Item component',
-            componentIds: [item.uuid]
+            description: '',
+            subObjectives: [item.uuid]
          }
          composite = await compositeRepo.create(compositeFields)
       })
@@ -95,7 +75,8 @@ describe('Composite API', () => {
          item2 = await stub.item()
          const compositeFields = {
             name: 'Composite with many Items as objectives',
-            componentIds: [item1.uuid, item2.uuid]
+            description: '',
+            subObjectives: [item1.uuid, item2.uuid]
          }
          composite = await compositeRepo.create(compositeFields)
       })
@@ -104,6 +85,25 @@ describe('Composite API', () => {
          expect(composite.components.items.length).toEqual(2)
          expect(composite.components.items).toInclude(item1)
          expect(composite.components.items).toInclude(item2)
+      })
+   })
+
+   describe('when Composite composed of single Composite is created', () => {
+      let composite
+      let component
+
+      beforeEach(async() => {
+         component = await stub.composite()
+         const compositeFields = {
+            name: 'Composite composed of single Composite',
+            description: '',
+            subObjectives: [component.uuid]
+         }
+         composite = await compositeRepo.create(compositeFields)
+      })
+
+      it('returns child Composite', async() => {
+         expect(composite.components.composites.length).toEqual(1)
       })
    })
 

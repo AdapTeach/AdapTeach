@@ -40,8 +40,8 @@ const find = async(uuid) => {
 const search = async(name) => {
    const statement = `
     MATCH (objective:Objective)
-    OPTIONAL MATCH (objective) -[:IN_CATEGORY]-> (category)
     WHERE objective.name =~ {nameRegex}
+    OPTIONAL MATCH (objective) -[:IN_CATEGORY]-> (category)
     RETURN objective, category`
    const params = {
       nameRegex: buildNameRegex(name)

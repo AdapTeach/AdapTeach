@@ -1,6 +1,7 @@
 import * as uuid from 'uuid'
 import {InvalidArgumentError} from '../error/InvalidArgumentError'
 import {cypher} from './graph/cypher'
+import {CompositeFields} from '../domain/CompositeFields'
 
 function compositeFromRecord(record) {
    const composite = record.get('c').properties
@@ -9,7 +10,7 @@ function compositeFromRecord(record) {
    const items = itemNodes.map(node => node.properties)
    const categories = categoryNodes.map(node => node.properties)
    addCategoriesToItems(items, categories)
-   const composites = record.composites || []
+   const composites = record.keys.indexOf('composites') >= 0 ? record.get('composites') : []
    composite.components = {items, composites}
    return composite
 }
@@ -19,16 +20,16 @@ function addCategoriesToItems(items, categories) {
    return items
 }
 
-const create = async(compositeFields) => {
+const create = async(compositeFields: CompositeFields) => {
    if (!compositeFields.name) throw new InvalidArgumentError('Name is missing on Composite to create')
-   // The second, long query will not return created Composite if the componentIds array is empty
+   // The second, long query will not return created Composite if the subObjectives array is empty
    let statement = `
     CREATE (c:Composite:Objective {uuid: {uuid}, name: {name}, description: {description}})
     RETURN c`
-   if (compositeFields.componentIds && compositeFields.componentIds.length > 0) statement = `
+   if (compositeFields.subObjectives && compositeFields.subObjectives.length > 0) statement = `
     CREATE (c:Composite:Objective {uuid: {uuid}, name: {name}, description: {description}})
     WITH c
-    UNWIND {componentIds} AS componentId
+    UNWIND {subObjectives} AS componentId
       MATCH (o:Objective {uuid: componentId})
       CREATE (c) -[:COMPOSED_OF]-> (o)
     WITH c
@@ -39,7 +40,7 @@ const create = async(compositeFields) => {
       uuid: uuid.v4(),
       name: compositeFields.name,
       description: compositeFields.description || '',
-      componentIds: compositeFields.componentIds
+      subObjectives: compositeFields.subObjectives
    }
    const result = await cypher.send(statement, parameters)
    return compositeFromRecord(result[0])

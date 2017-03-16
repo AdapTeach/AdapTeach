@@ -24,7 +24,8 @@ const createComposite = async() => {
    const item = await createItem()
    return await compositeRepo.create({
       name: 'Stub Composite',
-      componentIds: [item.uuid]
+      description: '',
+      subObjectives: [item.uuid]
    })
 }
 
@@ -32,6 +33,7 @@ const createItem = async() => {
    const category = await createCategory()
    return await itemRepo.create({
       name: 'Test Item',
+      description: '',
       category: category.uuid
    })
 }

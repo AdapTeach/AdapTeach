@@ -1,7 +1,7 @@
 import {UUID} from './UUID'
 
-export interface Category {
+export interface Objective {
    uuid?: UUID,
    name: string,
-   parent?: string
+   description: string
 }

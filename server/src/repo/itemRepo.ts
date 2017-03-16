@@ -2,7 +2,7 @@ import * as uuid from 'uuid'
 import {InvalidArgumentError} from '../error/InvalidArgumentError'
 import {cypher} from './graph/cypher'
 import {addParentHierarchyToCategory} from './util/addParentHierarchyToCategory'
-import {ItemData} from '../domain/ItemData'
+import {ItemFields} from '../domain/ItemFields'
 
 function itemFromRecord(row) {
    const item = row.get('i').properties
@@ -12,7 +12,7 @@ function itemFromRecord(row) {
    return item
 }
 
-const create = async(itemData: ItemData) => {
+const create = async(itemData: ItemFields) => {
    if (!itemData.category) throw new InvalidArgumentError('item.category is required')
    const statement = `
     MATCH (c:Category {uuid: {categoryId}})

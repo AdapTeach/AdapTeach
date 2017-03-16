@@ -10,6 +10,7 @@ describe('itemRepo', () => {
       const category = await stub.category()
       const itemData = {
          name: 'Test Item',
+         description: '',
          category: category.uuid
       }
       const item = await itemRepo.create(itemData)
@@ -34,6 +35,7 @@ describe('itemRepo', () => {
       const category = await stub.category()
       const created = await itemRepo.create({
          name: 'Item lacking a description',
+         description: '',
          category: category.uuid
       })
       expect(created.uuid).toExist()
@@ -92,6 +94,7 @@ describe('itemRepo', () => {
          category = await categoryRepo.create({name: 'Category with Grandparent', parentId: parentCategory.uuid})
          item = await itemRepo.create({
             name: 'Item with deep Category hierarchy',
+            description: '',
             category: category.uuid
          })
       })
