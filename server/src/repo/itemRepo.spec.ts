@@ -3,22 +3,24 @@ import {InvalidArgumentError} from '../error/InvalidArgumentError'
 import {categoryRepo} from './categoryRepo'
 import {itemRepo} from './itemRepo'
 import {stub} from './stubFactory'
+import {ITEM} from '../domain/Objective'
 
 describe('itemRepo', () => {
 
-   it('creates Item', async() => {
+   it('creates Item', async () => {
       const category = await stub.category()
-      const itemData = {
+      const itemFields = {
          name: 'Test Item',
          description: '',
          category: category.uuid
       }
-      const item = await itemRepo.create(itemData)
+      const item = await itemRepo.create(itemFields)
       expect(item.uuid).toExist()
-      expect(item.name).toEqual(itemData.name)
+      expect(item.name).toEqual(itemFields.name)
+      expect(item.type).toEqual(ITEM)
    })
 
-   it('prevents Item creation when no category is defined', async() => {
+   it('prevents Item creation when no category is defined', async () => {
       const itemWithoutCategory: any = {
          name: 'Item to create',
          description: 'Whatever',
@@ -31,7 +33,7 @@ describe('itemRepo', () => {
       }
    })
 
-   it('creates Item without a description', async() => {
+   it('creates Item without a description', async () => {
       const category = await stub.category()
       const created = await itemRepo.create({
          name: 'Item lacking a description',
@@ -41,7 +43,7 @@ describe('itemRepo', () => {
       expect(created.uuid).toExist()
    })
 
-   it('prevents Item creation if categoryId is not a valid UUID', async() => {
+   it('prevents Item creation if categoryId is not a valid UUID', async () => {
       const itemWithInvalidCategoryId = {
          name: 'Item to create',
          description: 'Whatever',
@@ -55,7 +57,7 @@ describe('itemRepo', () => {
       }
    })
 
-   it('prevents Item creation if no Category exists for given categoryId', async() => {
+   it('prevents Item creation if no Category exists for given categoryId', async () => {
       const itemWithNonExistentCategory = {
          name: 'Item to create',
          description: 'Whatever',
@@ -71,15 +73,14 @@ describe('itemRepo', () => {
 
    describe('when Item is created', () => {
       let item
-      beforeEach(async() => {
+      beforeEach(async () => {
          item = await stub.item()
       })
 
-      it('finds Item', async() => {
+      it('finds Item', async () => {
          const foundItem = await itemRepo.find(item.uuid)
          expect(foundItem).toEqual(item)
       })
-
    })
 
    describe('when Category has grandparent', () => {
@@ -88,7 +89,7 @@ describe('itemRepo', () => {
       let category
       let item
 
-      beforeEach(async() => {
+      beforeEach(async () => {
          grandparentCategory = await categoryRepo.create({name: 'Grandparent Category'})
          parentCategory = await categoryRepo.create({name: 'Parent Category', parent: grandparentCategory.uuid})
          category = await categoryRepo.create({name: 'Category with Grandparent', parent: parentCategory.uuid})
@@ -99,12 +100,12 @@ describe('itemRepo', () => {
          })
       })
 
-      it('returns Category hierarchy when creating item', async() => {
+      it('returns Category hierarchy when creating item', async () => {
          expect(item.category.parent.uuid).toEqual(parentCategory.uuid)
          expect(item.category.parent.parent.uuid).toEqual(grandparentCategory.uuid)
       })
 
-      it('returns Category hierarchy when getting Item by ID', async() => {
+      it('returns Category hierarchy when getting Item by ID', async () => {
          const found = await itemRepo.find(item.uuid)
          expect(found).toEqual(item)
       })

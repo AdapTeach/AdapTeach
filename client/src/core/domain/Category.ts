@@ -4,12 +4,12 @@ export interface Category extends Entity, CategoryFields {
 }
 
 export interface CategoryFields {
-   name: string,
+   name: string
    parent?: string
 }
 
 export interface CategoryDTO extends Entity {
-   name: string,
+   name: string
    parent?: CategoryDTO
 }
 

@@ -3,6 +3,7 @@ import {RouteProps} from '../../../../router/RouteProps'
 import {compositeEndpoint} from '../../../../endpoint/index'
 import {connect} from 'react-rx-pure-connect'
 
+
 const Component: React.StatelessComponent<any> = (composite) => <div>
    <h1>View Composite</h1>
    <h3>Name: {composite.name}</h3>

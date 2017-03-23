@@ -1,109 +1,140 @@
 import * as expect from 'expect'
 import {stub} from './stubFactory'
 import {compositeRepo} from './compositeRepo'
+import {COMPOSITE} from '../domain/Objective'
+import {Composite} from '../domain/Composite'
+import {Item} from '../domain/Item'
 
-describe('Composite API', () => {
+describe('compositeRepo', () => {
 
-   describe('when Composite with no subObjective is created', () => {
+   describe('when Composite with no sub-objective is created', () => {
       const compositeFields = {
          name: 'Empty Composite',
          description: 'Whatever',
          subObjectives: []
       }
-      let composite
+      let composite: Composite
 
-      beforeEach(async() => {
+      beforeEach(async () => {
          composite = await compositeRepo.create(compositeFields)
       })
 
-      it('returns created Composite', async() => {
+      it('returns created Composite', async () => {
          expect(composite.uuid).toExist()
          expect(composite.name).toEqual(compositeFields.name)
          expect(composite.description).toEqual(compositeFields.description)
+         expect(composite.type).toEqual(COMPOSITE)
       })
 
-      it('finds Composite by ID', async() => {
+      it('finds Composite by ID', async () => {
          const found = await compositeRepo.find(composite.uuid)
          expect(found).toEqual(composite)
       })
 
    })
 
-   describe('when Composite with single Item component is created', () => {
-      let item
-      let composite
+   describe('when Composite with single Item is created', () => {
+      let item: Item
+      let composite: Composite
 
-      beforeEach(async() => {
+      beforeEach(async () => {
          item = await stub.item()
-         const compositeFields = {
+         composite = await compositeRepo.create({
             name: 'Composite with single Item component',
             description: '',
             subObjectives: [item.uuid]
-         }
-         composite = await compositeRepo.create(compositeFields)
+         })
       })
 
-      it('returns Item in components', async() => {
-         const itemIds = composite.components.items.map(item => item.uuid)
-         expect(itemIds.length).toEqual(1)
-         expect(itemIds).toInclude(item.uuid)
+      it('returns Item in sub-objectives', async () => {
+         expect(composite.subObjectives.length).toEqual(1)
+         expect(composite.subObjectives).toInclude(item)
       })
 
       describe('when finding Composite by ID', () => {
-         let found
+         let found: Composite
 
-         beforeEach(async() => {
+         beforeEach(async () => {
             found = await compositeRepo.find(composite.uuid)
          })
 
-         it('returns Item in components', async() => {
-            const itemIds = found.components.items.map(item => item.uuid)
-            expect(itemIds.length).toEqual(1)
-            expect(itemIds).toInclude(item.uuid)
+         it('returns Item in sub-objectives', async () => {
+            expect(found.subObjectives.length).toEqual(1)
+            expect(found.subObjectives).toInclude(item)
          })
       })
 
    })
 
    describe('when Composite with many Items components is created', () => {
-      let item1
-      let item2
-      let composite
+      let item1: Item
+      let item2: Item
+      let composite: Composite
 
-      beforeEach(async() => {
+      beforeEach(async () => {
          item1 = await stub.item()
          item2 = await stub.item()
-         const compositeFields = {
+         composite = await compositeRepo.create({
             name: 'Composite with many Items as objectives',
             description: '',
             subObjectives: [item1.uuid, item2.uuid]
-         }
-         composite = await compositeRepo.create(compositeFields)
+         })
       })
 
-      it('returns Items in components', async() => {
-         expect(composite.components.items.length).toEqual(2)
-         expect(composite.components.items).toInclude(item1)
-         expect(composite.components.items).toInclude(item2)
+      it('returns Items in components', async () => {
+         expect(composite.subObjectives.length).toEqual(2)
+         expect(composite.subObjectives).toInclude(item1)
+         expect(composite.subObjectives).toInclude(item2)
       })
    })
 
    describe('when Composite composed of single Composite is created', () => {
-      let composite
-      let component
+      let composite: Composite
+      let child: Composite
 
-      beforeEach(async() => {
-         component = await stub.composite()
-         const compositeFields = {
+      beforeEach(async () => {
+         child = await stub.composite()
+         composite = await compositeRepo.create({
             name: 'Composite composed of single Composite',
             description: '',
-            subObjectives: [component.uuid]
-         }
-         composite = await compositeRepo.create(compositeFields)
+            subObjectives: [child.uuid]
+         })
       })
 
-      it('returns child Composite', async() => {
-         expect(composite.components.composites.length).toEqual(1)
+      it('returns child Composite', async () => {
+         expect(composite.subObjectives.length).toEqual(1)
+         expect(composite.subObjectives[0].uuid).toEqual(child.uuid)
+         expect(composite.subObjectives[0].type).toEqual(COMPOSITE)
+      })
+   })
+
+
+   describe('when Composite composed of parent Composite is created', () => {
+      let composite: Composite
+      let child: Composite
+      let grandChild: Composite
+
+      beforeEach(async () => {
+         grandChild = await stub.composite()
+         child = await compositeRepo.create({
+            name: 'Child Composite',
+            description: '',
+            subObjectives: [grandChild.uuid]
+         })
+         composite = await compositeRepo.create({
+            name: 'Composite composed of single Composite',
+            description: '',
+            subObjectives: [child.uuid]
+         })
+      })
+
+      it.skip('returns grandchild Composite', async () => {
+         const childComposite: Composite = <Composite> composite.subObjectives[0]
+         expect(childComposite.subObjectives.length).toEqual(1)
+         // const grandChildren = childComposite.subObjectives[0]
+         // expect(composite.subObjectives.length).toEqual(1)
+         // expect(composite.subObjectives[0].uuid).toEqual(child.uuid)
+         // expect(composite.subObjectives[0].type).toEqual(COMPOSITE)
       })
    })
 

@@ -13,6 +13,7 @@ export class CompositeEndpoint {
 
    get(uuid: UUID): Observable<Composite> {
       return http.get(`http://localhost:8000/api/composite/${uuid}`)
+         // .map(normalizeComposite)
          .map(({entities, result}) => entities.item[result])
    }
 

@@ -1,11 +1,11 @@
 import {Entity} from './Entity'
 
 export interface Category extends Entity {
-   name: string,
+   name: string
    parent?: Category
 }
 
 export interface CategoryFields {
-   name: string,
+   name: string
    parent?: string
 }

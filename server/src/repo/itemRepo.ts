@@ -4,9 +4,11 @@ import {cypher} from './graph/cypher'
 import {addParentHierarchyToCategory} from './util/addParentHierarchyToCategory'
 import {Item, ItemFields} from '../domain/Item'
 import {UUID} from '../domain/UUID'
+import {ITEM} from '../domain/Objective'
 
 function itemFromRecord(row) {
    const item = row.get('i').properties
+   item.type = ITEM
    item.category = row.get('c').properties
    const parents = row.get('parents').map(node => node.properties)
    addParentHierarchyToCategory(item.category, parents)

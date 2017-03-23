@@ -3,17 +3,25 @@ import {InvalidArgumentError} from '../error/InvalidArgumentError'
 import {cypher} from './graph/cypher'
 import {Composite, CompositeFields} from '../domain/Composite'
 import {UUID} from '../domain/UUID'
+import {COMPOSITE, ITEM} from '../domain/Objective'
 
 function compositeFromRecord(record) {
    const composite = record.get('c').properties
    const itemNodes = record.keys.indexOf('items') >= 0 ? record.get('items') : []
+   const items = itemNodes.map(node => node.properties).map(item => ({...item, type: ITEM}))
    const categoryNodes = record.keys.indexOf('categories') >= 0 ? record.get('categories') : []
-   const items = itemNodes.map(node => node.properties)
    const categories = categoryNodes.map(node => node.properties)
    addCategoriesToItems(items, categories)
-   const composites = record.keys.indexOf('composites') >= 0 ? record.get('composites') : []
-   composite.components = {items, composites}
-   return composite
+   const compositeNodes = record.keys.indexOf('composites') >= 0 ? record.get('composites') : []
+   const composites = compositeNodes.map(node => node.properties).map(composite => ({
+      ...composite,
+      type: COMPOSITE
+   }))
+   composite.subObjectives = [...items, ...composites]
+   return {
+      ...composite,
+      type: COMPOSITE
+   }
 }
 
 function addCategoriesToItems(items, categories) {
