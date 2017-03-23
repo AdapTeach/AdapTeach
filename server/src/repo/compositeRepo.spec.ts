@@ -1,7 +1,7 @@
 import * as expect from 'expect'
 import {stub} from './stubFactory'
 import {compositeRepo} from './compositeRepo'
-import {COMPOSITE} from '../domain/Objective'
+import {COMPOSITE, ITEM} from '../domain/Objective'
 import {Composite} from '../domain/Composite'
 import {Item} from '../domain/Item'
 
@@ -48,7 +48,8 @@ describe('compositeRepo', () => {
 
       it('returns Item in sub-objectives', async () => {
          expect(composite.subObjectives.length).toEqual(1)
-         expect(composite.subObjectives).toInclude(item)
+         expect(composite.subObjectives[0].type).toEqual(ITEM)
+         expect(composite.subObjectives[0].uuid).toEqual(item.uuid)
       })
 
       describe('when finding Composite by ID', () => {
@@ -60,7 +61,8 @@ describe('compositeRepo', () => {
 
          it('returns Item in sub-objectives', async () => {
             expect(found.subObjectives.length).toEqual(1)
-            expect(found.subObjectives).toInclude(item)
+            expect(found.subObjectives[0].type).toEqual(ITEM)
+            expect(found.subObjectives[0].uuid).toEqual(item.uuid)
          })
       })
 
@@ -83,8 +85,8 @@ describe('compositeRepo', () => {
 
       it('returns Items in components', async () => {
          expect(composite.subObjectives.length).toEqual(2)
-         expect(composite.subObjectives).toInclude(item1)
-         expect(composite.subObjectives).toInclude(item2)
+         expect(composite.subObjectives[0].type).toEqual(ITEM)
+         expect(composite.subObjectives[1].type).toEqual(ITEM)
       })
    })
 

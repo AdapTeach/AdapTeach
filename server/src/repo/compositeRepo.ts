@@ -11,7 +11,6 @@ function compositeFromRecord(record) {
    const items = itemNodes.map(node => node.properties).map(item => ({...item, type: ITEM}))
    const categoryNodes = record.keys.indexOf('categories') >= 0 ? record.get('categories') : []
    const categories = categoryNodes.map(node => node.properties)
-   addCategoriesToItems(items, categories)
    const compositeNodes = record.keys.indexOf('composites') >= 0 ? record.get('composites') : []
    const composites = compositeNodes.map(node => node.properties).map(composite => ({
       ...composite,
@@ -22,11 +21,6 @@ function compositeFromRecord(record) {
       ...composite,
       type: COMPOSITE
    }
-}
-
-function addCategoriesToItems(items, categories) {
-   items.forEach((item, index) => item.category = categories[index])
-   return items
 }
 
 const create = async (fields: CompositeFields): Promise<Composite> => {
