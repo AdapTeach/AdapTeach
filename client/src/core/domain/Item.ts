@@ -2,7 +2,7 @@ import {Objective, ObjectiveDTO, ObjectiveFields} from './Objective'
 import {Category} from './Category'
 
 export interface Item extends Objective {
-   type: 'ITEM'
+   type: 'Item'
    category: string
 }
 
@@ -11,6 +11,6 @@ export interface ItemFields extends ObjectiveFields {
 }
 
 export interface ItemDTO extends ObjectiveDTO {
-   type: 'ITEM'
+   type: 'Item'
    category: Category
 }

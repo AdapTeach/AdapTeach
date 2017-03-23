@@ -83,7 +83,7 @@ describe('compositeRepo', () => {
          })
       })
 
-      it('returns Items in components', async () => {
+      it('returns Items in sub-objectives', async () => {
          expect(composite.subObjectives.length).toEqual(2)
          expect(composite.subObjectives[0].type).toEqual(ITEM)
          expect(composite.subObjectives[1].type).toEqual(ITEM)
@@ -107,36 +107,6 @@ describe('compositeRepo', () => {
          expect(composite.subObjectives.length).toEqual(1)
          expect(composite.subObjectives[0].uuid).toEqual(child.uuid)
          expect(composite.subObjectives[0].type).toEqual(COMPOSITE)
-      })
-   })
-
-
-   describe('when Composite composed of parent Composite is created', () => {
-      let composite: Composite
-      let child: Composite
-      let grandChild: Composite
-
-      beforeEach(async () => {
-         grandChild = await stub.composite()
-         child = await compositeRepo.create({
-            name: 'Child Composite',
-            description: '',
-            subObjectives: [grandChild.uuid]
-         })
-         composite = await compositeRepo.create({
-            name: 'Composite composed of single Composite',
-            description: '',
-            subObjectives: [child.uuid]
-         })
-      })
-
-      it.skip('returns grandchild Composite', async () => {
-         const childComposite: Composite = <Composite> composite.subObjectives[0]
-         expect(childComposite.subObjectives.length).toEqual(1)
-         // const grandChildren = childComposite.subObjectives[0]
-         // expect(composite.subObjectives.length).toEqual(1)
-         // expect(composite.subObjectives[0].uuid).toEqual(child.uuid)
-         // expect(composite.subObjectives[0].type).toEqual(COMPOSITE)
       })
    })
 

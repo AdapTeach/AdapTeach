@@ -2,7 +2,7 @@ import {Objective, ObjectiveDTO, ObjectiveFields} from './Objective'
 import {UUID} from './UUID'
 
 export interface Composite extends Objective {
-   type: 'COMPOSITE'
+   type: 'Composite'
    subObjectives: UUID[]
 }
 
@@ -11,6 +11,6 @@ export interface CompositeFields extends ObjectiveFields {
 }
 
 export interface CompositeDTO extends ObjectiveDTO {
-   type: 'COMPOSITE'
+   type: 'Composite'
    subObjectives: Objective[]
 }

@@ -1,8 +1,8 @@
 import {Entity} from './Entity'
 
-export type ObjectiveType = 'ITEM' | 'COMPOSITE'
-export const ITEM: ObjectiveType = 'ITEM'
-export const COMPOSITE: ObjectiveType = 'COMPOSITE'
+export type ObjectiveType = 'Item' | 'Composite'
+export const ITEM: ObjectiveType = 'Item'
+export const COMPOSITE: ObjectiveType = 'Composite'
 
 export interface Objective extends Entity, ObjectiveFields {
    type: ObjectiveType

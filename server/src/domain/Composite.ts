@@ -2,7 +2,7 @@ import {Objective, ObjectiveFields} from './Objective'
 import {UUID} from './UUID'
 
 export interface Composite extends Objective {
-   type: 'COMPOSITE'
+   type: 'Composite'
    subObjectives: Objective[]
 }
 

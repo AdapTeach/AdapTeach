@@ -3,23 +3,22 @@ import {InvalidArgumentError} from '../error/InvalidArgumentError'
 import {cypher} from './graph/cypher'
 import {Composite, CompositeFields} from '../domain/Composite'
 import {UUID} from '../domain/UUID'
-import {COMPOSITE, ITEM} from '../domain/Objective'
+import {COMPOSITE, ITEM, ObjectiveType} from '../domain/Objective'
 
 function compositeFromRecord(record) {
    const composite = record.get('c').properties
-   const itemNodes = record.keys.indexOf('items') >= 0 ? record.get('items') : []
-   const items = itemNodes.map(node => node.properties).map(item => ({...item, type: ITEM}))
-   const categoryNodes = record.keys.indexOf('categories') >= 0 ? record.get('categories') : []
-   const categories = categoryNodes.map(node => node.properties)
-   const compositeNodes = record.keys.indexOf('composites') >= 0 ? record.get('composites') : []
-   const composites = compositeNodes.map(node => node.properties).map(composite => ({
-      ...composite,
-      type: COMPOSITE
-   }))
-   composite.subObjectives = [...items, ...composites]
+   const subObjectiveNodes = record.keys.indexOf('subObjectives') >= 0 ? record.get('subObjectives') : []
+   const subObjectives = subObjectiveNodes.map(node => {
+      const type: ObjectiveType = node.labels.includes(ITEM) ? ITEM : node.labels.includes(COMPOSITE) && COMPOSITE
+      return {...node.properties, type}
+   })
+   // TODO Add categories to Composite ?
+   // const categoryNodes = record.keys.indexOf('categories') >= 0 ? record.get('categories') : []
+   // const categories = categoryNodes.map(node => node.properties)
    return {
       ...composite,
-      type: COMPOSITE
+      type: COMPOSITE,
+      subObjectives
    }
 }
 
@@ -30,6 +29,7 @@ const create = async (fields: CompositeFields): Promise<Composite> => {
     RETURN c`
    // We're making sure the subObjectives array is NOT empty, in which case using the second query
    // will result in the created Composite not being returned
+   // TODO Add categories ? otherwise remove MATCH clause
    if (fields.subObjectives && fields.subObjectives.length > 0) statement = `
     CREATE (c:Composite:Objective {uuid: {uuid}, name: {name}, description: {description}})
     WITH c
@@ -37,9 +37,9 @@ const create = async (fields: CompositeFields): Promise<Composite> => {
       MATCH (o:Objective {uuid: componentId})
       CREATE (c) -[:COMPOSED_OF]-> (o)
     WITH c
-    OPTIONAL MATCH (c) -[:COMPOSED_OF]-> (item:Item) -[:IN_CATEGORY]-> (category:Category)
-    OPTIONAL MATCH (c) -[:COMPOSED_OF]-> (composite:Composite)
-    RETURN c, collect(DISTINCT item) as items, collect(DISTINCT category) as categories, collect(composite) as composites`
+    OPTIONAL MATCH (c) -[:COMPOSED_OF]-> (subObjective:Objective)
+    OPTIONAL MATCH (c) -[:COMPOSED_OF*]-> (:Objective) -[:IN_CATEGORY]-> (category:Category)
+    RETURN c, collect(DISTINCT subObjective) as subObjectives, collect(DISTINCT category) as categories`
    const parameters = {
       uuid: uuid.v4(),
       ...fields
@@ -49,11 +49,12 @@ const create = async (fields: CompositeFields): Promise<Composite> => {
 }
 
 const find = async (uuid: UUID): Promise<Composite> => {
+   // TODO Add categories ? otherwise remove MATCH clause
    const statement = `
     MATCH (c:Composite {uuid: {uuid}})
-    OPTIONAL MATCH (c) -[:COMPOSED_OF]-> (item:Item) -[:IN_CATEGORY]-> (category:Category)
-    OPTIONAL MATCH (c) -[:COMPOSED_OF]-> (composite:Composite)
-    RETURN c, collect(item) as items, collect(category) as categories, collect(composite) as composites`
+    OPTIONAL MATCH (c) -[:COMPOSED_OF]-> (subObjective:Objective)
+    OPTIONAL MATCH (c) -[:COMPOSED_OF*]-> (:Objective) -[:IN_CATEGORY]-> (category:Category)
+    RETURN c, collect(DISTINCT subObjective) as subObjectives, collect(DISTINCT category) as categories`
    const result = await cypher.send(statement, {uuid})
    return compositeFromRecord(result[0])
 }
