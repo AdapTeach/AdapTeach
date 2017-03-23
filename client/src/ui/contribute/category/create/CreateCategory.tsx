@@ -1,74 +1,77 @@
 import * as React from 'react'
 import {Route} from 'react-router-dom'
-import * as Autosuggest from 'react-autosuggest'
-import {F} from 'ramda'
-import {BehaviorSubject, Observable} from 'rxjs'
 import {categoryEndpoint} from '../../../../endpoint/index'
 import {Category} from '../../../../core/domain/Category'
-import {createCategoryStore} from '../../../../core/state/index'
 import {path} from '../../../../router/path'
 import {router} from '../../../../router/router'
+import {CreateCategoryState, createCategoryStore} from './createCategoryStore'
 import {connect} from 'react-rx-pure-connect'
-
-const inputValue$ = new BehaviorSubject<string>('')
 
 const goToDisplay = (category: Category) => router.goTo(path.contribute.category.display(category.uuid))
 
-inputValue$
-   .filter(input => input.length > 2)
-   .switchMap(searchInput => categoryEndpoint.searchByName(searchInput))
-   .subscribe(existingCategories => createCategoryStore.setSuggestions(existingCategories))
-
-const onSubmit = e => {
+const onSubmit = (state: CreateCategoryState) => e => {
    e.preventDefault()
    categoryEndpoint
-      .post({name: inputValue$.getValue()})
+      .post({
+         name: state.nameInputValue,
+         parent: state.selectedParentSuggestion && state.selectedParentSuggestion.uuid
+      })
       .subscribe(createdCategory => {
-         inputValue$.next('')
+         createCategoryStore.resetState()
          goToDisplay(createdCategory)
       })
 }
 
-const onSuggestionsFetchRequested = F
+const onNameInputChange = e => createCategoryStore.updateState({
+   nameInputValue: e.target.value
+})
 
-const onSuggestionsClearRequested = () => createCategoryStore.setSuggestions([])
+const NameSuggestion = (category: Category) =>
+   <li key={category.uuid} onClick={onNameSuggestionClick(category)}>
+      {category.name}
+   </li>
 
-const getSuggestionValue = (suggestedCategory: Category) => ''
-
-const renderSuggestion = (suggestedCategory: Category) =>
-   <div onClick={() => goToDisplay(suggestedCategory)}>
-      {suggestedCategory.name}
-   </div>
-
-const onInputValueChange = (event, {newValue, method}) => inputValue$.next(newValue)
-
-interface Props {
-   inputValue: string,
-   suggestions: Category[]
+const onNameSuggestionClick = (category: Category) => e => {
+   createCategoryStore.resetState()
+   goToDisplay(category)
 }
 
-const Component: React.StatelessComponent<Props> = ({inputValue, suggestions}) =>
+const onParentInputChange = e => createCategoryStore.updateState({
+   parentInputValue: e.target.value
+})
+
+const ParentSuggestion = (category: Category) =>
+   <li key={category.uuid} onClick={onParentSuggestionClick(category)}>
+      {category.name}
+   </li>
+
+const onParentSuggestionClick = (selectedParentSuggestion: Category) => e => createCategoryStore.updateState({
+   parentInputValue: '',
+   parentSuggestions: [],
+   selectedParentSuggestion
+})
+
+const Component = (state: CreateCategoryState) =>
    <div>
       <h2>Create Category</h2>
-      <form onSubmit={onSubmit}>
-         <Autosuggest
-            suggestions={suggestions}
-            onSuggestionsFetchRequested={onSuggestionsFetchRequested}
-            onSuggestionsClearRequested={onSuggestionsClearRequested}
-            getSuggestionValue={getSuggestionValue}
-            renderSuggestion={renderSuggestion}
-            inputProps={{
-               value: inputValue,
-               onChange: onInputValueChange
-            }}/>
-         <button onClick={onSubmit}>Create</button>
+      <form onSubmit={onSubmit(state)}>
+         <input placeholder='Name'
+                value={state.nameInputValue}
+                onChange={onNameInputChange}/>
+         <ul>
+            {state.nameSuggestions.map(NameSuggestion)}
+         </ul>
+         {!state.selectedParentSuggestion && <input placeholder='Parent'
+                                                    value={state.parentInputValue}
+                                                    onChange={onParentInputChange}/>}
+         <ul>
+            {state.parentSuggestions.map(ParentSuggestion)}
+         </ul>
+         {state.selectedParentSuggestion && <div>Parent: {state.selectedParentSuggestion.name}</div>}
+         <button onClick={onSubmit(state)}>Create</button>
       </form>
    </div>
 
-const propsMapper = () => Observable.combineLatest(
-   inputValue$,
-   createCategoryStore.select('suggestions'),
-   (inputValue, suggestions) => ({inputValue, suggestions})
-)
+const propsMapper = () => createCategoryStore.state$
 
 export const CreateCategory = connect(propsMapper)(Component)
