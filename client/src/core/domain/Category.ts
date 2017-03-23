@@ -1,7 +1,15 @@
-import {UUID} from './UUID'
+import {Entity} from './Entity'
 
-export interface Category {
-   uuid?: UUID,
+export interface Category extends Entity, CategoryFields {
+}
+
+export interface CategoryFields {
    name: string,
    parent?: string
 }
+
+export interface CategoryDTO extends Entity {
+   name: string,
+   parent?: CategoryDTO
+}
+

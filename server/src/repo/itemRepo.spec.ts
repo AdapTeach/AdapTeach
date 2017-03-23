@@ -90,8 +90,8 @@ describe('itemRepo', () => {
 
       beforeEach(async() => {
          grandparentCategory = await categoryRepo.create({name: 'Grandparent Category'})
-         parentCategory = await categoryRepo.create({name: 'Parent Category', parentId: grandparentCategory.uuid})
-         category = await categoryRepo.create({name: 'Category with Grandparent', parentId: parentCategory.uuid})
+         parentCategory = await categoryRepo.create({name: 'Parent Category', parent: grandparentCategory.uuid})
+         category = await categoryRepo.create({name: 'Category with Grandparent', parent: parentCategory.uuid})
          item = await itemRepo.create({
             name: 'Item with deep Category hierarchy',
             description: '',

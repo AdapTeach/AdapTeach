@@ -1,7 +1,8 @@
 import * as uuid from 'uuid'
 import {InvalidArgumentError} from '../error/InvalidArgumentError'
 import {cypher} from './graph/cypher'
-import {CompositeFields} from '../domain/CompositeFields'
+import {Composite, CompositeFields} from '../domain/Composite'
+import {UUID} from '../domain/UUID'
 
 function compositeFromRecord(record) {
    const composite = record.get('c').properties
@@ -20,13 +21,14 @@ function addCategoriesToItems(items, categories) {
    return items
 }
 
-const create = async(compositeFields: CompositeFields) => {
-   if (!compositeFields.name) throw new InvalidArgumentError('Name is missing on Composite to create')
-   // The second, long query will not return created Composite if the subObjectives array is empty
+const create = async (fields: CompositeFields): Promise<Composite> => {
+   if (!fields.name) throw new InvalidArgumentError('Name is missing on Composite to create')
    let statement = `
     CREATE (c:Composite:Objective {uuid: {uuid}, name: {name}, description: {description}})
     RETURN c`
-   if (compositeFields.subObjectives && compositeFields.subObjectives.length > 0) statement = `
+   // We're making sure the subObjectives array is NOT empty, in which case using the second query
+   // will result in the created Composite not being returned
+   if (fields.subObjectives && fields.subObjectives.length > 0) statement = `
     CREATE (c:Composite:Objective {uuid: {uuid}, name: {name}, description: {description}})
     WITH c
     UNWIND {subObjectives} AS componentId
@@ -38,15 +40,13 @@ const create = async(compositeFields: CompositeFields) => {
     RETURN c, collect(DISTINCT item) as items, collect(DISTINCT category) as categories, collect(composite) as composites`
    const parameters = {
       uuid: uuid.v4(),
-      name: compositeFields.name,
-      description: compositeFields.description || '',
-      subObjectives: compositeFields.subObjectives
+      ...fields
    }
    const result = await cypher.send(statement, parameters)
    return compositeFromRecord(result[0])
 }
 
-const find = async(uuid) => {
+const find = async (uuid: UUID): Promise<Composite> => {
    const statement = `
     MATCH (c:Composite {uuid: {uuid}})
     OPTIONAL MATCH (c) -[:COMPOSED_OF]-> (item:Item) -[:IN_CATEGORY]-> (category:Category)

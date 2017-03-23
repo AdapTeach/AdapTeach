@@ -1,13 +1,13 @@
 import {normalizeItem} from '../core/domain/norms'
 import {Observable} from 'rxjs'
-import {Item} from '../core/domain/Item'
+import {Item, ItemFields} from '../core/domain/Item'
 import {http} from './http'
 
 const entityTypeName = 'item'
 
 export class ItemEndpoint {
 
-   post(entity: Item): Observable<Item> {
+   post(entity: ItemFields): Observable<Item> {
       return http.post(`http://localhost:8000/api/${entityTypeName}`, entity)
    }
 

@@ -1,4 +1,4 @@
-import {Category} from '../core/domain/Category'
+import {Category, CategoryFields} from '../core/domain/Category'
 import {Observable} from 'rxjs'
 import {http} from './http'
 import {normalizeCategory} from '../core/domain/norms'
@@ -7,7 +7,7 @@ const entityTypeName = 'category'
 
 export class CategoryEndpoint {
 
-   post(entity: Category): Observable<Category> {
+   post(entity: CategoryFields): Observable<Category> {
       return http.post(`http://localhost:8000/api/${entityTypeName}`, entity)
    }
 

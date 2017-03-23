@@ -2,7 +2,8 @@ import * as uuid from 'uuid'
 import {InvalidArgumentError} from '../error/InvalidArgumentError'
 import {cypher} from './graph/cypher'
 import {addParentHierarchyToCategory} from './util/addParentHierarchyToCategory'
-import {ItemFields} from '../domain/ItemFields'
+import {Item, ItemFields} from '../domain/Item'
+import {UUID} from '../domain/UUID'
 
 function itemFromRecord(row) {
    const item = row.get('i').properties
@@ -12,27 +13,25 @@ function itemFromRecord(row) {
    return item
 }
 
-const create = async(itemData: ItemFields) => {
-   if (!itemData.category) throw new InvalidArgumentError('item.category is required')
+const create = async (fields: ItemFields): Promise<Item> => {
+   if (!fields.category) throw new InvalidArgumentError('item.category is required')
    const statement = `
-    MATCH (c:Category {uuid: {categoryId}})
+    MATCH (c:Category {uuid: {category}})
     CREATE (i:Item:Objective {uuid: {uuid}, name: {name}, description: {description}}) -[:IN_CATEGORY]-> (c)
     WITH i, c
     OPTIONAL MATCH (c) -[:CHILD_OF*]-> (p)
     RETURN i, c, collect(p) as parents`
    const parameters = {
-      categoryId: itemData.category,
       uuid: uuid.v4(),
-      name: itemData.name,
-      description: itemData.description ? itemData.description : ''
+      ...fields
    }
    const records = await cypher.send(statement, parameters)
    const record = records[0]
-   if (!record) throw new InvalidArgumentError(`No Category exists for id ${itemData.category}`)
+   if (!record) throw new InvalidArgumentError(`No Category exists for id ${fields.category}`)
    return itemFromRecord(record)
 }
 
-const find = async(uuid) => {
+const find = async (uuid: UUID): Promise<Item> => {
    const statement = `
     MATCH (i:Item {uuid: {uuid}}) -[:IN_CATEGORY]-> (c)
     OPTIONAL MATCH (c) -[:CHILD_OF*]-> (p)

@@ -62,7 +62,6 @@ export interface CreateCompositeState extends State {
 }
 
 export const createCompositeState$: Observable<CreateCompositeState> = createCompositeStore
-   .map(logAndReturn)
    .map(state => merge(state, {
       canSubmit: Boolean(state.name.length > 1 && state.subObjectives.length)
    }))

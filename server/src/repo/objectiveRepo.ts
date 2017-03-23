@@ -1,4 +1,8 @@
 import {cypher} from './graph/cypher'
+import {UUID} from '../domain/UUID'
+import {Objective} from '../domain/Objective'
+import {Item} from '../domain/Item'
+import {Composite} from '../domain/Composite'
 
 const buildNameRegex = (name) => `(?i)${name}.*`
 
@@ -22,7 +26,7 @@ function buildCompositeSearchQuery(name) {
    return {statement, parameters}
 }
 
-const find = async(uuid) => {
+const find = async (uuid: UUID): Promise<Objective> => {
    // OPTIONAL MATCH (o) -[:IN_CATEGORY]-> (c)
    // OPTIONAL MATCH (c) -[:CHILD_OF*]-> (p)
    // OPTIONAL MATCH (o) -[:COMPOSED_OF]-> (item:Item) -[:IN_CATEGORY]-> (category:Category)
@@ -37,7 +41,7 @@ const find = async(uuid) => {
 
 }
 
-const search = async(name) => {
+const search = async (name: string): Promise<{ items: Item[], composites: Composite[] }> => {
    const statement = `
     MATCH (objective:Objective)
     WHERE objective.name =~ {nameRegex}
