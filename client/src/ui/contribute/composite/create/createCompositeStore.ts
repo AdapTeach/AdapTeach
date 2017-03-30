@@ -1,7 +1,7 @@
-import {Store} from 'sparix'
 import {Observable} from 'rxjs'
 import {concat, contains, merge} from 'ramda'
 import {Objective} from '../../../../core/domain/Objective'
+import {ComponentStore} from '../../../../util/ComponentStore'
 
 interface State {
    name: string
@@ -12,7 +12,7 @@ interface State {
    subObjectiveSuggestions: Objective[]
 }
 
-class CreateCompositeStore extends Store<State> {
+class CreateCompositeStore extends ComponentStore<State> {
 
    constructor() {
       super({

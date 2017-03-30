@@ -5,7 +5,7 @@ import {Category} from '../../../../core/domain/Category'
 import {path} from '../../../../router/path'
 import {router} from '../../../../router/router'
 import {CreateCategoryState, createCategoryStore} from './createCategoryStore'
-import {connect} from 'react-rx-pure-connect'
+import {ConnectedComponent} from 'react-rx-pure-connect'
 
 const goToDisplay = (category: Category) => router.goTo(path.contribute.category.display(category.uuid))
 
@@ -72,6 +72,4 @@ const Component = (state: CreateCategoryState) =>
       </form>
    </div>
 
-const propsMapper = () => createCategoryStore.state$
-
-export const CreateCategory = connect(propsMapper)(Component)
+export const CreateCategory: ConnectedComponent<{}> = createCategoryStore.connect(Component)

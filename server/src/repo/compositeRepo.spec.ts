@@ -10,7 +10,7 @@ describe('compositeRepo', () => {
    describe('when Composite with no sub-objective is created', () => {
       const compositeFields = {
          name: 'Empty Composite',
-         description: 'Whatever',
+         description: 'DynamicComponentStore',
          subObjectives: []
       }
       let composite: Composite

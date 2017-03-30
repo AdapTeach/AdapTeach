@@ -23,7 +23,7 @@ describe('itemRepo', () => {
    it('prevents Item creation when no category is defined', async () => {
       const itemWithoutCategory: any = {
          name: 'Item to create',
-         description: 'Whatever',
+         description: 'DynamicComponentStore',
       }
       try {
          await itemRepo.create(itemWithoutCategory)
@@ -46,7 +46,7 @@ describe('itemRepo', () => {
    it('prevents Item creation if categoryId is not a valid UUID', async () => {
       const itemWithInvalidCategoryId = {
          name: 'Item to create',
-         description: 'Whatever',
+         description: 'DynamicComponentStore',
          category: 'Not a UUID'
       }
       try {
@@ -60,7 +60,7 @@ describe('itemRepo', () => {
    it('prevents Item creation if no Category exists for given categoryId', async () => {
       const itemWithNonExistentCategory = {
          name: 'Item to create',
-         description: 'Whatever',
+         description: 'DynamicComponentStore',
          category: 'b5afa2c7-1e55-4eea-b880-952e56721720'
       }
       try {

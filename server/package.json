@@ -31,26 +31,26 @@
     "koa-router": "^7.1.0",
     "koa-static": "^3.0.0",
     "moment": "^2.18.1",
-    "neo4j-driver": "^1.1.0",
+    "neo4j-driver": "^1.2.0",
     "ramda": "^0.23.0",
     "uuid": "^3.0.1"
   },
   "devDependencies": {
-    "@types/expect": "^1.20.0",
+    "@types/expect": "^1.20.1",
     "@types/koa": "^2.0.39",
     "@types/koa-bodyparser": "^3.0.23",
     "@types/koa-router": "^7.0.22",
     "@types/koa-static": "^2.0.22",
     "@types/mocha": "^2.2.40",
     "@types/moment": "^2.13.0",
-    "@types/node": "^7.0.10",
+    "@types/node": "^7.0.12",
     "@types/node-uuid": "0.0.28",
     "@types/ramda": "0.0.5",
     "@types/uuid": "^2.0.29",
     "mocha": "^3.2.0",
     "nodemon": "^1.11.0",
     "ts-node": "^3.0.2",
-    "tslint": "^4.5.1",
-    "typescript": "^2.1.5"
+    "tslint": "^5.0.0",
+    "typescript": "^2.2.2"
   }
 }

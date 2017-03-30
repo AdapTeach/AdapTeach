@@ -3,9 +3,9 @@ import * as Autosuggest from 'react-autosuggest'
 import {compositeEndpoint} from '../../../../endpoint/index'
 import {router} from '../../../../router/router'
 import {path} from '../../../../router/path'
-import {CreateCompositeState, createCompositeStore, createCompositeState$} from './createCompositeStore'
+import {CreateCompositeState, createCompositeState$, createCompositeStore} from './createCompositeStore'
 import * as R from 'ramda'
-import {connect} from 'react-rx-pure-connect'
+import {connectTo} from 'react-rx-pure-connect'
 import {searchedSubObjectiveNameChangedEpic} from './searchedSubObjectiveNameChangedEpic'
 import {Objective} from '../../../../core/domain/Objective'
 
@@ -43,7 +43,7 @@ const onSubmit = (state: CreateCompositeState) => e => {
       .subscribe(createdComposite => router.goTo(path.contribute.composite.display(createdComposite.uuid)))
 }
 
-const SubObjectiveForm: React.StatelessComponent<{state: CreateCompositeState}> = ({state}) =>
+const SubObjectiveForm: React.StatelessComponent<{ state: CreateCompositeState }> = ({state}) =>
    <Autosuggest
       suggestions={state.subObjectiveSuggestions}
       onSuggestionsFetchRequested={onSuggestionsFetchRequested}
@@ -51,9 +51,9 @@ const SubObjectiveForm: React.StatelessComponent<{state: CreateCompositeState}> 
       getSuggestionValue={getSuggestionValue}
       renderSuggestion={renderSuggestion}
       inputProps={{
-               value: state.searchedSubObjectiveName,
-               onChange: onSearchedSubObjectiveNameChange
-            }}/>
+         value: state.searchedSubObjectiveName,
+         onChange: onSearchedSubObjectiveNameChange
+      }}/>
 
 const Component: React.StatelessComponent<CreateCompositeState> = (state) =>
    <form onSubmit={onSubmit(state)}>
@@ -72,6 +72,6 @@ const Component: React.StatelessComponent<CreateCompositeState> = (state) =>
       <button onClick={onSubmit(state)} disabled={!state.canSubmit}>Create</button>
    </form>
 
-const mapProps = () => createCompositeState$
-
-export const CreateComposite = connect(mapProps)(Component)
+export const CreateComposite = connectTo(createCompositeState$, Component, {
+   onWillUnmount: () => createCompositeStore.resetState()
+})

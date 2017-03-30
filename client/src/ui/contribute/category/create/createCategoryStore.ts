@@ -1,6 +1,6 @@
-import {PartialDiff, Store} from 'sparix'
 import {Category} from '../../../../core/domain/Category'
 import {categoryEndpoint} from '../../../../endpoint/index'
+import {ComponentStore} from '../../../../util/ComponentStore'
 
 export interface CreateCategoryState {
    nameInputValue: string,
@@ -10,7 +10,7 @@ export interface CreateCategoryState {
    selectedParentSuggestion?: Category
 }
 
-const initialState = {
+const initialState: CreateCategoryState = {
    nameInputValue: '',
    nameSuggestions: [],
    parentInputValue: '',
@@ -18,23 +18,7 @@ const initialState = {
    selectedParentSuggestion: undefined
 }
 
-class CreateCategoryStore extends Store<CreateCategoryState> {
-
-   constructor() {
-      super(initialState)
-   }
-
-   updateState(diff: PartialDiff<CreateCategoryState>) {
-      super.updateState(diff)
-   }
-
-   resetState() {
-      super.updateState(initialState)
-   }
-
-}
-
-export const createCategoryStore = new CreateCategoryStore()
+export const createCategoryStore = ComponentStore.create(initialState)
 
 createCategoryStore
    .select('nameInputValue')
