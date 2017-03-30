@@ -1,8 +1,7 @@
 import {Store} from 'sparix'
 import {Observable} from 'rxjs'
-import {concat, merge} from 'ramda'
+import {concat, contains, merge} from 'ramda'
 import {Objective} from '../../../../core/domain/Objective'
-import {logAndReturn} from '../../../../util/logAndReturn'
 
 interface State {
    name: string
@@ -43,7 +42,9 @@ class CreateCompositeStore extends Store<State> {
    }
 
    setSubObjectiveSuggestions(subObjectiveSuggestions: Objective[]) {
-      this.updateState({subObjectiveSuggestions})
+      this.update(state => ({
+         subObjectiveSuggestions: subObjectiveSuggestions.filter(suggestion => !contains(suggestion, state.subObjectives))
+      }))
    }
 
    addSubObjective(objective: Objective) {
