@@ -17,9 +17,9 @@ export const path = {
          display: (uuid: string = ':uuid') => `/contribute/composite/${uuid}`
       },
 
-      quiz: {
-         create: '/contribute/quiz/create',
-         display: (uuid: string = ':uuid') => `/contribute/quiz/${uuid}`
+      assessment: {
+         create: '/contribute/assessment/create',
+         display: (uuid: string = ':uuid') => `/contribute/assessment/${uuid}`
       }
    },
 
