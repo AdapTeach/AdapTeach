@@ -14,6 +14,6 @@ const Component: React.StatelessComponent<Item> = (item) => <div>
    </h3>
 </div>
 
-const propsMapper = (props: RouteProps<{uuid: string}>) => itemEndpoint.get(props.match.params.uuid)
+const propsMapper = (props: RouteProps<{ uuid: string }>) => itemEndpoint.get(props.match.params.uuid)
 
-export const DisplayItem = connect(propsMapper)(Component)
+export const DisplayItem = connect(Component).withMapper(propsMapper)

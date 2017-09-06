@@ -12,13 +12,13 @@ const HierarchyComponent: React.StatelessComponent<Category> = (category) => {
       <CategoryLink category={parent}/> > </span>
 }
 
-const propsMapper = (props: {category: string}) => categoryEndpoint.get(props.category)
+const propsMapper = (props: { category: string }) => categoryEndpoint.get(props.category)
 
-const ParentHierarchy = connect(propsMapper)(HierarchyComponent)
+const ParentHierarchy = connect(HierarchyComponent).withMapper(propsMapper)
 
 const Component: React.StatelessComponent<Category> = (category) => <span>
    <ParentHierarchy category={category.uuid}/>
    {category.name}
 </span>
 
-export const CategoryParentHierarchy = connect(propsMapper)(Component)
+export const CategoryParentHierarchy = connect(Component).withMapper(propsMapper)

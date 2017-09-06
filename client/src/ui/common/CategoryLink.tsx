@@ -8,6 +8,6 @@ import {Link} from './Link'
 const Component: React.StatelessComponent<Category> = (category) =>
    <Link path={path.contribute.category.display(category.uuid)}>{category.name}</Link>
 
-const propsMapper = (props: {category: string}) => categoryEndpoint.get(props.category)
+const propsMapper = (props: { category: string }) => categoryEndpoint.get(props.category)
 
-export const CategoryLink = connect(propsMapper)(Component)
+export const CategoryLink = connect(Component).withMapper(propsMapper)

@@ -6,7 +6,7 @@ const navigateTo = (path: string) => (event) => {
    router.goTo(path)
 }
 
-export const Link: React.StatelessComponent<{path: string}> = ({path, children}) =>
+export const Link: React.StatelessComponent<{ path: string }> = ({path, children}) =>
    <a onClick={navigateTo(path)}>
       {children}
    </a>

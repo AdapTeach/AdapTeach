@@ -19,4 +19,4 @@ const Component: React.StatelessComponent<CompositeDTO> = (composite) => <div>
 
 const propsMapper = (props: RouteProps<{ uuid: string }>) => compositeEndpoint.get(props.match.params.uuid)
 
-export const DisplayComposite = connect(propsMapper)(Component)
+export const DisplayComposite = connect(Component).withMapper(propsMapper)

@@ -1,4 +1,4 @@
-import * as expect from 'expect'
+import {expect} from 'chai'
 import {InvalidArgumentError} from '../error/InvalidArgumentError'
 import {categoryRepo} from './categoryRepo'
 import {itemRepo} from './itemRepo'
@@ -15,9 +15,9 @@ describe('itemRepo', () => {
          category: category.uuid
       }
       const item = await itemRepo.create(itemFields)
-      expect(item.uuid).toExist()
-      expect(item.name).toEqual(itemFields.name)
-      expect(item.type).toEqual(ITEM)
+      expect(item.uuid).to.exist
+      expect(item.name).to.equal(itemFields.name)
+      expect(item.type).to.equal(ITEM)
    })
 
    it('prevents Item creation when no category is defined', async () => {
@@ -29,7 +29,7 @@ describe('itemRepo', () => {
          await itemRepo.create(itemWithoutCategory)
          throw Error('Should throw !')
       } catch (error) {
-         expect(error).toBeA(InvalidArgumentError)
+         expect(error).to.be.instanceof(InvalidArgumentError)
       }
    })
 
@@ -40,7 +40,7 @@ describe('itemRepo', () => {
          description: '',
          category: category.uuid
       })
-      expect(created.uuid).toExist()
+      expect(created.uuid).to.exist
    })
 
    it('prevents Item creation if categoryId is not a valid UUID', async () => {
@@ -53,7 +53,7 @@ describe('itemRepo', () => {
          await itemRepo.create(itemWithInvalidCategoryId)
          throw Error('Should throw !')
       } catch (error) {
-         expect(error).toBeA(InvalidArgumentError)
+         expect(error).to.be.instanceof(InvalidArgumentError)
       }
    })
 
@@ -67,7 +67,7 @@ describe('itemRepo', () => {
          await itemRepo.create(itemWithNonExistentCategory)
          throw Error('Should throw !')
       } catch (error) {
-         expect(error).toBeA(InvalidArgumentError)
+         expect(error).to.be.instanceof(InvalidArgumentError)
       }
    })
 
@@ -79,7 +79,7 @@ describe('itemRepo', () => {
 
       it('finds Item', async () => {
          const foundItem = await itemRepo.find(item.uuid)
-         expect(foundItem).toEqual(item)
+         expect(foundItem).to.deep.equal(item)
       })
    })
 
@@ -101,13 +101,13 @@ describe('itemRepo', () => {
       })
 
       it('returns Category hierarchy when creating item', async () => {
-         expect(item.category.parent.uuid).toEqual(parentCategory.uuid)
-         expect(item.category.parent.parent.uuid).toEqual(grandparentCategory.uuid)
+         expect(item.category.parent.uuid).to.equal(parentCategory.uuid)
+         expect(item.category.parent.parent.uuid).to.equal(grandparentCategory.uuid)
       })
 
       it('returns Category hierarchy when getting Item by ID', async () => {
          const found = await itemRepo.find(item.uuid)
-         expect(found).toEqual(item)
+         expect(found).to.deep.equal(item)
       })
    })
 

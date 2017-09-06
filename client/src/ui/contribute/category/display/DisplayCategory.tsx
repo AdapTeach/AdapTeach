@@ -12,6 +12,6 @@ const Component: React.StatelessComponent<Category> = (category) => <div>
    </h3>
 </div>
 
-const propsMapper = (props: RouteProps<{uuid: string}>) => categoryEndpoint.get(props.match.params.uuid)
+const propsMapper = (props: RouteProps<{ uuid: string }>) => categoryEndpoint.get(props.match.params.uuid)
 
-export const DisplayCategory = connect(propsMapper)(Component)
+export const DisplayCategory = connect(Component).withMapper(propsMapper)

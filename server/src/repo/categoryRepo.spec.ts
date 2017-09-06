@@ -1,4 +1,4 @@
-import * as expect from 'expect'
+import {expect} from 'chai'
 import {categoryRepo} from './categoryRepo'
 
 describe('categoryRepo', () => {
@@ -12,29 +12,29 @@ describe('categoryRepo', () => {
       })
 
       it('creates RootCategory', async () => {
-         expect(category.uuid).toExist()
-         expect(category.name).toEqual(categoryData.name)
+         expect(category.uuid).to.exist
+         expect(category.name).to.equal(categoryData.name)
       })
 
       it('finds Category by ID', async () => {
          const found = await categoryRepo.find(category.uuid)
-         expect(found.uuid).toEqual(category.uuid)
-         expect(found.name).toEqual(category.name)
+         expect(found.uuid).to.equal(category.uuid)
+         expect(found.name).to.equal(category.name)
       })
 
       it('finds Category by name', async () => {
          const found = await categoryRepo.search(category.name)
-         expect(found).toContain(category)
+         expect(found).to.deep.include(category)
       })
 
       it('finds Category by partial name', async () => {
          const found = await categoryRepo.search(category.name.substr(0, 3))
-         expect(found).toContain(category)
+         expect(found).to.deep.include(category)
       })
 
       it('finds Category case-insensitively', async () => {
          const found = await categoryRepo.search(category.name.toUpperCase())
-         expect(found).toContain(category)
+         expect(found).to.deep.include(category)
       })
 
    })
@@ -52,12 +52,12 @@ describe('categoryRepo', () => {
       })
 
       it('returns parent', async () => {
-         expect(child.parent.uuid).toEqual(parent.uuid)
+         expect(child.parent.uuid).to.equal(parent.uuid)
       })
 
       it('returns parent when finding child Category by ID', async () => {
          const found = await categoryRepo.find(child.uuid)
-         expect(found.parent!.uuid).toEqual(parent.uuid)
+         expect(found.parent!.uuid).to.equal(parent.uuid)
       })
 
       describe('when grandchild Category is created', () => {
@@ -67,21 +67,21 @@ describe('categoryRepo', () => {
          })
 
          it('returns parent hierarchy', async () => {
-            expect(grandchild.parent.uuid).toEqual(child.uuid)
-            expect(grandchild.parent.parent.uuid).toEqual(parent.uuid)
+            expect(grandchild.parent.uuid).to.equal(child.uuid)
+            expect(grandchild.parent.parent.uuid).to.equal(parent.uuid)
          })
 
          it('finds parent hierarchy', async () => {
             const found = await categoryRepo.find(grandchild.uuid)
 
-            expect(found.parent!.uuid).toEqual(child.uuid)
-            expect(found.parent!.parent!.uuid).toEqual(parent.uuid)
+            expect(found.parent!.uuid).to.equal(child.uuid)
+            expect(found.parent!.parent!.uuid).to.equal(parent.uuid)
          })
 
          it('returns parent hierarchy when searching grandchild Category by name', async () => {
             const found = await categoryRepo.search(grandchild.name)
 
-            expect(found).toContain(grandchild)
+            expect(found).to.deep.include(grandchild)
          })
       })
    })

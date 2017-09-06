@@ -5,7 +5,7 @@ import {router} from '../../../../router/router'
 import {path} from '../../../../router/path'
 import {CreateCompositeState, createCompositeState$, createCompositeStore} from './createCompositeStore'
 import * as R from 'ramda'
-import {connectTo} from 'react-rx-pure-connect'
+import {connect} from 'react-rx-pure-connect'
 import {searchedSubObjectiveNameChangedEpic} from './searchedSubObjectiveNameChangedEpic'
 import {Objective} from '../../../../core/domain/Objective'
 
@@ -59,19 +59,19 @@ const Component: React.StatelessComponent<CreateCompositeState> = (state) =>
    <form onSubmit={onSubmit(state)}>
       <h2>Create Composite</h2>
       <input placeholder='Name' onChange={onNameChange} value={state.name}/>
-      <br />
+      <br/>
       <input placeholder='Description' onChange={onDescriptionChange} value={state.description}/>
-      <br />
+      <br/>
       Sub-objectives:
       {state.isAddingSubObjective
          ? <SubObjectiveForm state={state}/>
          : <button onClick={setIsAddingSubObjective}>Add</button>
       }
       {state.subObjectives.map(subObjective => <div key={subObjective.uuid}>{subObjective.name}</div>)}
-      <br />
+      <br/>
       <button onClick={onSubmit(state)} disabled={!state.canSubmit}>Create</button>
    </form>
 
-export const CreateComposite = connectTo(createCompositeState$, Component, {
-   onWillUnmount: () => createCompositeStore.resetState()
+export const CreateComposite = connect(Component).to(createCompositeState$, {
+   componentWillUnmount: () => createCompositeStore.resetState()
 })

@@ -1,4 +1,4 @@
-import * as expect from 'expect'
+import {expect} from 'chai'
 import {stub} from './stubFactory'
 import {compositeRepo} from './compositeRepo'
 import {COMPOSITE, ITEM} from '../domain/Objective'
@@ -20,15 +20,15 @@ describe('compositeRepo', () => {
       })
 
       it('returns created Composite', async () => {
-         expect(composite.uuid).toExist()
-         expect(composite.name).toEqual(compositeFields.name)
-         expect(composite.description).toEqual(compositeFields.description)
-         expect(composite.type).toEqual(COMPOSITE)
+         expect(composite.uuid).to.exist
+         expect(composite.name).to.equal(compositeFields.name)
+         expect(composite.description).to.equal(compositeFields.description)
+         expect(composite.type).to.equal(COMPOSITE)
       })
 
       it('finds Composite by ID', async () => {
          const found = await compositeRepo.find(composite.uuid)
-         expect(found).toEqual(composite)
+         expect(found).to.deep.equal(composite)
       })
 
    })
@@ -47,9 +47,9 @@ describe('compositeRepo', () => {
       })
 
       it('returns Item in sub-objectives', async () => {
-         expect(composite.subObjectives.length).toEqual(1)
-         expect(composite.subObjectives[0].type).toEqual(ITEM)
-         expect(composite.subObjectives[0].uuid).toEqual(item.uuid)
+         expect(composite.subObjectives.length).to.equal(1)
+         expect(composite.subObjectives[0].type).to.equal(ITEM)
+         expect(composite.subObjectives[0].uuid).to.equal(item.uuid)
       })
 
       describe('when finding Composite by ID', () => {
@@ -60,9 +60,9 @@ describe('compositeRepo', () => {
          })
 
          it('returns Item in sub-objectives', async () => {
-            expect(found.subObjectives.length).toEqual(1)
-            expect(found.subObjectives[0].type).toEqual(ITEM)
-            expect(found.subObjectives[0].uuid).toEqual(item.uuid)
+            expect(found.subObjectives.length).to.equal(1)
+            expect(found.subObjectives[0].type).to.equal(ITEM)
+            expect(found.subObjectives[0].uuid).to.equal(item.uuid)
          })
       })
 
@@ -84,9 +84,9 @@ describe('compositeRepo', () => {
       })
 
       it('returns Items in sub-objectives', async () => {
-         expect(composite.subObjectives.length).toEqual(2)
-         expect(composite.subObjectives[0].type).toEqual(ITEM)
-         expect(composite.subObjectives[1].type).toEqual(ITEM)
+         expect(composite.subObjectives.length).to.equal(2)
+         expect(composite.subObjectives[0].type).to.equal(ITEM)
+         expect(composite.subObjectives[1].type).to.equal(ITEM)
       })
    })
 
@@ -104,9 +104,9 @@ describe('compositeRepo', () => {
       })
 
       it('returns child Composite', async () => {
-         expect(composite.subObjectives.length).toEqual(1)
-         expect(composite.subObjectives[0].uuid).toEqual(child.uuid)
-         expect(composite.subObjectives[0].type).toEqual(COMPOSITE)
+         expect(composite.subObjectives.length).to.equal(1)
+         expect(composite.subObjectives[0].uuid).to.equal(child.uuid)
+         expect(composite.subObjectives[0].type).to.equal(COMPOSITE)
       })
    })
 

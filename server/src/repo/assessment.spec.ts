@@ -1,5 +1,5 @@
+import {expect} from 'chai'
 import {InvalidArgumentError} from '../error/InvalidArgumentError'
-import * as expect from 'expect'
 import {assessmentRepo} from './assessmentRepo'
 import {stub} from './stubFactory'
 
@@ -10,7 +10,7 @@ const YES_OR_NO = [
 
 describe('Assessment API', () => {
 
-   it('creates simplest possible Quiz (one assessedItem, YES/NO question)', async() => {
+   it('creates simplest possible Quiz (one assessedItem, YES/NO question)', async () => {
       const item = await stub.item()
       const quiz = {
          type: 'Quiz',
@@ -19,17 +19,17 @@ describe('Assessment API', () => {
          answers: YES_OR_NO
       }
       const created = await assessmentRepo.create(quiz)
-      expect(created.uuid).toExist()
-      expect(created.type).toEqual('Quiz')
-      expect(created.assessedItems.map(i => i.uuid)).toEqual(quiz.assessedItemIds)
-      expect(created.prerequisites).toExist()
-      expect(created.activelyRecalledItems).toExist()
-      expect(created.passivelyRecalledItems).toExist()
-      expect(created.question).toEqual(quiz.question)
-      expect(created.answers).toEqual(quiz.answers)
+      expect(created.uuid).to.exist
+      expect(created.type).to.equal('Quiz')
+      expect(created.assessedItems.map(i => i.uuid)).to.deep.equal(quiz.assessedItemIds)
+      expect(created.prerequisites).to.exist
+      expect(created.activelyRecalledItems).to.exist
+      expect(created.passivelyRecalledItems).to.exist
+      expect(created.question).to.equal(quiz.question)
+      expect(created.answers).to.deep.equal(quiz.answers)
    })
 
-   it('prevents Assessment creation when type is not defined', async() => {
+   it('prevents Assessment creation when type is not defined', async () => {
       const item = await stub.item()
       const lackingType = {
          assessedItemIds: [item.uuid],
@@ -40,11 +40,11 @@ describe('Assessment API', () => {
          await assessmentRepo.create(lackingType)
          throw Error('Should have failed')
       } catch (error) {
-         expect(error).toBeA(InvalidArgumentError)
+         expect(error).to.be.instanceof(InvalidArgumentError)
       }
    })
 
-   it('creates Quiz with multiple assessedItems', async() => {
+   it('creates Quiz with multiple assessedItems', async () => {
       const item1 = await stub.item()
       const item2 = await stub.item()
       const quiz = {
@@ -54,10 +54,10 @@ describe('Assessment API', () => {
          answers: YES_OR_NO
       }
       const created = await assessmentRepo.create(quiz)
-      expect(created.assessedItems.map(i => i.uuid)).toEqual(quiz.assessedItemIds)
+      expect(created.assessedItems.map(i => i.uuid)).to.deep.equal(quiz.assessedItemIds)
    })
 
-   it('creates Quiz with single Item as prerequisite', async() => {
+   it('creates Quiz with single Item as prerequisite', async () => {
       const assessedItem = await stub.item()
       const preq = await stub.item()
       const quiz = {
@@ -68,10 +68,10 @@ describe('Assessment API', () => {
          answers: YES_OR_NO
       }
       const created = await assessmentRepo.create(quiz)
-      expect(created.prerequisites.map(preq => preq.uuid)).toEqual(quiz.prerequisiteIds)
+      expect(created.prerequisites.map(preq => preq.uuid)).to.deep.equal(quiz.prerequisiteIds)
    })
 
-   it('creates Quiz with multiple Items as prerequisites', async() => {
+   it('creates Quiz with multiple Items as prerequisites', async () => {
       const assessedItem = await stub.item()
       const preq1 = await stub.item()
       const preq2 = await stub.item()
@@ -83,10 +83,10 @@ describe('Assessment API', () => {
          answers: YES_OR_NO
       }
       const created = await assessmentRepo.create(quiz)
-      expect(created.prerequisites.map(preq => preq.uuid)).toEqual(quiz.prerequisiteIds)
+      expect(created.prerequisites.map(preq => preq.uuid)).to.deep.equal(quiz.prerequisiteIds)
    })
 
-   it('creates Quiz with single Composite as prerequisite', async() => {
+   it('creates Quiz with single Composite as prerequisite', async () => {
       const assessedItem = await stub.item()
       const preq = await stub.composite()
       const quiz = {
@@ -97,10 +97,10 @@ describe('Assessment API', () => {
          answers: YES_OR_NO
       }
       const created = await assessmentRepo.create(quiz)
-      expect(created.prerequisites.map(preq => preq.uuid)).toEqual(quiz.prerequisiteIds)
+      expect(created.prerequisites.map(preq => preq.uuid)).to.deep.equal(quiz.prerequisiteIds)
    })
 
-   it('creates Quiz with multiple Composites as prerequisites', async() => {
+   it('creates Quiz with multiple Composites as prerequisites', async () => {
       const assessedItem = await stub.item()
       const preq1 = await stub.composite()
       const preq2 = await stub.composite()
@@ -112,10 +112,10 @@ describe('Assessment API', () => {
          answers: YES_OR_NO
       }
       const created = await assessmentRepo.create(quiz)
-      expect(created.prerequisites.map(preq => preq.uuid)).toEqual(quiz.prerequisiteIds)
+      expect(created.prerequisites.map(preq => preq.uuid)).to.deep.equal(quiz.prerequisiteIds)
    })
 
-   it('creates Quiz with single activelyRecalledItem', async() => {
+   it('creates Quiz with single activelyRecalledItem', async () => {
       const assessedItem = await stub.item()
       const actively = await stub.item()
       const quiz = {
@@ -126,11 +126,11 @@ describe('Assessment API', () => {
          answers: YES_OR_NO
       }
       const created = await assessmentRepo.create(quiz)
-      expect(created.activelyRecalledItems.map(i => i.uuid)).toEqual(quiz.activelyRecalledItemIds)
+      expect(created.activelyRecalledItems.map(i => i.uuid)).to.deep.equal(quiz.activelyRecalledItemIds)
    })
 
 
-   it('creates Quiz with multiple activelyRecalledItems', async() => {
+   it('creates Quiz with multiple activelyRecalledItems', async () => {
       const assessedItem = await stub.item()
       const actively1 = await stub.item()
       const actively2 = await stub.item()
@@ -142,10 +142,10 @@ describe('Assessment API', () => {
          answers: YES_OR_NO
       }
       const created = await assessmentRepo.create(quiz)
-      expect(created.activelyRecalledItems.map(i => i.uuid)).toEqual(quiz.activelyRecalledItemIds)
+      expect(created.activelyRecalledItems.map(i => i.uuid)).to.deep.equal(quiz.activelyRecalledItemIds)
    })
 
-   it('creates Quiz with single passivelyRecalledItem', async() => {
+   it('creates Quiz with single passivelyRecalledItem', async () => {
       const assessedItem = await stub.item()
       const passively = await stub.item()
       const quiz = {
@@ -156,10 +156,10 @@ describe('Assessment API', () => {
          answers: YES_OR_NO
       }
       const created = await assessmentRepo.create(quiz)
-      expect(created.passivelyRecalledItems.map(i => i.uuid)).toEqual(quiz.passivelyRecalledItemIds)
+      expect(created.passivelyRecalledItems.map(i => i.uuid)).to.deep.equal(quiz.passivelyRecalledItemIds)
    })
 
-   it('creates Quiz with multiple passivelyRecalledItems', async() => {
+   it('creates Quiz with multiple passivelyRecalledItems', async () => {
       const assessedItem = await stub.item()
       const passively1 = await stub.item()
       const passively2 = await stub.item()
@@ -171,7 +171,7 @@ describe('Assessment API', () => {
          answers: YES_OR_NO
       }
       const created = await assessmentRepo.create(quiz)
-      expect(created.passivelyRecalledItems.map(i => i.uuid)).toEqual(quiz.passivelyRecalledItemIds)
+      expect(created.passivelyRecalledItems.map(i => i.uuid)).to.deep.equal(quiz.passivelyRecalledItemIds)
    })
 
    describe('when creating complete Quiz', () => {
@@ -181,7 +181,7 @@ describe('Assessment API', () => {
       let passively
       let quiz
 
-      beforeEach(async() => {
+      beforeEach(async () => {
          assessedItem = await stub.item()
          preq = await stub.composite()
          actively = await stub.item()
@@ -197,16 +197,16 @@ describe('Assessment API', () => {
          })
       })
 
-      it('creates Quiz', async() => {
-         expect(quiz.prerequisites.length).toEqual(1)
-         expect(quiz.activelyRecalledItems.length).toEqual(1)
-         expect(quiz.passivelyRecalledItems.length).toEqual(1)
+      it('creates Quiz', async () => {
+         expect(quiz.prerequisites.length).to.equal(1)
+         expect(quiz.activelyRecalledItems.length).to.equal(1)
+         expect(quiz.passivelyRecalledItems.length).to.equal(1)
       })
 
-      it('finds Quiz by uuid', async() => {
+      it('finds Quiz by uuid', async () => {
          const found = await assessmentRepo.find(quiz.uuid)
-         expect(found.uuid).toEqual(quiz.uuid)
-         expect(found.assessedItems[0].uuid).toEqual(assessedItem.uuid)
+         expect(found.uuid).to.equal(quiz.uuid)
+         expect(found.assessedItems[0].uuid).to.equal(assessedItem.uuid)
       })
 
    })
