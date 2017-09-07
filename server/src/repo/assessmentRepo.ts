@@ -2,6 +2,7 @@ import {InconsistentDatabaseError} from '../error/InconsistentDatabaseError'
 import {InvalidArgumentError} from '../error/InvalidArgumentError'
 import {cypher} from './graph/cypher'
 import * as uuid from 'uuid'
+import {AssessmentData} from '../domain/Assessment'
 
 const assessmentFromRecord = (record) => {
    const assessmentNode = record.get('assessment')
@@ -30,7 +31,7 @@ const assessmentFromRecord = (record) => {
    return assessment
 }
 
-const create = async(assessmentData) => {
+async function create(assessmentData: AssessmentData) {
    if (assessmentData.type !== 'Quiz') {
       throw new InvalidArgumentError('Unsupported assessment type: ' + assessmentData.type)
    }
@@ -96,7 +97,7 @@ const create = async(assessmentData) => {
    return assessmentFromRecord(records[0])
 }
 
-const find = async(uuid) => {
+const find = async (uuid) => {
    const statement = `
     MATCH (assessment:Assessment {uuid: {uuid}}) -[:ASSESSMENT_FOR*]-> (assessed:Item)
     OPTIONAL MATCH (q) -[:REQUIRES]-> (preq:Objective)

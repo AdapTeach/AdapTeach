@@ -38,8 +38,10 @@ const createUser = () => userRepo.create({name: 'Stub User'})
 const createAssessment = async () => {
    const item = await createItem()
    return await assessmentRepo.create({
-      name: 'Test Assessment',
-      testedItemIds: [item.uuid]
+      type: 'Quiz',
+      assessedItemIds: [item.uuid],
+      question: 'Stub Assessment',
+      answers: [{text: 'Yes', correct: true}, {text: 'No', correct: false}]
    })
 }
 

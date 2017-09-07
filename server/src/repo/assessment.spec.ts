@@ -2,8 +2,9 @@ import {expect} from 'chai'
 import {InvalidArgumentError} from '../error/InvalidArgumentError'
 import {assessmentRepo} from './assessmentRepo'
 import {stub} from './stubFactory'
+import {AssessmentAnswer, AssessmentData} from '../domain/Assessment'
 
-const YES_OR_NO = [
+const YES_OR_NO: AssessmentAnswer[] = [
    {text: 'Yes', correct: true},
    {text: 'No', correct: false}
 ]
@@ -12,7 +13,7 @@ describe('Assessment API', () => {
 
    it('creates simplest possible Quiz (one assessedItem, YES/NO question)', async () => {
       const item = await stub.item()
-      const quiz = {
+      const quiz: AssessmentData = {
          type: 'Quiz',
          assessedItemIds: [item.uuid],
          question: 'Test Question ?',
@@ -35,7 +36,7 @@ describe('Assessment API', () => {
          assessedItemIds: [item.uuid],
          question: 'Lacking type ?',
          answers: YES_OR_NO
-      }
+      } as AssessmentData
       try {
          await assessmentRepo.create(lackingType)
          throw Error('Should have failed')
@@ -47,7 +48,7 @@ describe('Assessment API', () => {
    it('creates Quiz with multiple assessedItems', async () => {
       const item1 = await stub.item()
       const item2 = await stub.item()
-      const quiz = {
+      const quiz: AssessmentData = {
          type: 'Quiz',
          assessedItemIds: [item1.uuid, item2.uuid],
          question: 'Multiple assessedItems ?',
@@ -60,7 +61,7 @@ describe('Assessment API', () => {
    it('creates Quiz with single Item as prerequisite', async () => {
       const assessedItem = await stub.item()
       const preq = await stub.item()
-      const quiz = {
+      const quiz: AssessmentData = {
          type: 'Quiz',
          assessedItemIds: [assessedItem.uuid],
          prerequisiteIds: [preq.uuid],
@@ -75,7 +76,7 @@ describe('Assessment API', () => {
       const assessedItem = await stub.item()
       const preq1 = await stub.item()
       const preq2 = await stub.item()
-      const quiz = {
+      const quiz: AssessmentData = {
          type: 'Quiz',
          assessedItemIds: [assessedItem.uuid],
          prerequisiteIds: [preq1.uuid, preq2.uuid],
@@ -89,7 +90,7 @@ describe('Assessment API', () => {
    it('creates Quiz with single Composite as prerequisite', async () => {
       const assessedItem = await stub.item()
       const preq = await stub.composite()
-      const quiz = {
+      const quiz: AssessmentData = {
          type: 'Quiz',
          assessedItemIds: [assessedItem.uuid],
          prerequisiteIds: [preq.uuid],
@@ -104,7 +105,7 @@ describe('Assessment API', () => {
       const assessedItem = await stub.item()
       const preq1 = await stub.composite()
       const preq2 = await stub.composite()
-      const quiz = {
+      const quiz: AssessmentData = {
          type: 'Quiz',
          assessedItemIds: [assessedItem.uuid],
          prerequisiteIds: [preq1.uuid, preq2.uuid],
@@ -118,7 +119,7 @@ describe('Assessment API', () => {
    it('creates Quiz with single activelyRecalledItem', async () => {
       const assessedItem = await stub.item()
       const actively = await stub.item()
-      const quiz = {
+      const quiz: AssessmentData = {
          type: 'Quiz',
          assessedItemIds: [assessedItem.uuid],
          activelyRecalledItemIds: [actively.uuid],
@@ -134,7 +135,7 @@ describe('Assessment API', () => {
       const assessedItem = await stub.item()
       const actively1 = await stub.item()
       const actively2 = await stub.item()
-      const quiz = {
+      const quiz: AssessmentData = {
          type: 'Quiz',
          assessedItemIds: [assessedItem.uuid],
          activelyRecalledItemIds: [actively1.uuid, actively2.uuid],
@@ -148,7 +149,7 @@ describe('Assessment API', () => {
    it('creates Quiz with single passivelyRecalledItem', async () => {
       const assessedItem = await stub.item()
       const passively = await stub.item()
-      const quiz = {
+      const quiz: AssessmentData = {
          type: 'Quiz',
          assessedItemIds: [assessedItem.uuid],
          passivelyRecalledItemIds: [passively.uuid],
@@ -163,7 +164,7 @@ describe('Assessment API', () => {
       const assessedItem = await stub.item()
       const passively1 = await stub.item()
       const passively2 = await stub.item()
-      const quiz = {
+      const quiz: AssessmentData = {
          type: 'Quiz',
          assessedItemIds: [assessedItem.uuid],
          passivelyRecalledItemIds: [passively1.uuid, passively2.uuid],

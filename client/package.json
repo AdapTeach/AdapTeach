@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "axios": "^0.16.2",
+    "immutable-lens": "0.0.4",
     "normalizr": "^3.2.3",
     "ramda": "^0.24.1",
     "react": "^15.6.1",
@@ -33,7 +34,7 @@
     "sparix": "^1.0.0-beta.6"
   },
   "devDependencies": {
-    "@types/ramda": "^0.24.9",
+    "@types/ramda": "^0.24.10",
     "@types/react": "^16.0.5",
     "@types/react-dom": "^15.5.4",
     "awesome-typescript-loader": "^3.2.3",
