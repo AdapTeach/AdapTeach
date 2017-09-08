@@ -1,8 +1,8 @@
-import {ComponentStore} from './ComponentStore'
+import {FormStore} from './FormStore'
 
-export function createFormStore<FormState>(initialFormState: FormState): ComponentStore<FormState> {
-   class FormStore extends ComponentStore<FormState> {
+export function createFormStore<FormState>(initialFormState: FormState): FormStore<FormState> {
+   class DynamicFormStore extends FormStore<FormState> {
    }
 
-   return new FormStore(initialFormState)
+   return new DynamicFormStore(initialFormState)
 }

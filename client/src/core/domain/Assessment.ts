@@ -16,9 +16,9 @@ export interface AssessmentFields {
 export interface AssessmentData {
    type: AssessmentType
    question: string
+   answers: AssessmentAnswer[]
    prerequisiteIds?: UUID[]
    assessedItemIds: UUID[]
    activelyRecalledItemIds?: UUID[]
    passivelyRecalledItemIds?: UUID[]
-   answers: AssessmentAnswer[]
 }

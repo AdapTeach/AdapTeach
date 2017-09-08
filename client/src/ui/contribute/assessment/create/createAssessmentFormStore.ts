@@ -6,6 +6,7 @@ export interface CreateAssessmentFormState {
    type: AssessmentType
    question: string
    prerequisiteIds: UUID[]
+   prerequisiteDialogVisible: boolean
    assessedItemIds: UUID[]
    activelyRecalledItemIds: UUID[]
    passivelyRecalledItemIds: UUID[]
@@ -16,8 +17,9 @@ export interface CreateAssessmentFormState {
 const initialState: CreateAssessmentFormState = {
    type: 'Quiz',
    question: '',
-   answers: [{text: 'Correct Answer', correct: true}, {text: 'Incorrect Answer', correct: false}],
+   answers: [{text: '', correct: true}, {text: '', correct: false}],
    prerequisiteIds: [],
+   prerequisiteDialogVisible: false,
    assessedItemIds: [],
    activelyRecalledItemIds: [],
    passivelyRecalledItemIds: [],
