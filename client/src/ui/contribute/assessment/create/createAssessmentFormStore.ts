@@ -14,7 +14,6 @@ export interface CreateAssessmentFormState {
    passivelyRecalledItemIds: UUID[]
    passivelyRecalledItemSearchFormIsVisible: boolean
    answers: AssessmentAnswer[]
-   valid: boolean
 }
 
 const initialState: CreateAssessmentFormState = {
@@ -28,13 +27,9 @@ const initialState: CreateAssessmentFormState = {
    activelyRecalledItemIds: [],
    activelyRecalledItemSearchFormIsVisible: false,
    passivelyRecalledItemIds: [],
-   passivelyRecalledItemSearchFormIsVisible: false,
-   valid: false
+   passivelyRecalledItemSearchFormIsVisible: false
 }
 
 export const createAssessmentFormStore = createFormStore(initialState)
 
 const store = createAssessmentFormStore
-
-store.map(({question, assessedItemIds, answers}) => question.length > 5)
-   .subscribe(valid => store.updateState({valid}))

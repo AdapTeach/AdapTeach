@@ -1,4 +1,5 @@
 import {UUID} from './UUID'
+import {Entity} from './Entity'
 
 export type AssessmentType = 'Quiz'
 
@@ -7,17 +8,14 @@ export interface AssessmentAnswer {
    correct: boolean
 }
 
-export interface Assessment {
+export interface Assessment extends Entity, AssessmentFields {
 }
 
 export interface AssessmentFields {
-}
-
-export interface AssessmentData {
    type: AssessmentType
    question: string
    answers: AssessmentAnswer[]
-   prerequisiteIds?: UUID[]
+   prerequisiteIds: UUID[]
    assessedItemIds: UUID[]
    activelyRecalledItemIds?: UUID[]
    passivelyRecalledItemIds?: UUID[]
