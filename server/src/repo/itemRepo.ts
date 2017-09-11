@@ -5,6 +5,7 @@ import {addParentHierarchyToCategory} from './util/addParentHierarchyToCategory'
 import {Item, ItemFields} from '../domain/Item'
 import {UUID} from '../domain/UUID'
 import {ITEM} from '../domain/Objective'
+import {buildNameRegex} from '../util/buildNameRegex'
 
 function itemFromRecord(row) {
    const item = row.get('i').properties
@@ -44,7 +45,26 @@ const find = async (uuid: UUID): Promise<Item> => {
    return itemFromRecord(row)
 }
 
+const search = async (name: string): Promise<Item[]> => {
+   const statement = `
+    MATCH (item:Item) -[:IN_CATEGORY]-> (category)
+    WHERE item.name =~ {nameRegex}
+    RETURN item, category
+    LIMIT 10`
+   const params = {
+      nameRegex: buildNameRegex(name)
+   }
+   const records = await cypher.send(statement, params)
+   const items = records.map(record => {
+      const item = record.get('item').properties
+      item.category = record.get('category').properties
+      return item
+   })
+   return items
+}
+
 export const itemRepo = {
    create,
-   find
+   find,
+   search
 }

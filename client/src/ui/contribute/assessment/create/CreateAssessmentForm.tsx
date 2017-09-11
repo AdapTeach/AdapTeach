@@ -6,6 +6,8 @@ import {ObjectiveSearch} from '../../../common/ObjectiveSearch'
 import {Objective} from '../../../../core/domain/Objective'
 import {ObjectiveComponent} from '../../../common/ObjectiveComponent'
 import {UUID} from '../../../../core/domain/UUID'
+import {ItemSearch} from '../../../common/ItemSearch'
+import {ItemComponent} from '../../../common/ItemComponent'
 
 const stateLens = createLens<State>()
 const answersLens = stateLens.focusOn('answers')
@@ -38,16 +40,28 @@ const onDeleteButtonClick = (index) => () => store.update(
    answersLens.update(remove(index, 1))
 )
 
-const showPrerequisiteDialog = () => store.updateState({prerequisiteDialogVisible: true})
-// const hidePrerequisiteDialog = () => store.updateState({prerequisiteDialogVisible: false})
+const showPrerequisiteSearchForm = () => store.updateState({prerequisiteSearchFormIsVisible: true})
 
-const onObjectiveSearchConfirm = (objective: Objective) => store.updateState({
+const onPrerequisiteSelection = (objective: Objective) => store.updateState({
    prerequisiteIds: append(objective.uuid),
-   prerequisiteDialogVisible: false
+   prerequisiteSearchFormIsVisible: false
 })
 
-const removePrerequisite = (id: UUID) => () => store.update(createLens<State>().updateFields({
+const removePrerequisite = (id: UUID) => () => store.update(stateLens.updateFields({
    prerequisiteIds: reject(equals(id))
+}))
+
+const showAssessedItemSearchForm = () => store.updateState({
+   assessedItemSearchFormIsVisible: true
+})
+
+const onAssessedItemIdSelection = (uuid: UUID) => store.updateState({
+   assessedItemIds: append(uuid),
+   assessedItemSearchFormIsVisible: false
+})
+
+const removeAssessedItem = (id: UUID) => () => store.update(stateLens.updateFields({
+   assessedItemIds: reject(equals(id))
 }))
 
 const Component: React.StatelessComponent<{ props: {}, state: State }> = ({state}) => <form onSubmit={onSubmit(state)}>
@@ -67,23 +81,35 @@ const Component: React.StatelessComponent<{ props: {}, state: State }> = ({state
    <hr/>
    Prerequisites
    &nbsp;
-   <input type='button' value='Add' onClick={showPrerequisiteDialog} hidden={state.prerequisiteDialogVisible}/>
+   {state.prerequisiteSearchFormIsVisible || <input type='button' value='Add' onClick={showPrerequisiteSearchForm}/>}
    <ul>{state.prerequisiteIds.map(prerequisiteId =>
       <li key={prerequisiteId}>
-         <ObjectiveComponent id={prerequisiteId}/>
-         &nbsp;
+         <ObjectiveComponent id={prerequisiteId}/>&nbsp;
          <input type='button' value='X' onClick={removePrerequisite(prerequisiteId)}/>
       </li>)}
    </ul>
-   <ObjectiveSearch visible={state.prerequisiteDialogVisible}
-                    rejectedSuggestions={state.prerequisiteIds}
-                    onSelect={onObjectiveSearchConfirm}/>
+   {state.prerequisiteSearchFormIsVisible && <ObjectiveSearch
+      suggestionsToReject={state.prerequisiteIds}
+      onSelect={onPrerequisiteSelection}/>}
    <hr/>
    Assessed Items
+   &nbsp;
+   {state.assessedItemSearchFormIsVisible || <input type='button' value='Add' onClick={showAssessedItemSearchForm}/>}
+   <ul>{state.assessedItemIds.map(assessedItemId =>
+      <li key={assessedItemId}>
+         <ItemComponent id={assessedItemId}/>&nbsp;
+         <input type='button' value='X' onClick={removeAssessedItem(assessedItemId)}/>
+      </li>)}
+   </ul>
+   {state.assessedItemSearchFormIsVisible && <ItemSearch
+      suggestionsToReject={state.assessedItemIds}
+      onSelect={onAssessedItemIdSelection}/>}
    <hr/>
    Actively recalled items
+   <ItemSearch/>
    <hr/>
    Passively recalled items
+   <ItemSearch/>
    <hr/>
    <input type='submit' value='Create' disabled={!state.valid}/>
 </form>

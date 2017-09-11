@@ -17,4 +17,9 @@ export class ItemEndpoint {
          .map(({entities, result}) => entities.item[result])
    }
 
+   search(name: string): Observable<Item[]> {
+      if (name.length < 2) return Observable.of([])
+      return http.get(`http://localhost:8000/api/${entityTypeName}/search/${name}`)
+   }
+
 }

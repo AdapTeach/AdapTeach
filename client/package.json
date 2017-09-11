@@ -30,6 +30,7 @@
     "react-dom": "^15.6.1",
     "react-router-dom": "^4.2.2",
     "react-rx-pure-connect": "^1.1.5",
+    "recycle": "^2.2.3",
     "rxjs": "^5.4.3",
     "sparix": "^1.0.0-beta.6"
   },

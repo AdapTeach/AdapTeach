@@ -3,35 +3,9 @@ import {UUID} from '../domain/UUID'
 import {Objective} from '../domain/Objective'
 import {Item} from '../domain/Item'
 import {Composite} from '../domain/Composite'
-
-const buildNameRegex = (name) => `(?i)${name}.*`
-
-function buildItemSearchQuery(name) {
-   const statement = `
-    MATCH (item:Item) -[:IN_CATEGORY]-> (category)
-    WHERE item.name  =~ {nameRegex}
-    RETURN item, category`
-   const nameRegex = buildNameRegex(name)
-   const parameters = {nameRegex}
-   return {statement, parameters}
-}
-
-function buildCompositeSearchQuery(name) {
-   const statement = `
-    MATCH (composite:Composite)
-    WHERE composite.name  =~ {nameRegex}
-    RETURN composite`
-   const nameRegex = buildNameRegex(name)
-   const parameters = {nameRegex}
-   return {statement, parameters}
-}
+import {buildNameRegex} from '../util/buildNameRegex'
 
 const find = async (uuid: UUID): Promise<Objective> => {
-   // OPTIONAL MATCH (o) -[:IN_CATEGORY]-> (c)
-   // OPTIONAL MATCH (c) -[:CHILD_OF*]-> (p)
-   // OPTIONAL MATCH (o) -[:COMPOSED_OF]-> (item:Item) -[:IN_CATEGORY]-> (category:Category)
-   // OPTIONAL MATCH (o) -[:COMPOSED_OF]-> (composite:Composite)
-   // RETURN o, c, collect(p) as parents
    const statement = `
     MATCH (o:Objective {uuid: {uuid}}) 
     RETURN o`
@@ -46,7 +20,8 @@ const search = async (name: string): Promise<{ items: Item[], composites: Compos
     MATCH (objective:Objective)
     WHERE objective.name =~ {nameRegex}
     OPTIONAL MATCH (objective) -[:IN_CATEGORY]-> (category)
-    RETURN objective, category`
+    RETURN objective, category
+    LIMIT 10`
    const params = {
       nameRegex: buildNameRegex(name)
    }

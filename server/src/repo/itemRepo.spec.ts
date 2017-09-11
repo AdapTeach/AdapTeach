@@ -111,4 +111,15 @@ describe('itemRepo', () => {
       })
    })
 
+   it('finds Item by name', async () => {
+      const category = await stub.category()
+      const created = await itemRepo.create({
+         name: 'Searchable Item',
+         description: '',
+         category: category.uuid
+      })
+      const foundItems = await itemRepo.search('searchable')
+      expect(foundItems.map(found => found.uuid)).to.contain(created.uuid)
+   })
+
 })

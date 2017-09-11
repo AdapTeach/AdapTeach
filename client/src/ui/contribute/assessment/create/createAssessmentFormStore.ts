@@ -6,10 +6,13 @@ export interface CreateAssessmentFormState {
    type: AssessmentType
    question: string
    prerequisiteIds: UUID[]
-   prerequisiteDialogVisible: boolean
+   prerequisiteSearchFormIsVisible: boolean
    assessedItemIds: UUID[]
+   assessedItemSearchFormIsVisible: boolean
    activelyRecalledItemIds: UUID[]
+   activelyRecalledItemSearchFormIsVisible: boolean
    passivelyRecalledItemIds: UUID[]
+   passivelyRecalledItemSearchFormIsVisible: boolean
    answers: AssessmentAnswer[]
    valid: boolean
 }
@@ -19,10 +22,13 @@ const initialState: CreateAssessmentFormState = {
    question: '',
    answers: [{text: '', correct: true}, {text: '', correct: false}],
    prerequisiteIds: [],
-   prerequisiteDialogVisible: false,
+   prerequisiteSearchFormIsVisible: false,
    assessedItemIds: [],
+   assessedItemSearchFormIsVisible: false,
    activelyRecalledItemIds: [],
+   activelyRecalledItemSearchFormIsVisible: false,
    passivelyRecalledItemIds: [],
+   passivelyRecalledItemSearchFormIsVisible: false,
    valid: false
 }
 

@@ -6,8 +6,7 @@ import {Objective} from '../../core/domain/Objective'
 import {UUID} from '../../core/domain/UUID'
 
 type Props = {
-   visible: boolean
-   rejectedSuggestions: UUID[]
+   suggestionsToReject: UUID[]
    onSelect: (selectedObjective: Objective) => void
 }
 
@@ -28,17 +27,16 @@ const onSuggestionSelected = (suggestion: Objective, props: Props) => () => {
    store.resetState()
 }
 
-const Component: React.StatelessComponent<{ props: Props, state: State }> = ({props, state}) =>
-   <div hidden={!props.visible}>
-      <input placeholder='Search Objective by name'
-             value={state.query}
-             onChange={(e) => store.updateState({query: e.target.value})}/>
-      <ul>{state.suggestions
-         .filter(suggestion => !contains(suggestion.uuid, props.rejectedSuggestions))
-         .map(suggestion =>
-            <li key={suggestion.uuid} onClick={onSuggestionSelected(suggestion, props)}>{suggestion.name}</li>)}
-      </ul>
-   </div>
+const Component: React.StatelessComponent<{ props: Props, state: State }> = ({props, state}) => <div>
+   <input placeholder='Search Objective by name'
+          value={state.query}
+          onChange={(e) => store.updateState({query: e.target.value})}/>
+   <ul>{state.suggestions
+      .filter(suggestion => !contains(suggestion.uuid, props.suggestionsToReject))
+      .map(suggestion =>
+         <li key={suggestion.uuid} onClick={onSuggestionSelected(suggestion, props)}>{suggestion.name}</li>)}
+   </ul>
+</div>
 
 
 export const ObjectiveSearch = store.connect(Component)
