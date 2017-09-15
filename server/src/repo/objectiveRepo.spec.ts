@@ -1,6 +1,9 @@
 import {expect} from 'chai'
 import {stub} from './stubFactory'
 import {objectiveRepo} from './objectiveRepo'
+import {Item} from '../domain/Item'
+import {itemRepo} from './itemRepo'
+import {compositeRepo} from './compositeRepo'
 
 describe('Objective API', () => {
 
@@ -17,6 +20,12 @@ describe('Objective API', () => {
       })
 
       it('finds Item by name', async () => {
+         const category = await stub.category()
+         const item: Item = await itemRepo.create({
+            name: 'Random Item ' + Math.round(Math.random() * 1000 * 1000),
+            description: '',
+            category: category.uuid
+         })
          const result = await objectiveRepo.search(item.name)
          const foundItemIds = result.items.map(i => i.uuid)
          expect(foundItemIds).to.contain(item.uuid)
@@ -37,6 +46,12 @@ describe('Objective API', () => {
       })
 
       it('finds Composite by name', async () => {
+         const item = await stub.item()
+         const composite = await compositeRepo.create({
+            name: 'Random Composite ' + Math.round(Math.random() * 1000 * 1000),
+            description: '',
+            subObjectives: [item.uuid]
+         })
          const searchResult = await objectiveRepo.search(composite.name)
          const foundCompositeIds = searchResult.composites.map(c => c.uuid)
          expect(foundCompositeIds).to.contain(composite.uuid)
