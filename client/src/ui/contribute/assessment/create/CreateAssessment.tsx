@@ -1,9 +1,9 @@
 import * as React from 'react'
-import {CreateAssessmentForm} from './CreateAssessmentForm'
+import {CreateAssessmentFormComponent} from './CreateAssessmentFormComponent'
 
 const Component = () => <div>
    <h1>Create Assessment</h1>
-   <CreateAssessmentForm/>
+   <CreateAssessmentFormComponent/>
 </div>
 
 export const CreateAssessment = Component

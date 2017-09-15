@@ -20,3 +20,16 @@ export interface AssessmentFields {
    activelyRecalledItemIds?: UUID[]
    passivelyRecalledItemIds?: UUID[]
 }
+
+export const EMPTY_ASSESSMENT_FIELDS: AssessmentFields = {
+   type: 'Quiz',
+   question: '',
+   answers: [
+      {text: '', correct: true},
+      {text: '', correct: false}
+   ],
+   prerequisiteIds: [],
+   assessedItemIds: [],
+   activelyRecalledItemIds: [],
+   passivelyRecalledItemIds: []
+}
