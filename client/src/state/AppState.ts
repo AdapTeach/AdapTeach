@@ -1,23 +1,17 @@
-import {
-   CreateAssessmentFormState,
-   EMPTY_CREATE_ASSESSMENT_FORM
-} from '../routes/contribute/assessment/create/CreateAssessmentFormState'
+import {EMPTY_CREATE_ASSESSMENT_FORM} from '../routes/contribute/assessment/create/CreateAssessmentFormState'
+import {RoutesState} from '../routes/state'
 
 export interface AppState {
-   contribute: {
-      assessment: {
-         create: {
-            form: CreateAssessmentFormState
-         }
-      }
-   }
+   routes: RoutesState
 }
 
 export const initialState: AppState = {
-   contribute: {
-      assessment: {
-         create: {
-            form: EMPTY_CREATE_ASSESSMENT_FORM
+   routes: {
+      contribute: {
+         assessment: {
+            create: {
+               form: EMPTY_CREATE_ASSESSMENT_FORM
+            }
          }
       }
    }

@@ -15,13 +15,13 @@ export const ContributeRoutes = () =>
    <Route path='/contribute' render={() => <div>
       <ContributeNavigation />
       <Switch>
+         <Route exact path={path.contribute.assessment.create} component={CreateAssessment}/>
+         <Route exact path={path.contribute.assessment.display()} component={DisplayAssessment}/>
          <Route exact path={path.contribute.category.create} component={CreateCategory}/>
          <Route exact path={path.contribute.category.display()} component={DisplayCategory}/>
          <Route exact path={path.contribute.composite.create} component={CreateComposite}/>
          <Route exact path={path.contribute.composite.display()} component={DisplayComposite}/>
          <Route exact path={path.contribute.item.create} component={CreateItem}/>
          <Route exact path={path.contribute.item.display()} component={DisplayItem}/>
-         <Route exact path={path.contribute.assessment.create} component={CreateAssessment}/>
-         <Route exact path={path.contribute.assessment.display()} component={DisplayAssessment}/>
       </Switch>
    </div>}/>

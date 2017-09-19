@@ -1,15 +1,15 @@
 import * as React from 'react'
-import {Router, Switch, Route} from 'react-router-dom'
-import {ContributeRoutes} from './contribute/ContributeRoutes'
+import {Route, Router, Switch} from 'react-router-dom'
 import {router} from '../router/router'
+import {ContributeRoutes} from './contribute/component'
 
 const Home: React.StatelessComponent<{}> = () => <h1>Home</h1>
 
-export const UI = () =>
+export const RoutesComponent = () =>
    <Router history={router.history}>
       <Switch>
          <Route exact path='/' component={Home}/>
-         <ContributeRoutes />
+         <ContributeRoutes/>
       </Switch>
    </Router>
 

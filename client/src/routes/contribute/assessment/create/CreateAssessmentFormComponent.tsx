@@ -10,12 +10,11 @@ import {assessmentEndpoint} from '../../../../endpoint/index'
 import {AssessmentFields} from '../../../../core/domain/Assessment'
 import {connect} from 'react-rx-pure-connect'
 import {CreateAssessmentFormState as State} from './CreateAssessmentFormState'
-import {state} from '../../../../state/state'
-import {lens} from '../../../../state/lens'
-import {store} from '../../../../state/store'
+import {createAssessmentRouteStore} from './store'
 
-const formLens = lens.createAssessmentForm
-const answersLens = formLens.focusOn('answers')
+const formStore = createAssessmentRouteStore.focusOn('form')
+const answersLens = formStore.lens.focusOn('answers')
+const answerStore = formStore.focusOn('answers')
 
 const onSubmit = (state: State) => e => {
    e.preventDefault()
@@ -40,73 +39,71 @@ const isFormValid = (state: State): boolean => state.question.length > 5
    && not(isEmpty(state.assessedItemIds))
 
 
-const onQuestionChange = (e) => store.next(formLens.setFieldValues({question: e.target.value}))
+const onQuestionChange = (e) => formStore.setFieldValues({question: e.target.value})
 
-const onAddAnswerButtonClick = () => store.next(answersLens.update(append({text: '', correct: false})))
+const onAddAnswerButtonClick = () => answerStore.update(append({text: '', correct: false}))
 
-const onAnswerTextChange = (index) => (e) => store.next(
+const onAnswerTextChange = (index) => (e) => formStore.update(
    answersLens
       .focusIndex(index)
       .throwIfUndefined()
       .focusOn('text')
       .setValue(e.target.value))
 
-const onAnswerCorrectChange = (index) => () => store.next(
+const onAnswerCorrectChange = (index) => () => formStore.update(
    answersLens
       .focusIndex(index)
       .throwIfUndefined()
       .focusOn('correct')
       .update(value => !value))
 
-const onDeleteButtonClick = (index) => () => store.next(
-   answersLens.update(remove(index, 1))
-)
+const onDeleteButtonClick = (index) => () => answerStore.update(remove(index, 1))
 
-const showPrerequisiteSearchForm = () => store.next(formLens.setFieldValues({prerequisiteSearchFormIsVisible: true}))
+const showPrerequisiteSearchForm = () => formStore.setFieldValues({prerequisiteSearchFormIsVisible: true})
 
-const onPrerequisiteSelection = (objective: Objective) => store.next(formLens.updateFields({
+const onPrerequisiteSelection = (objective: Objective) => formStore.updateFields({
    prerequisiteIds: append(objective.uuid),
    prerequisiteSearchFormIsVisible: () => false
-}))
+})
 
-const removePrerequisite = (id: UUID) => () => store.next(formLens.updateFields({
+const removePrerequisite = (id: UUID) => () => formStore.updateFields({
    prerequisiteIds: reject(equals(id))
-}))
+})
 
-const showAssessedItemSearchForm = () => store.next(formLens.setFieldValues({
+const showAssessedItemSearchForm = () => formStore.setFieldValues({
    assessedItemSearchFormIsVisible: true
-}))
+})
 
-const onAssessedItemSelection = (uuid: UUID) => store.next(formLens.updateFields({
+const onAssessedItemSelection = (uuid: UUID) => formStore.updateFields({
    assessedItemIds: append(uuid),
    assessedItemSearchFormIsVisible: () => false
-}))
+})
 
-const removeAssessedItem = (id: UUID) => () => store.next(formLens.updateFields({
+const removeAssessedItem = (id: UUID) => () => formStore.updateFields({
    assessedItemIds: reject(equals(id))
-}))
+})
 
-const showActivelyRecalledItemSearchForm = () => store.next(formLens.setFieldValues({activelyRecalledItemSearchFormIsVisible: true}))
+const showActivelyRecalledItemSearchForm = () => formStore.setFieldValues({activelyRecalledItemSearchFormIsVisible: true})
 
-const removeActivelyRecalledItem = (id: UUID) => () => store.next(formLens.updateFields({
+const removeActivelyRecalledItem = (id: UUID) => () => formStore.updateFields({
    activelyRecalledItemIds: reject(equals(id))
-}))
+})
 
-const onActivelyRecalledItemSelection = (id: UUID) => store.next(formLens.updateFields({
+const onActivelyRecalledItemSelection = (id: UUID) => formStore.updateFields({
    activelyRecalledItemIds: append(id),
    activelyRecalledItemSearchFormIsVisible: () => false
-}))
+})
 
-const showPassivelyRecalledItemSearchForm = () => store.next(formLens.setFieldValues({passivelyRecalledItemSearchFormIsVisible: true}))
+const showPassivelyRecalledItemSearchForm = () => formStore.setFieldValues({passivelyRecalledItemSearchFormIsVisible: true})
 
-const removePassivelyRecalledItem = (id: UUID) => () => store.next(formLens.updateFields({
+const removePassivelyRecalledItem = (id: UUID) => () => formStore.updateFields({
    passivelyRecalledItemIds: reject(equals(id))
-}))
+})
 
-const onPassivelyRecalledItemSelection = (id: UUID) => store.next(formLens.updateFields({
+const onPassivelyRecalledItemSelection = (id: UUID) => formStore.updateFields({
    passivelyRecalledItemIds: append(id),
    passivelyRecalledItemSearchFormIsVisible: () => false
-}))
+})
 
 const Component: React.StatelessComponent<State> = (state) => <form onSubmit={onSubmit(state)}>
    Question <br/>
@@ -183,4 +180,4 @@ const Component: React.StatelessComponent<State> = (state) => <form onSubmit={on
    <input type='submit' value='Create' disabled={!isFormValid(state)}/>
 </form>
 
-export const CreateAssessmentFormComponent = connect(Component).to(state.createAssessmentForm$)
+export const CreateAssessmentFormComponent = connect(Component).to(formStore.state$)

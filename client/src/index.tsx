@@ -1,8 +1,8 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import {UI} from './routes/UI'
+import {RoutesComponent} from './routes/component'
 
 ReactDOM.render(
-   <UI />,
-   document.getElementById('routes')
+   <RoutesComponent />,
+   document.getElementById('app')
 )

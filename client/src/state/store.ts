@@ -1,5 +1,4 @@
-import {Subject} from 'rxjs'
-import {AppState} from './AppState'
-import {Update} from 'immutable-lens'
+import {initialState} from './AppState'
+import {createStore} from 'lenrix'
 
-export const store = new Subject<Update<AppState>>()
+export const store = createStore(initialState)
