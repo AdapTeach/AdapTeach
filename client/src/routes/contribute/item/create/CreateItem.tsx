@@ -1,6 +1,6 @@
 import * as React from 'react'
 import {Category} from '../../../../core/domain/Category'
-import {CategorySearch} from '../../../common/CategorySearch'
+import {CategorySearch} from '../../../../widgets/common/CategorySearch'
 import {itemEndpoint} from '../../../../endpoint/index'
 import {router} from '../../../../router/router'
 import {path} from '../../../../router/path'

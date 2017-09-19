@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {CategoryParentHierarchy} from '../../../common/CategoryParentHierarchy'
+import {CategoryParentHierarchy} from '../../../../widgets/common/CategoryParentHierarchy'
 import {Category} from '../../../../core/domain/Category'
 import {categoryEndpoint} from '../../../../endpoint/index'
 import {RouteProps} from '../../../../router/RouteProps'

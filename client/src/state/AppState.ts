@@ -1,7 +1,7 @@
 import {
    CreateAssessmentFormState,
    EMPTY_CREATE_ASSESSMENT_FORM
-} from '../ui/contribute/assessment/create/CreateAssessmentFormState'
+} from '../routes/contribute/assessment/create/CreateAssessmentFormState'
 
 export interface AppState {
    contribute: {

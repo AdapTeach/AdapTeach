@@ -2,7 +2,7 @@ import * as React from 'react'
 import {itemEndpoint} from '../../../../endpoint/index'
 import {RouteProps} from '../../../../router/RouteProps'
 import {Item} from '../../../../core/domain/Item'
-import {CategoryParentHierarchy} from '../../../common/CategoryParentHierarchy'
+import {CategoryParentHierarchy} from '../../../../widgets/common/CategoryParentHierarchy'
 import {connect} from 'react-rx-pure-connect'
 
 const Component: React.StatelessComponent<Item> = (item) => <div>
