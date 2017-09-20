@@ -2,7 +2,7 @@ import * as React from 'react'
 import {Route, Switch} from 'react-router-dom'
 import {path} from '../../../router/path'
 import {ContributeNavigation} from '../ContributeNavigation'
-import {CreateAssessment} from './create/CreateAssessment'
+import {CreateAssessment} from './create/component'
 import {DisplayAssessment} from './display/DisplayAssessment'
 
 export const ContributeAssessment = () =>

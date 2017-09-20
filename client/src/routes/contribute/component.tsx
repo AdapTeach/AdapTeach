@@ -8,7 +8,7 @@ import {CreateItem} from './item/create/CreateItem'
 import {DisplayItem} from './item/display/DisplayItem'
 import {CreateComposite} from './composite/create/CreateComposite'
 import {DisplayComposite} from './composite/display/DisplayComposite'
-import {CreateAssessment} from './assessment/create/CreateAssessment'
+import {CreateAssessment} from './assessment/create/component'
 import {DisplayAssessment} from './assessment/display/DisplayAssessment'
 
 export const ContributeComponent = () =>
