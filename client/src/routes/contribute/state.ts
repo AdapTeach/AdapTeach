@@ -1,9 +1,5 @@
-import {CreateAssessmentFormState} from './assessment/create/CreateAssessmentFormState'
+import {ContributeAssessmentState} from './assessment/state'
 
-export interface ContributeRoutesState {
-   assessment: {
-      create: {
-         form: CreateAssessmentFormState
-      }
-   }
+export interface ContributeState {
+   assessment: ContributeAssessmentState
 }

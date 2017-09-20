@@ -1,1 +1,6 @@
-import * as React from 'react'
+import {CreateAssessmentState} from './create/state'
+
+export interface ContributeAssessmentState {
+   create: CreateAssessmentState
+}
+

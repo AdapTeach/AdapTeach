@@ -11,7 +11,7 @@ import {DisplayComposite} from './composite/display/DisplayComposite'
 import {CreateAssessment} from './assessment/create/CreateAssessment'
 import {DisplayAssessment} from './assessment/display/DisplayAssessment'
 
-export const ContributeRoutes = () =>
+export const ContributeComponent = () =>
    <Route path='/contribute' render={() => <div>
       <ContributeNavigation />
       <Switch>
