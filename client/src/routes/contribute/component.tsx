@@ -8,14 +8,14 @@ import {CreateItem} from './item/create/CreateItem'
 import {DisplayItem} from './item/display/DisplayItem'
 import {CreateComposite} from './composite/create/CreateComposite'
 import {DisplayComposite} from './composite/display/DisplayComposite'
-import {CreateAssessment} from './assessment/create/component'
+import {CreateAssessmentPlace} from './assessment/create/CreateAssessmentPlace'
 import {DisplayAssessment} from './assessment/display/DisplayAssessment'
 
 export const ContributeComponent = () =>
    <Route path='/contribute' render={() => <div>
       <ContributeNavigation />
       <Switch>
-         <Route exact path={path.contribute.assessment.create} component={CreateAssessment}/>
+         <Route exact path={path.contribute.assessment.create} component={CreateAssessmentPlace}/>
          <Route exact path={path.contribute.assessment.display()} component={DisplayAssessment}/>
          <Route exact path={path.contribute.category.create} component={CreateCategory}/>
          <Route exact path={path.contribute.category.display()} component={DisplayCategory}/>

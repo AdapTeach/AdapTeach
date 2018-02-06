@@ -1,7 +1,7 @@
-import {normalizeItem} from '../core/domain/norms'
-import {Observable} from 'rxjs'
-import {Item, ItemFields} from '../core/domain/Item'
-import {http} from './http'
+import { normalizeItem } from '../core/domain/norms'
+import { Observable } from 'rxjs'
+import { Item, ItemFields, ItemDTO } from '../core/domain/Item';
+import { http } from './http'
 
 const entityTypeName = 'item'
 
@@ -12,9 +12,9 @@ export class ItemEndpoint {
    }
 
    get(uuid: string): Observable<Item> {
-      return http.get(`http://localhost:8000/api/${entityTypeName}/${uuid}`)
+      return http.get<ItemDTO>(`http://localhost:8000/api/${entityTypeName}/${uuid}`)
          .map(normalizeItem)
-         .map(({entities, result}) => entities.item[result])
+         .map(({ entities, result }) => entities.item[result])
    }
 
    search(name: string): Observable<Item[]> {

@@ -1,12 +1,12 @@
 import * as React from 'react'
-import {router} from '../../router/router'
+import { router } from '../../router/router'
 
-const navigateTo = (path: string) => (event) => {
+const navigateTo = (path: string) => (event: any) => {
    event.preventDefault()
    router.goTo(path)
 }
 
-export const Link: React.StatelessComponent<{ path: string }> = ({path, children}) =>
+export const Link: React.StatelessComponent<{ path: string }> = ({ path, children }) =>
    <a onClick={navigateTo(path)}>
       {children}
    </a>

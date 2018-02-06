@@ -1,4 +1,4 @@
-import {Category, CategoryFields} from '../core/domain/Category'
+import { Category, CategoryFields, CategoryDTO } from '../core/domain/Category';
 import {Observable} from 'rxjs'
 import {http} from './http'
 import {normalizeCategory} from '../core/domain/norms'
@@ -12,7 +12,7 @@ export class CategoryEndpoint {
    }
 
    get(uuid: string): Observable<Category> {
-      return http.get(`http://localhost:8000/api/${entityTypeName}/${uuid}`)
+      return http.get<CategoryDTO>(`http://localhost:8000/api/${entityTypeName}/${uuid}`)
          .map(normalizeCategory)
          .map(({entities, result}) => entities.category[result])
    }

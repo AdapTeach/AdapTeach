@@ -1,4 +1,4 @@
-import {createAssessmentInitialState, CreateAssessmentState} from '../routes/contribute/assessment/create/state'
+import {createAssessmentInitialState, CreateAssessmentState} from '../routes/contribute/assessment/create/CreateAssessmentState'
 
 export interface AppState {
    routes: {
