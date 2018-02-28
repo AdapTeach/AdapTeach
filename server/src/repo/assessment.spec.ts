@@ -1,12 +1,12 @@
-import {expect} from 'chai'
-import {InvalidArgumentError} from '../error/InvalidArgumentError'
-import {assessmentRepo} from './assessmentRepo'
-import {stub} from './stubFactory'
-import {AssessmentAnswer, AssessmentData} from '../domain/Assessment'
+import { expect } from 'chai'
+import { InvalidArgumentError } from '../error/InvalidArgumentError'
+import { assessmentRepo } from './assessmentRepo'
+import { stub } from './stubFactory'
+import { AssessmentAnswer, AssessmentData } from '../domain/Assessment'
 
 const YES_OR_NO: AssessmentAnswer[] = [
-   {text: 'Yes', correct: true},
-   {text: 'No', correct: false}
+   { text: 'Yes', correct: true },
+   { text: 'No', correct: false }
 ]
 
 describe('Assessment API', () => {
@@ -23,11 +23,24 @@ describe('Assessment API', () => {
       expect(created.uuid).to.exist
       expect(created.type).to.equal('Quiz')
       expect(created.assessedItems.map(i => i.uuid)).to.deep.equal(quiz.assessedItemIds)
-      expect(created.prerequisites).to.exist
-      expect(created.activelyRecalledItems).to.exist
-      expect(created.passivelyRecalledItems).to.exist
+      expect(created.prerequisites).to.deep.equal([])
+      expect(created.activelyRecalledItems).to.deep.equal([])
+      expect(created.passivelyRecalledItems).to.deep.equal([])
       expect(created.question).to.equal(quiz.question)
       expect(created.answers).to.deep.equal(quiz.answers)
+   })
+
+   it('finds simple Quiz by uuid', async () => {
+      const item = await stub.item()
+      const quiz: AssessmentData = {
+         type: 'Quiz',
+         assessedItemIds: [item.uuid],
+         question: 'Test Question ?',
+         answers: YES_OR_NO
+      }
+      const created = await assessmentRepo.create(quiz)
+      const found = await assessmentRepo.find(created.uuid)
+      expect(found).to.deep.equal(created)
    })
 
    it('prevents Assessment creation when type is not defined', async () => {

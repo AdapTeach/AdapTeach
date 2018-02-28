@@ -100,9 +100,9 @@ async function create(assessmentData: AssessmentData) {
 const find = async (uuid) => {
    const statement = `
     MATCH (assessment:Assessment {uuid: {uuid}}) -[:ASSESSMENT_FOR*]-> (assessed:Item)
-    OPTIONAL MATCH (q) -[:REQUIRES]-> (preq:Objective)
-    OPTIONAL MATCH (q) -[:ACTIVELY_RECALLS]-> (actively:Item)
-    OPTIONAL MATCH (q) -[:PASSIVELY_RECALLS]-> (passively:Item)
+    OPTIONAL MATCH (assessment) -[:REQUIRES]-> (preq:Objective)
+    OPTIONAL MATCH (assessment) -[:ACTIVELY_RECALLS]-> (actively:Item)
+    OPTIONAL MATCH (assessment) -[:PASSIVELY_RECALLS]-> (passively:Item)
     RETURN assessment, collect(assessed) as assessedItems, collect(preq) as prerequisites,
            collect(actively) as activelyRecalledItems, collect(passively) as passivelyRecalledItems`
    const records = await cypher.send(statement, {uuid})

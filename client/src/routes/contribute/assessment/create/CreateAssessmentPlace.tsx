@@ -18,18 +18,7 @@ const store = createAssessmentStore
 
 const onSubmit = (state: State) => e => {
    e.preventDefault()
-   const fields: AssessmentFields = pick([
-      'question',
-      'answers',
-      'prerequisiteIds',
-      'assessedItemIds',
-      'activelyRecalledItemIds',
-      'passivelyRecalledItemIds'
-   ], state.form) as any
-   fields.type = 'Quiz'
-   assessmentEndpoint
-      .post(fields)
-      .subscribe(assessment => console.log(assessment))
+   store.dispatch({ createAssessment: undefined })
 }
 
 const isFormValid: (form: AssessmentFields) => boolean = (form) => form.question.length > 5
@@ -38,92 +27,39 @@ const isFormValid: (form: AssessmentFields) => boolean = (form) => form.question
    && any(answer => answer.correct, form.answers)
    && not(isEmpty(form.assessedItemIds))
 
-
 const onQuestionChange = (e) => store.dispatch({ updateFields: { question: e.target.value } })
 
-const onAddAnswerButtonClick = () => { }
-// const onAddAnswerButtonClick = () => answerStore.update(append({text: '', correct: false}))
+const onAddAnswerButtonClick = () => store.dispatch({ addAnswer: undefined })
 
-const onAnswerTextChange = (index) => (e) => { }
-// const onAnswerTextChange = (index) => (e) => formStore.update(
-//    answersLens
-//       .focusIndex(index)
-//       .throwIfUndefined()
-//       .focusOn('text')
-//       .setValue(e.target.value))
+const onAnswerTextChange = (index) => (e) => store.dispatch({ updateAnswer: { index, answer: { text: e.target.value } } })
 
-const onAnswerCorrectChange = (index) => () => { }
-// const onAnswerCorrectChange = (index) => () => formStore.update(
-//    answersLens
-//       .focusIndex(index)
-//       .throwIfUndefined()
-//       .focusOn('correct')
-//       .update(value => !value))
+const onAnswerCorrectChange = (index) => (e) => store.dispatch({ toggleAnswerIsCorrect: { index } })
 
-const onDeleteButtonClick = (index) => () => { }
-// const onDeleteButtonClick = (index) => () => answerStore.update(remove(index, 1))
+const onDeleteButtonClick = (index) => () => store.dispatch({ deleteAnswer: { index } })
 
-const showPrerequisiteSearchForm = () => { }
-// const showPrerequisiteSearchForm = () => store.setFieldValues({ prerequisiteSearchFormIsVisible: true })
+const showPrerequisiteSearchForm = () => store.dispatch({ showPrerequisitesSearchForm: undefined })
 
-const onPrerequisiteSelection = (objective: Objective) => { }
-// const onPrerequisiteSelection = (objective: Objective) => store.pipe(
-//    formLens.updateFields({ prerequisiteIds: append(objective.uuid) }),
-//    store.lens.setFieldValues({ prerequisiteSearchFormIsVisible: false })
-// )
+const onPrerequisiteSelection = (objective: Objective) => store.dispatch({ onPrerequisiteSelection: { objective } })
 
-const removePrerequisite = (id: UUID) => () => { }
-// const removePrerequisite = (id: UUID) => () => formStore.updateFields({
-//    prerequisiteIds: reject(equals(id))
-// })
+const removePrerequisite = (id: UUID) => () => store.dispatch({ removePrerequisite: { id } })
 
-const showAssessedItemSearchForm = () => { }
-// const showAssessedItemSearchForm = () => store.setFieldValues({
-//    assessedItemSearchFormIsVisible: true
-// })
+const showAssessedItemSearchForm = () => store.dispatch({ showAssessedItemSearchForm: undefined })
 
-const onAssessedItemSelection = (uuid: UUID) => { }
-// const onAssessedItemSelection = (uuid: UUID) => store.pipe(
-//    formLens.updateFields({ assessedItemIds: append(uuid) }),
-//    store.lens.setFieldValues({ assessedItemSearchFormIsVisible: false })
-// )
+const onAssessedItemSelection = (id: UUID) => store.dispatch({ onAssessedItemSelection: { id } })
 
-const removeAssessedItem = (id: UUID) => () => { }
-// const removeAssessedItem = (id: UUID) => () => formStore.updateFields({
-//    assessedItemIds: reject(equals(id))
-// })
+const removeAssessedItem = (id: UUID) => () => store.dispatch({ removeAssessedItem: { id } })
 
-const showActivelyRecalledItemSearchForm = () => { }
-// const showActivelyRecalledItemSearchForm = () => store.setFieldValues({
-//    activelyRecalledItemSearchFormIsVisible: true
-// })
+const showActivelyRecalledItemSearchForm = () => store.dispatch({ showActivelyRecalledItemSearchForm: undefined })
 
-const removeActivelyRecalledItem = (id: UUID) => () => { }
-// const removeActivelyRecalledItem = (id: UUID) => () => formStore.updateFields({
-//    activelyRecalledItemIds: reject(equals(id))
-// })
+const onActivelyRecalledItemSelection = (id: UUID) => store.dispatch({ onActivelyRecalledItemSelection: { id } })
 
-const onActivelyRecalledItemSelection = (id: UUID) => { }
-// const onActivelyRecalledItemSelection = (id: UUID) => store.pipe(
-//    formLens.updateFields({ activelyRecalledItemIds: append(id) }),
-//    store.lens.setFieldValues({ activelyRecalledItemSearchFormIsVisible: false })
-// )
+const removeActivelyRecalledItem = (id: UUID) => () => store.dispatch({ removeAssessedItem: { id } })
 
-const showPassivelyRecalledItemSearchForm = () => { }
-// const showPassivelyRecalledItemSearchForm = () => store.setFieldValues({
-//    passivelyRecalledItemSearchFormIsVisible: true
-// })
+const showPassivelyRecalledItemSearchForm = () => store.dispatch({ showPassivelyRecalledItemSearchForm: undefined })
 
-const removePassivelyRecalledItem = (id: UUID) => () => { }
-// const removePassivelyRecalledItem = (id: UUID) => () => formStore.updateFields({
-//    passivelyRecalledItemIds: reject(equals(id))
-// })
+const onPassivelyRecalledItemSelection = (id: UUID) => store.dispatch({ onPassivelyRecalledItemSelection: { id } })
 
-const onPassivelyRecalledItemSelection = (id: UUID) => { }
-// const onPassivelyRecalledItemSelection = (id: UUID) => store.pipe(
-//    formLens.updateFields({ passivelyRecalledItemIds: append(id) }),
-//    store.lens.setFieldValues({ passivelyRecalledItemSearchFormIsVisible: false })
-// )
+const removePassivelyRecalledItem = (id: UUID) => () => store.dispatch({ removePassivelyRecalledItem: { id } })
 
 const Component: React.SFC<State> = (state) => <div>
    <h1>Create Assessment</h1>
